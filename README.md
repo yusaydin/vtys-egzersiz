@@ -1,66 +1,62 @@
-# VFS Global Randevu Takip Asistanı 🚀
+# VTYS Egzersiz 🚀
 
-Bu proje, VFS Global web sitesinde randevu uygunluğunu izleyen, form doldurma süreçlerini kolaylaştıran ve randevu açıldığında sesli/Telegram uyarısı gönderen bir **Chrome Uzantısı (Extension)** aracıdır.
+**VTYS Egzersiz**, Veritabanı Yönetim Sistemleri (VTYS) dersi konularını pekiştirmek amacıyla tasarlanmış, web tabanlı interaktif bir SQL sınav ve çalışma asistanıdır. 
 
-VFS Global'in katı Cloudflare ve SMS OTP (MFA) korumalarını aşmak için **yarı-otomatik (asistan)** mantıkla tasarlanmıştır. Güvenli tarayıcınız üzerinden çalıştığı için hesap banı veya IP engellemesi riski minimumdur.
-
----
-
-## 🛠️ Kurulum Adımları
-
-### 1. Eklentiyi Google Chrome'a Yükleme
-1. Bu projeyi bilgisayarınıza indirin.
-2. Google Chrome tarayıcınızı açın ve adres çubuğuna `chrome://extensions/` yazıp gidin.
-3. Sağ üst köşede bulunan **"Geliştirici modu" (Developer mode)** seçeneğini aktif hale getirin.
-4. Sol üstte çıkan **"Paketlenmemiş öğe yükle" (Load unpacked)** butonuna tıklayın.
-5. Proje klasörünün içindeki `extension` klasörünü seçip yükleyin.
-6. Uzantı, Chrome araç çubuğunuza eklenecektir. (Sağ üstteki yapboz simgesine tıklayıp sabitleyebilirsiniz).
+Uygulama, çoktan seçmeli teorik soruların yanı sıra kod yazma/kod tamamlama pratiği yapabileceğiniz W3Schools tarzı dinamik bir sınama paneline sahiptir.
 
 ---
 
-## 🤖 Telegram Bot Kurulumu (Bildirim Almak İçin)
+## 🌟 Öne Çıkan Özellikler
 
-Randevu açıldığında telefonunuza anlık bildirim gelmesini istiyorsanız aşağıdaki adımları takip edin:
-
-1. **Bot Oluşturma:**
-   - Telegram uygulamasını açın ve arama kısmına `@BotFather` yazın.
-   - BotFather ile konuşma başlatıp `/newbot` komutunu gönderin.
-   - Botunuza bir isim ve ardından sonu `bot` ile biten bir kullanıcı adı (username) girin (Örn: `VfsTakipciBot`).
-   - BotFather size bir **HTTP API Token** verecektir. Bu sizin **Telegram Bot Token** değerinizdir.
-
-2. **Chat ID Öğrenme:**
-   - Telegram arama kısmına `@userinfobot` yazın.
-   - Bu botla konuşma başlatıp `Start` butonuna tıkladığınızda size `Id: XXXXXXXXX` şeklinde bir numara verecektir. Bu numara sizin **Telegram Chat ID** değerinizdir.
-
-3. **Botu Aktifleştirme:**
-   - Yeni oluşturduğunuz botun sohbet sayfasına gidip `/start` komutunu gönderin (Bunu yapmazsanız bot size mesaj gönderemez).
+- **Gelişmiş Kod Tamamlama Modu (Fill-in-the-Blank)**: Kod sorularında SQL anahtar kelimelerini doğru sırayla yerleştirmenizi sınayan W3Schools benzeri interaktif kutucuklar.
+- **"Cevapla" ve "Cevabı Göster" Butonları**: 
+  - **Cevapla (Submit Answer)**: Girilen cevabın doğruluğunu kontrol eder. Yanlışsa temizleyip yeniden denemenize izin verir; doğruysa sonraki soruya geçişi açar.
+  - **Cevabı Göster (Show Answer)**: Tıklandığında doğru cevapları gösterir ve tekrar tıklandığında cevapları gizler.
+- **Detaylı Çözüm Açıklamaları**: Her sorunun altında doğru yanıtın nedenlerini açıklayan detaylı, öğretici geri bildirimler.
+- **Kategori ve Tip Filtreleme**: Soruları belirli alt başlıklara (VIEW, INDEX, Saklı Yordam, JOIN vb.) veya soru tipine (Kod / Çoktan Seçmeli) göre filtreleme imkanı.
+- **Dinamik Sınav Raporu**: Quiz tamamlandığında doğru, yanlış ve boş bırakılan soru adetlerini gösteren grafiksel başarı karnesi.
+- **Premium Tasarım**: Outfit & Source Code Pro yazı tipleri, yumuşak geçişli animasyonlar ve şık HSL renk paletine sahip, modern bir kullanıcı arayüzü.
 
 ---
 
-## 📈 Kullanım Kılavuzu
+## 📚 Ders İçerikleri ve Soru Dağılımları
 
-1. **Ayarları Yapılandırın:**
-   - Chrome'daki uzantı simgemize tıklayarak arayüzü açın.
-   - VFS formlarında seçmek istediğiniz **Vize Kategorisi** ve **Vize Alt Kategorisi** isimlerini (VFS sitesinde göründüğü haliyle, örn: `Schengen Visa`, `Tourism`) yazın.
-   - Telegram Token ve Chat ID bilgilerinizi girip **"Telegram Test Mesajı Gönder"** butonuna basarak bağlantıyı test edin.
-   - Yenileme sıklığını (Önerilen: 3 veya 4 dakika) ayarlayın.
-   - Ayarlar otomatik olarak kaydedilecektir.
+Uygulamada çalışabileceğiniz 3 ana bölüm (ders) ve toplam **225 soru** bulunmaktadır:
 
-2. **VFS Global Oturumu Açın:**
-   - Tarayıcınızdan normal bir şekilde VFS Global randevu sistemine girin.
-   - E-posta, şifre ve telefonunuza gelen **SMS OTP** kodunu girerek sisteme manuel olarak giriş yapın.
+### 1. Ders 8: Görünüm, Geçici Tablo ve Dizin (100 Soru)
+- **I. Görünüm (VIEW)** (40 Soru)
+- **II. Geçici Tablo (TEMPORARY TABLE)** (30 Soru)
+- **III. Dizin (INDEX)** (30 Soru)
 
-3. **Takibi Başlatın:**
-   - Giriş yaptıktan sonra eklenti simgesine tıklayıp **"Takibi Başlat"** butonuna basın.
-   - Eklenti, form aşamalarını otomatik doldurarak son sayfaya geçecek ve ayarladığınız sürelerde sayfayı yenileyerek randevu durumunu kontrol edecektir.
-   - **Önemli:** Takip sırasında VFS sayfasının açık olduğu sekmeyi kapatmayın (arka planda durabilir).
+### 2. Ders 9: T-SQL ve Saklı Yordam (50 Soru)
+- **I. Transact-SQL ve Transaction Yönetimi** (20 Soru)
+- **II. Saklı Yordam (STORED PROCEDURE)** (30 Soru)
 
-4. **Alarm Durumu:**
-   - Randevu açıldığı an tarayıcınız yüksek sesli alarm çalacak ve Telegram'dan telefonunuza mesaj gelecektir. Hemen tarayıcı sekmene dönüp randevunuzu manuel olarak onaylayabilirsiniz!
-   - Oturumunuz kapandığında (session timeout) sistem sizi uyarmak için farklı bir ton çalacak ve Telegram'dan *"Oturumunuz Sonlandı"* uyarısı atacaktır. Bu durumda tekrar manuel giriş yapıp takibi başlatabilirsiniz.
+### 3. Ders 10: Market SQL Sorguları (75 Soru)
+- **I. Tablo Birleştirmeleri (JOIN - INNER/LEFT/RIGHT/OUTER)** (38 Soru)
+- **II. Alt Sorgular ve Gruplama (SUBQUERY, GROUP BY, HAVING, DATEDIFF vb.)** (37 Soru)
+  *Bu bölümdeki tüm sorular, gerçek bir market veritabanı şeması ve sorgularına dayalı olarak hazırlanmıştır.*
 
 ---
 
-## ⚠️ Güvenlik ve Önemli Notlar
-*   **İnsansı Beklemeler:** Eklenti sayfalar arası geçişlerde 1.5 - 3.5 saniye arasında rastgele bekler. Bu, bot korumalarını (Cloudflare) atlatmak için kritik öneme sahiptir.
-*   **Gizlilik:** Verileriniz tamamen tarayıcınızın yerel belleğinde (`chrome.storage`) saklanır ve hiçbir üçüncü taraf sunucuyla paylaşılmaz.
+## 🛠️ Teknolojiler ve Kurulum
+
+### Kullanılan Teknolojiler
+- **Core**: HTML5, Vanilla JavaScript (ES6)
+- **Styling**: Vanilla CSS3 (Custom Properties, Flexbox, Grid, CSS Confetti)
+- **Fontlar**: Google Fonts (Outfit, Source Code Pro, Source Sans 3)
+
+### Nasıl Çalıştırılır?
+Projeyi çalıştırmak için herhangi bir derleyici veya kuruluma gerek yoktur:
+1. Depoyu (repository) bilgisayarınıza klonlayın veya zip olarak indirin.
+2. Klasör içindeki index.html dosyasını herhangi bir web tarayıcısında (Chrome, Edge, Firefox vb.) çift tıklayarak doğrudan açın.
+3. Alternatif olarak yerel bir geliştirme sunucusu başlatarak çalıştırabilirsiniz:
+   ```bash
+   python -m http.server 8080
+   ```
+   Ardından tarayıcınızdan http://localhost:8080 adresine gidin.
+
+---
+
+## 🤝 Lisans ve Katkıda Bulunma
+Bu proje eğitim amaçlı geliştirilmiştir. Hata bildirimleri veya yeni soru ekleme talepleri için Pull Request (PR) açabilirsiniz.
