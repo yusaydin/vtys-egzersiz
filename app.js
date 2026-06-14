@@ -3,6 +3,7 @@
     let questions = [];
     let currentLesson = localStorage.getItem('selected_lesson') || 'ders8';
     let currentDifficulty = localStorage.getItem('selected_difficulty') || 'easy';
+    let skipQuestionsEnabled = localStorage.getItem('skip_questions_enabled') === 'true';
     let currentFilteredQuestions = [];
     let currentIndex = 0;
     let userAnswers = {};
@@ -11,6 +12,7 @@
     const lessonFilter = document.getElementById('lesson-filter');
     const difficultyFilter = document.getElementById('difficulty-filter');
     const difficultyFilterContainer = document.getElementById('difficulty-filter-container');
+    const skipToggle = document.getElementById('skip-toggle');
     const categoryFilter = document.getElementById('category-filter');
     const typeFilter = document.getElementById('type-filter');
     const questionsGrid = document.getElementById('questions-grid');
@@ -209,7 +211,7 @@
         }
 
         btn.addEventListener('click', () => {
-          if (idx > currentIndex) {
+          if (!skipQuestionsEnabled && idx > currentIndex) {
             for (let i = currentIndex; i < idx; i++) {
               const checkQ = currentFilteredQuestions[i];
               if (!userAnswers[checkQ.id] || !userAnswers[checkQ.id].isCorrect) {
@@ -834,7 +836,7 @@
     function handleNext() {
       const q = currentFilteredQuestions[currentIndex];
       const savedAns = userAnswers[q.id];
-      if (!savedAns || !savedAns.isCorrect) {
+      if (!skipQuestionsEnabled && (!savedAns || !savedAns.isCorrect)) {
         alert("Bu soruyu doğru cevaplamadan bir sonraki soruya geçemezsiniz!");
         return;
       }
@@ -1022,6 +1024,11 @@
       loadQuestionsForLesson(currentLesson);
     });
 
+    skipToggle.addEventListener('change', () => {
+      skipQuestionsEnabled = skipToggle.checked;
+      localStorage.setItem('skip_questions_enabled', skipQuestionsEnabled);
+    });
+
     btnCheck.addEventListener('click', checkAnswer);
     btnNext.addEventListener('click', handleNext);
     btnPrev.addEventListener('click', handlePrev);
@@ -1036,4 +1043,5 @@
     }
 
     // Run!
+    skipToggle.checked = skipQuestionsEnabled;
     initQuiz();
