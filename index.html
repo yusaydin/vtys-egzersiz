@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VTYS Egzersiz</title>
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Source+Code+Pro:wght@400;500;600&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+</head>
+<body>
+  
+  <canvas id="confetti-canvas"></canvas>
+
+  <header>
+    <div class="header-logo-title">
+      <div class="logo-w3">w3schools</div>
+      <h1>VTYS Egzersiz (Ders 9)</h1>
+    </div>
+    <div class="header-stats">
+      <div class="stat-badge correct-badge">Doğru: <span id="header-correct">0</span></div>
+      <div class="stat-badge incorrect-badge">Yanlış: <span id="header-incorrect">0</span></div>
+      <div class="stat-badge">Kalan: <span id="header-remaining">50</span></div>
+    </div>
+  </header>
+
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-filter">
+        <div class="filter-label">Ders Seçimi</div>
+        <select class="filter-select" id="lesson-filter">
+          <option value="ders8">Ders 8: Görünüm, Geçici Tablo ve Dizin (100 Soru)</option>
+          <option value="ders9">Ders 9: T-SQL ve Saklı Yordam (50 Soru)</option>
+          <option value="ders10">Ders 10: Market SQL Sorguları (75 Soru)</option>
+        </select>
+      </div>
+      <div class="sidebar-filter">
+        <div class="filter-label">Kategori Filtrele</div>
+        <select class="filter-select" id="category-filter">
+          <option value="all">Tüm Sorular (50)</option>
+          <option value="tsql">I. Transact-SQL ve Transaction (20)</option>
+          <option value="sp">II. Saklı Yordam (STORED PROCEDURE) (30)</option>
+        </select>
+      </div>
+      <div class="sidebar-filter">
+        <div class="filter-label">Soru Tipi Filtrele</div>
+        <select class="filter-select" id="type-filter">
+          <option value="all">Tüm Tipler</option>
+          <option value="code">Kod Soruları (70%)</option>
+          <option value="choice">Çoktan Seçmeli (30%)</option>
+        </select>
+      </div>
+      <div class="sidebar-list-container">
+        <div class="questions-grid" id="questions-grid">
+          <!-- Dynamically populated buttons -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+      <div class="content-wrapper">
+        <div class="progress-container">
+          <div class="progress-bar-fill" id="progress-bar"></div>
+        </div>
+
+        <div id="quiz-area">
+          <div class="question-card" id="question-card">
+            <div class="question-meta">
+              <span id="question-category">Kategori</span>
+              <span id="question-number">Soru 1 / 50</span>
+            </div>
+            
+            <h3 class="question-title" id="question-text">Yükleniyor...</h3>
+            
+            <div class="code-snippet" id="code-block" style="display: none;"></div>
+            
+            <!-- Question types templates -->
+            <div id="answers-container">
+              <!-- Dynamically populated options -->
+            </div>
+
+            <div class="actions-row">
+              <div class="nav-buttons">
+                <button class="btn btn-secondary" id="btn-prev">
+                  &larr; Önceki
+                </button>
+                <button class="btn btn-secondary" id="btn-next">
+                  Sonraki &rarr;
+                </button>
+              </div>
+              
+              <div style="display: flex; gap: 10px;">
+                <button class="btn btn-info" id="btn-explain" style="display: none;">
+                  Cevabı / Açıklamayı Göster
+                </button>
+                <button class="btn btn-primary" id="btn-check">
+                  Cevabı Kontrol Et
+                </button>
+              </div>
+            </div>
+
+            <!-- Explanation Box -->
+            <div class="explanation-box" id="explanation-box">
+              <h4>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                Açıklama ve Slayt Referansı
+              </h4>
+              <p id="explanation-text"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Template (hidden by default) -->
+        <div id="dashboard-area" style="display: none;">
+          <div class="dashboard-card">
+            <h2 class="dashboard-title">Quiz Tamamlandı! 🎉</h2>
+            <p class="dashboard-subtitle">Dr. Öğr. Üyesi Hüseyin COŞKUN'un Ders 9 (T-SQL ve Saklı Yordamlar) sunumuna dayalı 50 soruluk sınavı tamamladınız.</p>
+            
+            <div class="score-circle">
+              <div class="score-percentage" id="score-percent">0%</div>
+              <div class="score-fraction" id="score-fraction">0 / 50</div>
+            </div>
+
+            <table class="stats-table">
+              <tr class="correct-row">
+                <td>Doğru Sayısı:</td>
+                <td id="dash-correct">0</td>
+              </tr>
+              <tr class="incorrect-row">
+                <td>Yanlış Sayısı:</td>
+                <td id="dash-incorrect">0</td>
+              </tr>
+              <tr>
+                <td>Boş Bırakılan:</td>
+                <td id="dash-empty">0</td>
+              </tr>
+              <tr>
+                <td>Başarı Durumu:</td>
+                <td id="dash-status">Geliştirilmeli</td>
+              </tr>
+            </table>
+
+            <button class="btn btn-primary" id="btn-reset">Sınavı Yeniden Başlat</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="questions.js?v=1.4"></script>
+  <script src="app.js?v=1.4"></script>
+</body>
+</html>
