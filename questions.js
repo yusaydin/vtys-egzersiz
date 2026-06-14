@@ -2958,3 +2958,682 @@ const questionsDers10 = [
     explanation: 'Sorgu çıktısı SELECT ile belirlenir. GROUP BY gruplamayı sağlar, gruplanmış veri kriterleri HAVING COUNT ile süzülür.'
   }
 ];
+
+
+const questionsDers10Zor = [
+  {
+    id: 1,
+    category: 'joins',
+    type: 'code',
+    question: '1 nolu müşterinin satın aldığı ürünlerin adını, fiyatını ve müşteri numarasını listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ U.UrunAd, U.Fiyat, S.MusteriNo \n___2___ satis ___3___ S\n___4___ urun ___5___ U\n___6___ U.UrunNo = S.UrunNo\n___7___ S.MusteriNo = 1;',
+    blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE'],
+    explanation: 'SELECT kolonları listeler. satis tablosuna S alias\'ı verilir. urun tablosu U alias\'ı ile INNER JOIN yapılarak ON kelimesiyle ilişkilendirilir. Müşteri filtresi WHERE ile uygulanır.'
+  },
+  {
+    id: 2,
+    category: 'joins',
+    type: 'code',
+    question: '1 nolu müşterinin satın aldığı ürünlerin toplam tutarını ve müşteri numarasını veren aggregate sorgusunu yazın.',
+    snippet: '___1___ ___2___(U.Fiyat * S.Adet), S.MusteriNo \n___3___ satis ___4___ S\n___5___ urun ___6___ U\n___7___ U.UrunNo = S.UrunNo\n___8___ S.MusteriNo = 1;',
+    blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE'],
+    explanation: 'SUM fonksiyonu toplam tutarı (fiyat * adet) hesaplar. Tablolar INNER JOIN ile birleştirilir ve ON birleşme koşulu belirlenir.'
+  },
+  {
+    id: 3,
+    category: 'joins',
+    type: 'code',
+    question: '2 nolu kasiyerin içinde bulunduğumuz ayda yaptığı toplam satış tutarı sorgusunu tamamlayın.',
+    snippet: '___1___ ___2___(U.Fiyat * S.Adet) \n___3___ satis ___4___ S\n___5___ urun ___6___ U\n___7___ U.UrunNo = S.UrunNo\n___8___ S.KasiyerNo = 2\n___9___ ___10___(S.Tarih) = ___11___(___12___());',
+    blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'AND', 'MONTH', 'MONTH', 'NOW'],
+    explanation: 'SUM fonksiyonu toplam tutarı hesaplar. Tablolar INNER JOIN ile bağlanır. MONTH() fonksiyonu tarihin ay bilgisini alıp NOW() (bugün) ile karşılaştırır.'
+  },
+  {
+    id: 4,
+    category: 'joins',
+    type: 'code',
+    question: '\'Nevbahar\' isimli kasiyerin bu ay yaptığı toplam satış tutarını hesaplayan 3\'lü JOIN sorgusunu tamamlayın.',
+    snippet: '___1___ ___2___(U.Fiyat * S.Adet) \n___3___ satis ___4___ S\n___5___ urun ___6___ U ___7___ U.UrunNo = S.UrunNo\n___8___ kasiyer ___9___ K ___10___ K.KasiyerNo = S.KasiyerNo\n___11___ K.Ad = \'Nevbahar\'\n___12___ ___13___(S.Tarih) = ___14___(___15___());',
+    blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'AND', 'MONTH', 'MONTH', 'NOW'],
+    explanation: 'Satis, urun ve kasiyer tabloları INNER JOIN ile bağlanır. Nevbahar ismine göre filtreleme WHERE ile yapılır. NOW() fonksiyonunun ayı MONTH() ile karşılaştırılır.'
+  },
+  {
+    id: 5,
+    category: 'joins',
+    type: 'code',
+    question: 'Alışveriş yapmayan (satis tablosunda kaydı bulunmayan) müşterilerin adını, müşteri numarasını ve telefonunu listelemek için eksik JOIN ve filtre kelimelerini tamamlayın.',
+    snippet: '___1___ M.Ad, M.MusteriNo, M.Telefon \n___2___ musteri ___3___ M\n___4___ satis ___5___ S\n___6___ S.MusteriNo = M.MusteriNo\n___7___ S.MusteriNo ___8___;',
+    blanks: ['SELECT', 'FROM', 'AS', 'LEFT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    explanation: 'Müşterilerin tamamını getirmek ve satış yapmayanları bulmak için LEFT JOIN kullanılır. Satış kaydı olmayanlar WHERE koşulunda IS NULL ile elenir.'
+  },
+  {
+    id: 6,
+    category: 'joins',
+    type: 'code',
+    question: 'Satış yapmayan kasiyerleri ad ve soyadlarını birleştirerek ve kasiyer numarasıyla listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(K.Ad, \' \', K.Soyad) ___3___ \'Ad Soyad\', S.KasiyerNo \n___4___ kasiyer ___5___ K\n___6___ satis ___7___ S\n___8___ K.KasiyerNo = S.KasiyerNo\n___9___ S.KasiyerNo ___10___;',
+    blanks: ['SELECT', 'CONCAT', 'AS', 'FROM', 'AS', 'LEFT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    explanation: 'CONCAT fonksiyonu ad ve soyadı araya boşluk koyarak birleştirir. LEFT JOIN ile kasiyerler satıs ile birleştirilir. Satış yapmayanlar IS NULL ile filtrelenir.'
+  },
+  {
+    id: 7,
+    category: 'joins',
+    type: 'code',
+    question: 'Satis tablosunda hiç kaydı bulunmayan satış yapmamış şubeleri RIGHT JOIN kullanarak listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ SU.SubeNo, S.SubeNo, SU.Ad \n___2___ satis ___3___ S\n___4___ sube ___5___ SU\n___6___ S.SubeNo = SU.SubeNo\n___7___ S.SubeNo ___8___;',
+    blanks: ['SELECT', 'FROM', 'AS', 'RIGHT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    explanation: 'Şubeler sağ tablo (RIGHT JOIN) yapılarak tüm şubeler listelenir ve satis tablosundaki karşılığı IS NULL olanlar elenir.'
+  },
+  {
+    id: 8,
+    category: 'joins',
+    type: 'code',
+    question: 'Hiç satışı yapılmamış ürünleri RIGHT JOIN kullanarak listeleyen ve ürün numarasına göre sıralayan sorguyu tamamlayın.',
+    snippet: '___1___ S.SatisNo, U.UrunAd, S.UrunNo \n___2___ satis ___3___ S\n___4___ urun ___5___ U ___6___ S.UrunNo = U.UrunNo\n___7___ S.UrunNo ___8___\n___9___ S.UrunNo;',
+    blanks: ['SELECT', 'FROM', 'AS', 'RIGHT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL', 'ORDER BY'],
+    explanation: 'Ürünler sağda olduğu için RIGHT JOIN kullanılır. Satışı olmayanları filtrelemek için WHERE S.UrunNo IS NULL yazılır ve ORDER BY ile sıralanır.'
+  },
+  {
+    id: 9,
+    category: 'joins',
+    type: 'code',
+    question: 'Bünyesinde hiçbir ürün barındırmayan (ürünü olmayan) kategorileri listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ K.KategoriAd \n___2___ kategori ___3___ K \n___4___ urun ___5___ U\n___6___ K.KategoriNo = U.KategoriNo\n___7___ U.KategoriNo ___8___;',
+    blanks: ['SELECT', 'FROM', 'AS', 'LEFT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    explanation: 'Kategori sol tablo kabul edilip LEFT JOIN ile urun tablosuna bağlanır. Ürünü olmayan kategoriler WHERE U.KategoriNo IS NULL ile tespit edilir.'
+  },
+  {
+    id: 10,
+    category: 'joins',
+    type: 'code',
+    question: 'Ürünü olmayan markaları RIGHT JOIN ile marka tablosunu sağda tutarak listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ M.MarkaAd \n___2___ urun ___3___ U  \n___4___ marka ___5___ M\n___6___ M.MarkaNo = U.MarkaNo\n___7___ U.UrunNo ___8___;',
+    blanks: ['SELECT', 'FROM', 'AS', 'RIGHT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    explanation: 'Markaları sağ tablo tutarak RIGHT JOIN ile ürünlerle birleştiririz. Ürünü olmayan markalar WHERE U.UrunNo IS NULL ile bulunur.'
+  },
+  {
+    id: 11,
+    category: 'joins',
+    type: 'code',
+    question: 'Ürün adlarını, kategori adlarını ve marka adlarını birlikte listeleyen 3\'lü INNER JOIN sorgusunu tamamlayın.',
+    snippet: '___1___ UrunAd, KategoriAd, MarkaAd\n___2___ urun ___3___ u \n___4___ kategori ___5___ k ___6___ k.KategoriNo = u.KategoriNo\n___7___ marka ___8___ m ___9___ m.MarkaNo = u.MarkaNo;',
+    blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    explanation: 'Üç tabloyu birleştirmek için FROM ifadesi ve iki adet INNER JOIN ile bunlara karşılık gelen ON birleştirme şartları yazılır.'
+  },
+  {
+    id: 12,
+    category: 'joins',
+    type: 'code',
+    question: 'Kategori adı \'Baharat\' olan ürünleri ve kategori adlarını INNER JOIN kullanarak listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ UrunAd, KategoriAd \n___2___ urun ___3___ u \n___4___ kategori ___5___ k\n___6___ k.KategoriNo = u.KategoriNo\n___7___ k.KategoriAd ___8___ (\'Baharat\');',
+    blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'IN'],
+    explanation: 'Tablolar INNER JOIN ... ON ile bağlanır, ardından WHERE k.KategoriAd IN (\'Baharat\') veya \'=\' ile filtrelenir.'
+  },
+  {
+    id: 13,
+    category: 'joins',
+    type: 'code',
+    question: 'Hangi markadan kaç adet ürün olduğunu bulan, adet sayısı 1\'den büyük olan markaları listeleyen aggregate sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(U.MarkaNo) ___3___ \'Adet\', M.MarkaAd ___4___ \'Marka Ad\'\n___5___ urun ___6___ U\n___7___ marka ___8___ M ___9___ M.MarkaNo = U.MarkaNo\n___10___ M.MarkaNo\n___11___ 1 < ___12___(U.MarkaNo);',
+    blanks: ['SELECT', 'COUNT', 'AS', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'COUNT'],
+    explanation: 'COUNT aggregate fonksiyonudur. Markaya göre gruplama GROUP BY ile yapılır. Gruplanmış sonuçlardaki filtreleme HAVING COUNT(...) ile gerçekleştirilir.'
+  },
+  {
+    id: 14,
+    category: 'joins',
+    type: 'code',
+    question: 'Her bir kasiyerin bu ay yaptığı toplam satış tutarını kasiyer adı ve oranıyla birlikte hesaplayan sorguyu tamamlayın.',
+    snippet: '___1___ K.Ad, S.KasiyerNo, ___2___(S.Adet * U.Fiyat) \n___3___ satis ___4___ S\n___5___ urun ___6___ U ___7___ U.UrunNo = S.UrunNo\n___8___ kasiyer ___9___ K ___10___ K.KasiyerNo = S.KasiyerNo\n___11___ ___12___(___13___()) = ___14___(S.Tarih) \n___15___ ___16___(___17___()) = ___18___(S.Tarih)\n___19___ S.KasiyerNo;',
+    blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'MONTH', 'NOW', 'MONTH', 'AND', 'YEAR', 'NOW', 'YEAR', 'GROUP BY'],
+    explanation: 'SUM satış tutarını toplar. Tablolar INNER JOIN ve ON ile bağlanır. Kasiyere göre gruplamak için GROUP BY S.KasiyerNo kullanılır.'
+  },
+  {
+    id: 15,
+    category: 'joins',
+    type: 'code',
+    question: 'Her bir şubenin bugün yaptığı toplam satış tutarını bulan sorguyu tamamlayın.',
+    snippet: '___1___ SU.Ad, ___2___(S.Adet * U.Fiyat) \n___3___ satis ___4___ S\n___5___ urun ___6___ U ___7___ U.UrunNo = S.UrunNo\n___8___ sube ___9___ SU ___10___ SU.SubeNo = S.SubeNo\n___11___ ___12___(___13___(), S.Tarih) = 0\n___14___ S.SubeNo;',
+    blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'DATEDIFF', 'NOW', 'GROUP BY'],
+    explanation: 'DATEDIFF(NOW(), Tarih) = 0 bugün yapılan satışları filtreler. Şubeye göre toplam tutar için SUM fonksiyonu ve GROUP BY kullanılır.'
+  },
+  {
+    id: 16,
+    category: 'joins',
+    type: 'code',
+    question: 'Hangi kategoride kaç çeşit ürün olduğunu bulup kategori adıyla listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(U.UrunNo) ___3___ \'Adet\', K.KategoriAd ___4___ \'Kategori Adı\' \n___5___ kategori ___6___ K\n___7___ urun ___8___ U\n___9___ U.KategoriNo = K.KategoriNo\n___10___ K.KategoriNo;',
+    blanks: ['SELECT', 'COUNT', 'AS', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    explanation: 'COUNT(UrunNo) kategorideki ürün sayısını verir. INNER JOIN ile kategoriler bağlanır ve GROUP BY ile gruplama yapılır.'
+  },
+  {
+    id: 17,
+    category: 'joins',
+    type: 'code',
+    question: 'Bu yıl yapılan satışları ay bazında gruplayarak, her ayın toplam satış tutarını hesaplayan sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(S.Adet * U.Fiyat), ___3___(S.Tarih)\n___4___ urun ___5___ U\n___6___ satis ___7___ S ___8___ U.UrunNo = S.UrunNo\n___9___ ___10___(S.Tarih) = ___11___(___12___())\n___13___ ___14___(S.Tarih);',
+    blanks: ['SELECT', 'SUM', 'MONTH', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'YEAR', 'YEAR', 'NOW', 'GROUP BY', 'MONTH'],
+    explanation: 'Aylık gruplama MONTH(Tarih) ile yapılır. Bu yıl filtresi YEAR(Tarih) = YEAR(NOW()) ile WHERE altında uygulanır.'
+  },
+  {
+    id: 18,
+    category: 'joins',
+    type: 'code',
+    question: 'Her kategorinin ortalama fiyat bilgisini bulan görünümü (VIEW) oluşturan veya değiştiren sorguyu tamamlayın.',
+    snippet: '___1___ ___2___ ortalamaFiyatKategori ___3___\n___4___ ___5___(Fiyat) ___6___ \'OrtalamaFiyat\', K.KategoriAd \n___7___ urun ___8___ U\n___9___ kategori ___10___ K ___11___ K.KategoriNo = U.KategoriNo\n___12___ K.KategoriAd;',
+    blanks: ['ALTER', 'VIEW', 'AS', 'SELECT', 'AVG', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    explanation: 'ALTER VIEW görünümü güncellemeye yarar. Ortalama için AVG kullanılır. Kategorilere göre gruplama GROUP BY ile sağlanır.'
+  },
+  {
+    id: 19,
+    category: 'joins',
+    type: 'code',
+    question: 'Müşterilerin satın almış oldukları ürünlerin adını, fiyatını, satış tarihini ve müşteri bilgilerini listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ M.Ad, M.Soyad, U.UrunNo, U.UrunAd, U.Fiyat, S.Tarih \n___2___ satis ___3___ S\n___4___ urun ___5___ U\n___6___ S.UrunNo = U.UrunNo\n___7___ musteri ___8___ M\n___9___ M.MusteriNo = S.MusteriNo;',
+    blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    explanation: 'FROM tablo belirtir. satis tablosu urun ve musteri tablolarıyla INNER JOIN ve ON koşulları üzerinden birleştirilir.'
+  },
+  {
+    id: 20,
+    category: 'joins',
+    type: 'code',
+    question: 'Her bir kasiyerin toplam kaç liralık satış yaptığını kasiyer adına göre gruplayıp ürün numarasına göre sıralayan sorguyu tamamlayın.',
+    snippet: '___1___ k.Ad ___2___ \'Kasiyer Adı\', ___3___(u.Fiyat * s.Adet) \n___4___ satis ___5___ s \n___6___ kasiyer ___7___ k ___8___ s.KasiyerNo = k.KasiyerNo\n___9___ urun ___10___ u ___11___ s.UrunNo = u.UrunNo\n___12___ k.Ad\n___13___ u.UrunNo;',
+    blanks: ['SELECT', 'AS', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY'],
+    explanation: 'Toplam tutar SUM ile hesaplanır. Kasiyer ve ürün tabloları INNER JOIN ile bağlanır. GROUP BY kasiyer adına göre yapılırken, ORDER BY ile ürün numarasına göre sıralanır.'
+  },
+  {
+    id: 21,
+    category: 'joins',
+    type: 'code',
+    question: '100 TL ve üzerinde satış yapan her bir kasiyerin adını ve toplam satış tutarını listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ k.Ad, ___2___(u.Fiyat * s.Adet) \n___3___ satis ___4___ s \n___5___ kasiyer ___6___ k ___7___ s.KasiyerNo = k.KasiyerNo\n___8___ urun ___9___ u ___10___ s.UrunNo = u.UrunNo\n___11___ k.Ad\n___12___ 100 <= ___13___(u.Fiyat * s.Adet)\n___14___ u.UrunNo;',
+    blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'SUM', 'ORDER BY'],
+    explanation: 'Toplam tutar filtrelemesi gruplamadan sonra HAVING ile kontrol edilir (100 <= SUM(...)). Sıralama ORDER BY ile yapılır.'
+  },
+  {
+    id: 22,
+    category: 'joins',
+    type: 'code',
+    question: 'Müşterilerin hangi markalardan alışveriş yaptığını listeleyen 4 tablolu sorguyu tamamlayın.',
+    snippet: '___1___ mu.MusteriNo, mu.Ad, u.UrunAd, m.MarkaNo, m.MarkaAd \n___2___ market.musteri ___3___ mu\n___4___ market.satis ___5___ s ___6___ mu.MusteriNo = s.MusteriNo\n___7___ market.urun ___8___ u ___9___ s.UrunNo = u.UrunNo\n___10___ market.marka ___11___ m ___12___ u.MarkaNo = m.MarkaNo;',
+    blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    explanation: '4 tablo (musteri, satis, urun, marka) sırayla INNER JOIN ... ON ilişkileriyle birbirine bağlanır.'
+  },
+  {
+    id: 23,
+    category: 'joins',
+    type: 'code',
+    question: 'Her bir şubenin toplam kaç liralık satış yaptığını bulup şube adına göre gruplayıp ürün noya göre sıralayan sorguyu tamamlayın.',
+    snippet: '___1___ su.Ad ___2___ \'Şube Adı\', ___3___(u.Fiyat * s.Adet) ___4___ \'Toplam Satış Tutarı\' \n___5___ satis ___6___ s \n___7___ sube ___8___ su ___9___ s.SubeNo = su.SubeNo\n___10___ urun ___11___ u ___12___ s.UrunNo = u.UrunNo\n___13___ su.Ad\n___14___ u.UrunNo;',
+    blanks: ['SELECT', 'AS', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY'],
+    explanation: 'Toplam tutar SUM ile hesaplanır, sube ve urun tabloları birleştirilir, GROUP BY şube adına göre, ORDER BY ise ürün noya göre sıralar.'
+  },
+  {
+    id: 24,
+    category: 'joins',
+    type: 'code',
+    question: 'Her bir müşterinin hangi kategoriden kaç adet ürün aldığını müşteri numarası ve kategori adıyla listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ M.MusteriNo, M.Ad, K.KategoriAd, ___2___(S.Adet) ___3___ \'Adet\' \n___4___ satis ___5___ S\n___6___ urun ___7___ U ___8___ U.UrunNo = S.UrunNo\n___9___ musteri ___10___ M ___11___ M.MusteriNo = S.MusteriNo\n___12___ kategori ___13___ K ___14___ K.KategoriNo = U.KategoriNo\n___15___ M.MusteriNo, K.KategoriNo;',
+    blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    explanation: 'Miktar toplamak için SUM(Adet) kullanılır. 4 tablo JOIN ile birleştirildikten sonra hem müşteri no hem kategori noya göre GROUP BY uygulanır.'
+  },
+  {
+    id: 25,
+    category: 'joins',
+    type: 'code',
+    question: 'Her markadan 2 adetten fazla ürün alan müşterilerin ad soyad, marka ve adet bilgilerini listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ m.MusteriNo, m.ad, m.Soyad, ma.MarkaAd, ___2___(s.Adet) ___3___ \'Adet\' \n___4___ market.musteri ___5___ m \n___6___ market.satis ___7___ s ___8___ m.MusteriNo = s.MusteriNo\n___9___ market.urun ___10___ u ___11___ s.UrunNo = u.UrunNo\n___12___ market.marka ___13___ ma ___14___ u.MarkaNo = ma.MarkaNo\n___15___ m.MusteriNo, ma.MarkaNo\n___16___ 2 < ___17___(s.Adet);',
+    blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'SUM'],
+    explanation: 'Müşteri, satış, ürün ve marka tabloları INNER JOIN ile bağlanır. Müşteri ve Marka bazında GROUP BY yapıldıktan sonra HAVING SUM(Adet) > 2 filtresi uygulanır.'
+  },
+  {
+    id: 26,
+    category: 'joins',
+    type: 'code',
+    question: 'Müşterilerin hangi markalardan alışveriş yaptığını listeleyen ve 4 tabloyu birbirine bağlayan sorguyu yazın.',
+    snippet: '___1___ m.MusteriNo, m.ad, m.Soyad, ma.MarkaAd, ___2___(s.Adet) ___3___ \'Adet\' \n___4___ market.musteri ___5___ m \n___6___ market.satis ___7___ s ___8___ m.MusteriNo = s.MusteriNo\n___9___ market.urun ___10___ u ___11___ s.UrunNo = u.UrunNo\n___12___ market.marka ___13___ ma ___14___ u.MarkaNo = ma.MarkaNo\n___15___ m.Ad, ma.MarkaAd;',
+    blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    explanation: 'Müşteri, satış, ürün ve marka tabloları sırasıyla INNER JOIN ... ON bağlantılarıyla birleştirilerek listelenir.'
+  },
+  {
+    id: 27,
+    category: 'joins',
+    type: 'code',
+    question: 'Müşterilerin hangi kategorilerden alışveriş yaptığını gösteren 4 tablolu birleşik sorguyu tamamlayın.',
+    snippet: '___1___ m.MusteriNo, m.Ad, u.UrunAd, k.KategoriNo, k.KategoriAd \n___2___ market.musteri ___3___ m \n___4___ market.satis ___5___ s ___6___ m.MusteriNo = s.MusteriNo\n___7___ market.urun ___8___ u ___9___ s.UrunNo = u.UrunNo\n___10___ market.kategori ___11___ k ___12___ u.KategoriNo = k.KategoriNo;',
+    blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    explanation: 'Bu 4 tablolu sorguda musteri, satis, urun ve kategori tabloları INNER JOIN kullanılarak birleştirilmiştir.'
+  },
+  {
+    id: 28,
+    category: 'joins',
+    type: 'code',
+    question: 'Her bir müşterinin satın almış olduğu toplam ürün adedini veren JOIN ve gruplama sorgusunu tamamlayın.',
+    snippet: '___1___ M.MusteriNo, ___2___(S.Adet) ___3___ \'Adet\' \n___4___ satis ___5___ S \n___6___ urun ___7___ U ___8___ U.UrunNo = S.UrunNo\n___9___ musteri ___10___ M ___11___ M.MusteriNo = S.MusteriNo\n___12___ M.MusteriNo;',
+    blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    explanation: 'SUM aggregate fonksiyonudur. Müşteri noya göre gruplamak için GROUP BY M.MusteriNo kullanılır.'
+  },
+  {
+    id: 29,
+    category: 'joins',
+    type: 'code',
+    question: 'Ürünlerin markalarını getirirken, markası tanımlanmamış ürünlerin de listelenmesini sağlayan LEFT OUTER JOIN sorgusunu tamamlayın.',
+    snippet: '___1___ UrunAd, MarkaAd \n___2___ urun ___3___ marka \n___4___ urun.MarkaNo = marka.MarkaNo;',
+    blanks: ['SELECT', 'FROM', 'LEFT OUTER JOIN', 'ON'],
+    explanation: 'Sol taraftaki (urun) tüm kayıtları ve sağ taraftaki (marka) eşleşenleri getirmek için LEFT OUTER JOIN kullanılır.'
+  },
+  {
+    id: 30,
+    category: 'joins',
+    type: 'code',
+    question: 'Marka tablosunu sol, ürün tablosunu sağ alarak tüm ürünleri ve marka adlarını listeleyen RIGHT OUTER JOIN sorgusunu tamamlayın.',
+    snippet: '___1___ UrunAd, MarkaAd \n___2___ marka ___3___ urun \n___4___ urun.MarkaNo = marka.MarkaNo;',
+    blanks: ['SELECT', 'FROM', 'RIGHT OUTER JOIN', 'ON'],
+    explanation: 'Sağ taraftaki (urun) tüm kayıtları ve sol taraftaki (marka) eşleşenleri getirmek için RIGHT OUTER JOIN kullanılır.'
+  },
+  {
+    id: 31,
+    category: 'joins',
+    type: 'code',
+    question: 'Ürün, kategori ve marka adlarını birleştiren \'v_UrunBilgileri\' isimli bir VIEW (görünüm) oluşturan sorguyu tamamlayın.',
+    snippet: 'CREATE ___1___ v_UrunBilgileri ___2___ \n___3___ U.UrunAd, K.KategoriAd, M.MarkaAd \n___4___ market.urun ___5___ U \n___6___ kategori ___7___ K ___8___ K.KategoriNo = U.KategoriNo\n___9___ marka ___10___ M ___11___ M.MarkaNo = U.MarkaNo;',
+    blanks: ['VIEW', 'AS', 'SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    explanation: 'CREATE VIEW ad AS formatı ile görünüm oluşturulur. Tablolar INNER JOIN ile birbirine bağlanır.'
+  },
+  {
+    id: 32,
+    category: 'joins',
+    type: 'code',
+    question: 'Kasiyerlerin yaptıkları satışları ürün bazında gruplayarak toplam ürün adedi ve toplam satış tutarını hesaplayan sorguyu tamamlayın.',
+    snippet: '___1___ k.KasiyerNo, k.ad, k.Soyad, u.UrunNo, u.fiyat, \n  ___2___(u.UrunNo) ___3___ \'toplamUrun\', \n  (s.Adet * u.Fiyat * ___4___(u.UrunNo)) ___5___ \'toplamFiyat\' \n___6___ market.kasiyer ___7___ k \n___8___ market.satis ___9___ s ___10___ k.KasiyerNo = s.KasiyerNo\n___11___ market.urun ___12___ u ___13___ s.SatisNo = u.UrunNo\n___14___ k.ad, u.UrunNo;',
+    blanks: ['SELECT', 'SUM', 'AS', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    explanation: 'Kasiyer bazında satışları ürün noya göre gruplamak için GROUP BY kullanılır. JOIN ve ON koşullarıyla tablolar bağlanır.'
+  },
+  {
+    id: 33,
+    category: 'joins',
+    type: 'code',
+    question: 'Şubelerin her ay gerçekleştirdiği satış işlemleri sayısını şube ve ay bazında listeleyen gruplanmış sorguyu tamamlayın.',
+    snippet: '___1___ SU.Ad, ___2___(*), ___3___(S.Tarih) \n___4___ satis ___5___ S \n___6___ sube ___7___ SU ___8___ SU.SubeNo = S.SubeNo \n___9___ SU.SubeNo, ___10___(S.Tarih);',
+    blanks: ['SELECT', 'COUNT', 'MONTH', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'MONTH'],
+    explanation: 'İşlem sayısı için COUNT(*), ay numarası için MONTH() fonksiyonu kullanılır. Şube ve aya göre GROUP BY uygulanır.'
+  },
+  {
+    id: 34,
+    category: 'joins',
+    type: 'code',
+    question: 'Marka adı \'HP\' olmayan ve kategorisi \'Laptop\' olan ürünlerin toplam fiyatını veren 3\'lü birleşik sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(U.Fiyat) \n___3___ urun ___4___ U \n___5___ marka ___6___ M ___7___ M.MarkaNo = U.MarkaNo \n___8___ kategori ___9___ K ___10___ K.KategoriNo = U.KategoriNo \n___11___ M.MarkaAd <> \'HP\' ___12___ K.KategoriAd = \'Laptop\';',
+    blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'AND'],
+    explanation: 'Toplam hesaplamak için SUM kullanılır. Tablolar INNER JOIN ile bağlanır ve filtreler WHERE ve AND ile belirtilir.'
+  },
+  {
+    id: 35,
+    category: 'joins',
+    type: 'code',
+    question: 'Her bir kasiyerin yaptığı toplam satış işlemleri sayısını bulup, en az satış yapan kasiyeri sıralama ve limit kullanarak bulan sorguyu tamamlayın.',
+    snippet: '___1___ K.Ad, ___2___(*) \n___3___ Satis ___4___ S \n___5___ kasiyer ___6___ K ___7___ K.KasiyerNo = S.KasiyerNo \n___8___ K.KasiyerNo \n___9___ ___10___(*) ___11___ \n___12___ 0, 1;',
+    blanks: ['SELECT', 'COUNT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY', 'COUNT', 'ASC', 'LIMIT'],
+    explanation: 'En az satış yapanı bulmak için COUNT(*) değerine göre ORDER BY COUNT Extent (ASC) sıralama yapılır ve LIMIT 0,1 ile ilk satır alınır.'
+  },
+  {
+    id: 36,
+    category: 'joins',
+    type: 'code',
+    question: 'Peynir kategorisindeki satış adetlerini aylara göre gruplayarak listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(S.Tarih), ___3___(*) \n___4___ urun ___5___ U \n___6___ satis ___7___ S ___8___ S.UrunNo = U.UrunNo \n___9___ kategori ___10___ K ___11___ K.KategoriNo = U.KategoriNo \n___12___ K.KategoriAd = \'Peynir\' \n___13___ ___14___(S.Tarih);',
+    blanks: ['SELECT', 'MONTH', 'COUNT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'GROUP BY', 'MONTH'],
+    explanation: 'Aylık gruplama için MONTH() fonksiyonu, JOIN bağlantıları ve filtreleme için WHERE, gruplama için ise GROUP BY kullanılır.'
+  },
+  {
+    id: 37,
+    category: 'joins',
+    type: 'code',
+    question: 'Ürünlerin toplam fiyatının 5000\'den büyük olduğu kategorileri ve toplam fiyatlarını veren gruplanmış sorguyu tamamlayın.',
+    snippet: '___1___ K.KategoriAd, ___2___(U.Fiyat) \n___3___ urun ___4___ U \n___5___ kategori ___6___ K ___7___ K.KategoriNo = U.KategoriNo \n___8___ K.KategoriAd \n___9___ 5000 < ___10___(U.Fiyat);',
+    blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'SUM'],
+    explanation: 'Gruplanmış verilerde aggregate koşullarını filtrelemek için HAVING ifadesi kullanılır. Toplam fiyat SUM ile alınır.'
+  },
+  {
+    id: 38,
+    category: 'joins',
+    type: 'code',
+    question: 'Şehir adları \'a\' harfiyle başlamayan müşterilerin benzersiz şehir listesini veren sorguyu tamamlayın.',
+    snippet: '___1___ DISTINCT(Sehir) ___2___ musteri \n___3___ Sehir ___4___ ___5___ \'a%\';',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'NOT', 'LIKE'],
+    explanation: 'Benzersiz değerler için DISTINCT, \'a\' harfi ile başlamayanlar için NOT LIKE \'a%\' kalıbı kullanılır.'
+  },
+  {
+    id: 39,
+    category: 'subquery',
+    type: 'code',
+    question: '1, 2 ve 3 numaralı kategorilerdeki ürünlerin fiyatlarının tamamının (hepsinin) altında fiyata sahip ürünleri ALL kullanarak listeleyin.',
+    snippet: '___1___ * ___2___ urun \n___3___ Fiyat < ___4___ (___5___ Fiyat ___6___ urun ___7___ KategoriNo ___8___ (1,2,3));',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'ALL', 'SELECT', 'FROM', 'WHERE', 'IN'],
+    explanation: 'Alt sorgudaki tüm fiyatların altında olmasını sağlamak için \'< ALL\' ifadesi ve alt sorguda \'IN (1,2,3)\' filtresi kullanılır.'
+  },
+  {
+    id: 40,
+    category: 'subquery',
+    type: 'code',
+    question: '1, 2 ve 3 numaralı kategorilerdeki ürünlerin herhangi birinin fiyatının üstünde fiyata sahip ürünleri ANY kullanarak listeleyin.',
+    snippet: '___1___ * ___2___ urun \n___3___ Fiyat > ___4___ (___5___ Fiyat ___6___ urun ___7___ KategoriNo ___8___ (1,2,3));',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'ANY', 'SELECT', 'FROM', 'WHERE', 'IN'],
+    explanation: '\'ANY\' alt sorgudaki değerlerden herhangi biriyle eşleşmenin yeterli olduğunu belirtir. Fiyat > ANY (...) şeklinde kullanılır.'
+  },
+  {
+    id: 41,
+    category: 'subquery',
+    type: 'code',
+    question: 'Ürünlerin fiyatı, genel ortalama fiyattan küçük olan ürünleri listeleyen ve fiyata göre sıralayan alt sorgulu ifadeyi tamamlayın.',
+    snippet: '___1___ * ___2___ urun \n___3___ Fiyat < (___4___ ___5___(Fiyat) ___6___ urun) \n___7___ Fiyat;',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'SELECT', 'AVG', 'FROM', 'ORDER BY'],
+    explanation: 'AVG(Fiyat) ortalama fiyatı bulur. Dış sorguda WHERE Fiyat < (Alt Sorgu) ile ortalamanın altındakiler filtrelenir ve ORDER BY ile sıralanır.'
+  },
+  {
+    id: 42,
+    category: 'subquery',
+    type: 'code',
+    question: '\'Elektronik\' kategorisindeki ortalama fiyatın altındaki elektronik ürünleri listeleyen karmaşık alt sorguyu tamamlayın.',
+    snippet: '___1___ * ___2___ urun \n___3___ Fiyat < (___4___ ___5___(Fiyat) ___6___ urun ___7___ KategoriNo ___8___ KategoriNo = (___9___ KategoriNo ___10___ kategori ___11___ KategoriAd = \'Elektronik\'))\n___12___ KategoriNo = (___13___ KategoriNo ___14___ kategori ___15___ KategoriAd = \'Elektronik\')\n___16___ Fiyat;',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'SELECT', 'AVG', 'FROM', 'GROUP BY', 'HAVING', 'SELECT', 'FROM', 'WHERE', 'AND', 'SELECT', 'FROM', 'WHERE', 'ORDER BY'],
+    explanation: 'İçeride Elektronik kategorisinin ortalamasını bulmak için GROUP BY ve HAVING kullanılır. Dış sorguda da kategorinin Elektronik olması AND KategoriNo = (SELECT...) ile sınırlanır.'
+  },
+  {
+    id: 43,
+    category: 'subquery',
+    type: 'code',
+    question: '7. aydan önce satılan ürünlerin listesini alt sorguda IN kullanarak getiren sorguyu tamamlayın.',
+    snippet: '___1___ * ___2___ market.urun \n___3___ UrunNo ___4___ (___5___ UrunNo ___6___ market.satis ___7___ ___8___(Tarih) < 7);',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'IN', 'SELECT', 'FROM', 'WHERE', 'MONTH'],
+    explanation: 'Belirli bir aydan önce satılan ürünlerin numaraları alt sorguda MONTH(Tarih) < 7 ile çekilir ve dış sorguda WHERE UrunNo IN (...) ile listelenir.'
+  },
+  {
+    id: 44,
+    category: 'subquery',
+    type: 'code',
+    question: 'Ürün eklerken marka numarasını ve kategori numarasını alt sorgu ile ilgili tablolardan çekerek INSERT yapan sorguyu tamamlayın.',
+    snippet: '___1___ market.urun (UrunAd, MarkaNo, KategoriNo, Fiyat, SonKullanmaTarih, Ozellik) \n___2___ (\'Vestel Buzdolabı\', (___3___ MarkaNo ___4___ marka ___5___ MarkaAd = \'Boron\'), (___6___ KategoriNo ___7___ kategori ___8___ KategoriAd = \'Elektronik\'), 4800, \'2023-12-01\', \'Nofrost\');',
+    blanks: ['INSERT INTO', 'VALUES', 'SELECT', 'FROM', 'WHERE', 'SELECT', 'FROM', 'WHERE'],
+    explanation: 'INSERT INTO ... VALUES yapısında, değerler listesinde statik sayılar yerine alt sorgulardan dönen tekil veriler SELECT ile kullanılabilir.'
+  },
+  {
+    id: 45,
+    category: 'subquery',
+    type: 'code',
+    question: '\'Vestel Buzdolabı\' adlı ürünün marka numarasını alt sorgu ile \'Vestel\' markası olarak güncelleyen sorguyu tamamlayın.',
+    snippet: '___1___ market.urun \n___2___ MarkaNo = (___3___ MarkaNo ___4___ marka ___5___ MarkaAd = \'Vestel\') \n___6___ UrunNo = (___7___ UrunNo ___8___ urun ___9___ UrunAd = \'Vestel Buzdolabı\');',
+    blanks: ['UPDATE', 'SET', 'SELECT', 'FROM', 'WHERE', 'WHERE', 'SELECT', 'FROM', 'WHERE'],
+    explanation: 'UPDATE table SET sütun = (SELECT...) WHERE sütun = (SELECT...) yapısıyla dinamik alt sorgulu güncelleme yapılır.'
+  },
+  {
+    id: 46,
+    category: 'subquery',
+    type: 'code',
+    question: '2021 yılı mart (3) veya kasım (11) aylarında yapılan satışları alt sorgu yardımıyla silen sorguyu tamamlayın.',
+    snippet: '___1___ satis \n___2___ Tarih ___3___ (___4___ s.Tarih ___5___ market.satis ___6___ S \n___7___ ___8___(s.Tarih) = 2021 ___9___ ___10___(s.Tarih) ___11___ (3,11));',
+    blanks: ['DELETE FROM', 'WHERE', 'IN', 'SELECT', 'FROM', 'AS', 'WHERE', 'YEAR', 'AND', 'MONTH', 'IN'],
+    explanation: 'DELETE FROM table WHERE ... şeklinde silme yapılır. Tarihleri eşleştirmek için YEAR() ve MONTH() fonksiyonlarından yararlanılır.'
+  },
+  {
+    id: 47,
+    category: 'subquery',
+    type: 'code',
+    question: 'Müşteri tablosunda kayıtlı olup satis tablosunda hiç kaydı bulunmayan müşterileri alt sorgu (NOT IN) mantığıyla listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ * ___2___ musteri \n___3___ MusteriNo ___4___ ___5___ (___6___ MusteriNo ___7___ satis ___8___ MusteriNo ___9___ ___10___ ___11___);',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'NOT', 'IN', 'SELECT', 'FROM', 'WHERE', 'IS', 'NOT', 'NULL'],
+    explanation: 'NOT IN kullanarak alt sorgudaki listede yer almayan müşteriler elenir. Alt sorguda \'WHERE MusteriNo IS NOT NULL\' yapılması performans ve doğruluk açısından önemlidir.'
+  },
+  {
+    id: 48,
+    category: 'subquery',
+    type: 'code',
+    question: 'Ürünlerin son kullanma tarihine bugün itibariyle kaç gün kaldığını DATEDIFF kullanarak listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ UrunAd ___2___ \'Ürün Adı\', SonKullanmaTarihi, \n___3___(SonKullanmaTarihi, ___4___()) ___5___ \'Kaç Gün Var\' \n___6___ urun\n___7___ SonKullanmaTarihi > ___8___();',
+    blanks: ['SELECT', 'AS', 'DATEDIFF', 'NOW', 'AS', 'FROM', 'WHERE', 'NOW'],
+    explanation: 'DATEDIFF iki tarih arasındaki gün farkını hesaplar. NOW() anlık zamanı verir. Filtreleme WHERE ile yapılır.'
+  },
+  {
+    id: 49,
+    category: 'subquery',
+    type: 'code',
+    question: 'Son kullanma tarihine 1 ile 7 gün arasında (1 hafta) süre kalmış ürünleri listelemek için BETWEEN kelimesini kullanan sorguyu tamamlayın.',
+    snippet: '___1___ UrunAd, Fiyat, ___2___(SonKullanmaTarih, ___3___()) ___4___ \'Kalan Gün\'\n___5___ market.urun \n___6___ ___7___(SonKullanmaTarih, ___8___()) ___9___ 1 ___10___ 7;',
+    blanks: ['SELECT', 'DATEDIFF', 'NOW', 'AS', 'FROM', 'WHERE', 'DATEDIFF', 'NOW', 'BETWEEN', 'AND'],
+    explanation: 'İki sınır arasındaki değerleri seçmek için BETWEEN min AND max yapısı kullanılır. DATEDIFF ile kalan gün bulunur.'
+  },
+  {
+    id: 50,
+    category: 'subquery',
+    type: 'code',
+    question: 'Son kullanma tarihi geçmiş (kalan gün sayısı sıfırdan küçük) olan ürünleri bulan sorguyu tamamlayın.',
+    snippet: '___1___ UrunAd, Fiyat, ___2___(SonKullanmaTarih, ___3___()) ___4___ \'Gecen Gun\' \n___5___ market.urun \n___6___ ___7___(SonKullanmaTarih, ___8___()) < 0;',
+    blanks: ['SELECT', 'DATEDIFF', 'NOW', 'AS', 'FROM', 'WHERE', 'DATEDIFF', 'NOW'],
+    explanation: 'Tarihi geçmiş ürünleri bulmak için DATEDIFF(SonKullanmaTarih, NOW()) değerinin < 0 (sıfırdan küçük) olması kontrol edilir.'
+  },
+  {
+    id: 51,
+    category: 'subquery',
+    type: 'code',
+    question: 'En yüksek fiyata sahip ürünün adı, markası, SKT ve fiyatını getiren alt sorgulu ifadeyi tamamlayın.',
+    snippet: '___1___ U.UrunAd, M.MarkaAd, U.SonKullanmaTarih, U.Fiyat \n___2___ urun ___3___ U \n___4___ marka ___5___ M ___6___ M.MarkaNo = U.MarkaNo \n___7___ Fiyat = (___8___ ___9___(Fiyat) ___10___ urun);',
+    blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'SELECT', 'MAX', 'FROM'],
+    explanation: 'MAX(Fiyat) alt sorguda en yüksek fiyatı döner. Dış sorgu WHERE Fiyat = (en yüksek fiyat) olan satırı getirir.'
+  },
+  {
+    id: 52,
+    category: 'subquery',
+    type: 'code',
+    question: 'Adı \'Sinan\' olan müşterinin adını \'Petek\' olarak alt sorgulu WHERE koşuluyla güncelleyen sorguyu tamamlayın.',
+    snippet: '___1___ musteri ___2___ Ad = \'Petek\' \n___3___ MusteriNo = (___4___ MusteriNo ___5___ musteri ___6___ Ad = \'Sinan\');',
+    blanks: ['UPDATE', 'SET', 'WHERE', 'SELECT', 'FROM', 'WHERE'],
+    explanation: 'UPDATE table SET ad = \'Yeni\' WHERE no = (SELECT no FROM table WHERE ad = \'Eski\') yapısı kullanılır.'
+  },
+  {
+    id: 53,
+    category: 'subquery',
+    type: 'code',
+    question: 'Kasiyerler arasında en az satış kaydı girmiş (en az adet değil, en az işlem) kasiyeri bulmak için LIMIT kullanan sorguyu tamamlayın.',
+    snippet: '___1___ K.Ad, ___2___(*) \n___3___ satis ___4___ S \n___5___ kasiyer ___6___ K ___7___ K.KasiyerNo = S.KasiyerNo \n___8___ S.KasiyerNo \n___9___(*) \n___10___ 0, 1;',
+    blanks: ['SELECT', 'COUNT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY', 'LIMIT'],
+    explanation: 'İşlem sayılarını bulmak için GROUP BY ile kasiyerler gruplanır. ORDER BY COUNT(*) artan sıralama yapar. LIMIT 0, 1 en az olan ilk kaydı alır.'
+  },
+  {
+    id: 54,
+    category: 'subquery',
+    type: 'code',
+    question: '\'Peynir\' kategorisindeki ürünlerin aylara göre satış adetlerinin toplamını listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(S.Tarih), ___3___(S.Adet) \n___4___ urun ___5___ U \n___6___ satis ___7___ S ___8___ S.UrunNo = U.UrunNo \n___9___ kategori ___10___ K ___11___ K.KategoriNo = U.KategoriNo \n___12___ K.KategoriAd = \'Peynir\' \n___13___ ___14___(S.Tarih);',
+    blanks: ['SELECT', 'MONTH', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'GROUP BY', 'MONTH'],
+    explanation: 'MONTH(Tarih) fonksiyonu ay bilgisine göre gruplamayı sağlar. Filtreleme WHERE ile Peynir kategorisi için yapılır.'
+  },
+  {
+    id: 55,
+    category: 'subquery',
+    type: 'code',
+    question: 'Tarih boyunca en çok satış yapılan ayı (toplam adet veya işlem bazında) bulan sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(S.Tarih), ___3___(*) \n___4___ satis ___5___ S \n___6___ ___7___(S.Tarih) \n___8___ ___9___(*) ___10___ \n___11___ 0, 1;',
+    blanks: ['SELECT', 'MONTH', 'COUNT', 'FROM', 'AS', 'GROUP BY', 'MONTH', 'ORDER BY', 'COUNT', 'DESC', 'LIMIT'],
+    explanation: 'MONTH(Tarih) bazında gruplanır. ORDER BY COUNT(*) DESC ile çoktan aza sıralanıp LIMIT 0,1 ile en üstteki kayıt seçilir.'
+  },
+  {
+    id: 56,
+    category: 'subquery',
+    type: 'code',
+    question: 'Şubelerin aylık bazda kaç adet satış yaptığını (şube adı ve ay numarasıyla) listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ SU.Ad, ___2___(*), ___3___(S.Tarih) \n___4___ satis ___5___ S \n___6___ sube ___7___ SU ___8___ SU.SubeNo = S.SubeNo \n___9___ SU.SubeNo, ___10___(S.Tarih);',
+    blanks: ['SELECT', 'COUNT', 'MONTH', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'MONTH'],
+    explanation: 'Şubeler ve satis tablosu ON ile birleştirilir. Gruplama hem şube noya hem de MONTH(Tarih)\'e göre çoklu olarak yapılır.'
+  },
+  {
+    id: 57,
+    category: 'subquery',
+    type: 'code',
+    question: 'Ürün tablosundaki \'Kategori\' sütununu \'KategoriNo\' olarak değiştirip yabancı anahtar (FOREIGN KEY) ilişkisi ekleyen sorguyu tamamlayın.',
+    snippet: '___1___ market.urun \n___2___ Kategori KategoriNo INT(11) ___3___ ___4___; \n___5___ market.urun \n___6___ fk_kategori \n___7___ (KategoriNo) ___8___ market.kategori (KategoriNo);',
+    blanks: ['ALTER TABLE', 'CHANGE COLUMN', 'NOT', 'NULL', 'ALTER TABLE', 'ADD CONSTRAINT', 'FOREIGN KEY', 'REFERENCES'],
+    explanation: 'CHANGE COLUMN sütun adını ve türünü değiştirir. ADD CONSTRAINT ... FOREIGN KEY (...) REFERENCES tablo (sütun) yabancı anahtarı tanımlar.'
+  },
+  {
+    id: 58,
+    category: 'subquery',
+    type: 'code',
+    question: 'Ürün tablosundaki \'Marka\' sütununu \'MarkaNo\' olarak değiştirip yabancı anahtar (FOREIGN KEY) tanımlayan sorguyu tamamlayın.',
+    snippet: '___1___ market.urun \n___2___ Marka MarkaNo INT(11) ___3___ ___4___; \n___5___ market.urun \n___6___ fk_marka \n___7___ (MarkaNo) ___8___ market.marka (MarkaNo);',
+    blanks: ['ALTER TABLE', 'CHANGE COLUMN', 'NOT', 'NULL', 'ALTER TABLE', 'ADD CONSTRAINT', 'FOREIGN KEY', 'REFERENCES'],
+    explanation: 'Sütun adını değiştirmek için ALTER TABLE urun CHANGE COLUMN, ilişki eklemek için ise ADD CONSTRAINT ... FOREIGN KEY ... REFERENCES kullanılır.'
+  },
+  {
+    id: 59,
+    category: 'subquery',
+    type: 'code',
+    question: 'Bugün satılan ürünleri, adetlerini ve tutarlarını (fiyat*adet) listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ U.UrunNo, U.UrunAd, U.Fiyat, S.Adet, (U.Fiyat * S.Adet) ___2___ \'Tutar\' \n___3___ satis ___4___ S \n___5___ urun ___6___ U ___7___ U.UrunNo = S.UrunNo \n___8___ ___9___(Tarih) = ___10___(___11___()) \n___12___ ___13___(Tarih) = ___14___(___15___());',
+    blanks: ['SELECT', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'DAY', 'DAY', 'NOW', 'AND', 'MONTH', 'MONTH', 'NOW'],
+    explanation: 'Yeni hesaplanan kolona AS ile takma isim verilir. Bugün filtresi için DAY(Tarih) = DAY(NOW()) AND MONTH(Tarih) = MONTH(NOW()) kontrol edilir.'
+  },
+  {
+    id: 60,
+    category: 'subquery',
+    type: 'code',
+    question: 'Bugün toplam kaç adet (farklı işlemlerin toplam adedi değil, satılan toplam adet) ürün satıldığını bulan sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(Adet) ___3___ \'Toplam Adet\' \n___4___ satis \n___5___ ___6___(Tarih) = ___7___(___8___()) \n___9___ ___10___(Tarih) = ___11___(___12___());',
+    blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'WHERE', 'DAY', 'DAY', 'NOW', 'AND', 'MONTH', 'MONTH', 'NOW'],
+    explanation: 'Toplam miktarı bulmak için COUNT yerine SUM(Adet) kullanılır. Tarih filtreleri WHERE and AND ile gün-ay kontrolüyle verilir.'
+  },
+  {
+    id: 61,
+    category: 'subquery',
+    type: 'code',
+    question: 'Kategori ve Marka tablolarına yabancı anahtarla (FOREIGN KEY REFERENCES) bağlı bir ürün tablosu oluşturma şemasını tamamlayın.',
+    snippet: 'CREATE ___1___ urun ( \n  UrunNo INT(11) ___2___ ___3___ ___4___, \n  UrunAd VARCHAR(45) ___5___ ___6___, \n  MarkaNo INT(11) ___7___ ___8___, \n  KategoriNo INT(11) ___9___ ___10___, \n  ___11___ (UrunNo), \n  ___12___ fk_kategori ___13___ (KategoriNo) ___14___ kategori (KategoriNo) \n);',
+    blanks: ['TABLE', 'NOT', 'NULL', 'AUTO_INCREMENT', 'NOT', 'NULL', 'NOT', 'NULL', 'NOT', 'NULL', 'PRIMARY KEY', 'CONSTRAINT', 'FOREIGN KEY', 'REFERENCES'],
+    explanation: 'Otomatik artan sütun için AUTO_INCREMENT, birincil anahtar için PRIMARY KEY, yabancı anahtar için CONSTRAINT ... FOREIGN KEY ... REFERENCES kullanılır.'
+  },
+  {
+    id: 62,
+    category: 'subquery',
+    type: 'code',
+    question: '\'İçecek\' kategorisindeki ürünlerde %20 indirim yaparak ürün adı, normal fiyat ve indirimli fiyatı listeleyen sorguyu tamamlayın.',
+    snippet: '___1___ UrunAd, Fiyat, Fiyat * 0.8 ___2___ \'İndirimli Fiyat\' \n___3___ urun \n___4___ Kategori ___5___ (\'İçecek\') \n___6___ Fiyat ___7___;',
+    blanks: ['SELECT', 'AS', 'FROM', 'WHERE', 'IN', 'ORDER BY', 'ASC'],
+    explanation: '%20 indirimli fiyat Fiyat * 0.8 ile hesaplanır. Kategori filtresi WHERE Kategori IN (\'İçecek\') ile yapılır ve ORDER BY Fiyat ASC ile sıralanır.'
+  },
+  {
+    id: 63,
+    category: 'subquery',
+    type: 'code',
+    question: 'Ürünleri adına göre sıralayıp 3. kayıttan itibaren 5 adet listeleyen (Sayfalama - Pagination) sorguyu tamamlayın.',
+    snippet: '___1___ UrunAd, Kategori, Marka \n___2___ urun \n___3___ UrunAd ___4___ \n___5___ 3, 5;',
+    blanks: ['SELECT', 'FROM', 'ORDER BY', 'ASC', 'LIMIT'],
+    explanation: 'Sıralama için ORDER BY UrunAd ASC kullanılır. Sayfalama için LIMIT offset, count (yani LIMIT 3, 5) kullanılır.'
+  },
+  {
+    id: 64,
+    category: 'subquery',
+    type: 'code',
+    question: 'Telefon numarası \'505\' ile başlayan müşterilerin sayısını bulan sorguyu yazın.',
+    snippet: '___1___ ___2___(*) ___3___ musteri ___4___ Telefon ___5___ \'505%\';',
+    blanks: ['SELECT', 'COUNT', 'FROM', 'WHERE', 'LIKE'],
+    explanation: 'Kayıt sayısını bulmak için COUNT(*), eşleşme için WHERE ve LIKE kullanılır.'
+  },
+  {
+    id: 65,
+    category: 'subquery',
+    type: 'code',
+    question: 'Müşterileri şehirlerine göre gruplayayıp her şehirde kaç müşteri olduğunu listeleyen sorguyu yazın.',
+    snippet: '___1___ Sehir, ___2___(*) ___3___ musteri ___4___ Sehir;',
+    blanks: ['SELECT', 'COUNT', 'FROM', 'GROUP BY'],
+    explanation: 'Şehirlere göre gruplayarak saymak için COUNT ve GROUP BY Sehir kullanılır.'
+  },
+  {
+    id: 66,
+    category: 'subquery',
+    type: 'code',
+    question: 'Belirtilen doğum tarihinden (1984-06-05) bugüne kadar geçen toplam gün sayısını hesaplayan DATEDIFF sorgusunu tamamlayın.',
+    snippet: '___1___ ___2___(___3___(), \'1984-06-05\') ___4___ \'Furkan Kaç Günlük\';',
+    blanks: ['SELECT', 'DATEDIFF', 'NOW', 'AS'],
+    explanation: 'DATEDIFF iki tarih arasındaki farkı gün olarak döner. NOW() bugünü ifade eder.'
+  },
+  {
+    id: 67,
+    category: 'subquery',
+    type: 'code',
+    question: 'Elektronik kategorisinin ortalama ürün fiyatını GROUP BY ve HAVING alt sorgusuyla bulan sorguyu tamamlayın.',
+    snippet: '___1___ ___2___(Fiyat) ___3___ urun ___4___ KategoriNo ___5___ KategoriNo = (___6___ KategoriNo ___7___ kategori ___8___ KategoriAd = \'Elektronik\');',
+    blanks: ['SELECT', 'AVG', 'FROM', 'GROUP BY', 'HAVING', 'SELECT', 'FROM', 'WHERE'],
+    explanation: 'Kategori bazında gruplandıktan sonra HAVING koşulunda Elektronik kategorisinin nosu alt sorgudan çekilir.'
+  },
+  {
+    id: 68,
+    category: 'subquery',
+    type: 'code',
+    question: 'MarkaEkle saklı yordamında parametre modlarını (IN/OUT), SQLEXCEPTION Handler bildirimini ve INSERT ifadesini tamamlayın.',
+    snippet: 'CREATE ___1___ MarkaEkle (___2___ P_Marka VARCHAR(45), ___3___ P_MarkaNo INT, P_Ekleyen INT, OUT O_Durum TEXT) \n___4___ \n  ___5___ ___6___ ___7___ ___8___ ___9___ \n  ___10___ \n    ___11___ O_Durum = \'Hata oluştu\'; \n  ___12___; \n  ___13___ marka(No, Marka, Ekleyen) ___14___ (P_MarkaNo, P_Marka, P_Ekleyen); \n___15___',
+    blanks: ['PROCEDURE', 'IN', 'IN', 'BEGIN', 'DECLARE', 'EXIT', 'HANDLER', 'FOR', 'SQLEXCEPTION', 'BEGIN', 'SET', 'END', 'INSERT INTO', 'VALUES', 'END'],
+    explanation: 'Saklı yordam parametreleri IN veya OUT olabilir. Hataları yakalamak için HANDLER tanımlanır.'
+  },
+  {
+    id: 69,
+    category: 'subquery',
+    type: 'code',
+    question: 'UrunEkle saklı yordamı (procedure) içinde yer alan INSERT bloğunu ve OUT parametresine değer atama kelimesini yazın.',
+    snippet: 'CREATE ___1___ UrunEkle (___2___ P_UrunAd VARCHAR(100), ___3___ P_MarkaNo INT, ___4___ P_KategoriNo INT, ___5___ P_Fiyat FLOAT, OUT Sonuc VARCHAR(50)) \n___6___ \n  ___7___ urun (Ad, MarkaNo, KategoriNo, Fiyat) \n  ___8___ (P_UrunAd, P_MarkaNo, P_KategoriNo, P_Fiyat); \n  ___9___ Sonuc = \'Ürün Eklendi\'; \n___10___',
+    blanks: ['PROCEDURE', 'IN', 'IN', 'IN', 'IN', 'BEGIN', 'INSERT INTO', 'VALUES', 'SET', 'END'],
+    explanation: 'Veri ekleme işlemi INSERT INTO ... VALUES ile yapılır. Parametrelere veya değişkenlere değer atamak için SET kullanılır.'
+  },
+  {
+    id: 70,
+    category: 'subquery',
+    type: 'code',
+    question: 'Bir ürünün son kullanma tarihine kalan gün sayısını hesaplayan saklı fonksiyonu (FUNCTION) tamamlayın.',
+    snippet: 'CREATE ___1___ SonKullanmaZamanHesapla (P_SonKullanmaTarih DATE) ___2___ INT \n___3___ \n  ___4___ KalanZaman INT; \n  ___5___ KalanZaman = ___6___(P_SonKullanmaTarih, ___7___()); \n  ___8___ KalanZaman; \n___9___',
+    blanks: ['FUNCTION', 'RETURNS', 'BEGIN', 'DECLARE', 'SET', 'DATEDIFF', 'NOW', 'RETURN', 'END'],
+    explanation: 'MySQL fonksiyonlarında dönüş tipi RETURNS ile, gövde içi değişkenler DECLARE ile tanımlanır. Değer döndürme RETURN ile yapılır.'
+  },
+  {
+    id: 71,
+    category: 'subquery',
+    type: 'code',
+    question: 'Fiyatı 5 TL ile 20 TL arasında (sınırlar dahil) olan ürünleri filtreleyip sıralayan sorguyu tamamlayın.',
+    snippet: '___1___ * ___2___ market.urun \n___3___ Fiyat ___4___ 5 ___5___ 20 \n___6___ Fiyat;',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'BETWEEN', 'AND', 'ORDER BY'],
+    explanation: 'BETWEEN ... AND ... yapısı belirtilen aralıktaki değerleri filtreler. ORDER BY sıralama yapar.'
+  },
+  {
+    id: 72,
+    category: 'subquery',
+    type: 'code',
+    question: 'Müşteri tablosunda adı \'Sinan\' olan müşterileri \'Petek\' olarak güncelleyen ve boş telefon numarası olanları seçen sorguları tamamlayın.',
+    snippet: '___1___ musteri ___2___ Ad = \'Petek\' ___3___ Ad = \'Sinan\';\n___4___ * ___5___ musteri ___6___ Telefon = \'\';',
+    blanks: ['UPDATE', 'SET', 'WHERE', 'SELECT', 'FROM', 'WHERE'],
+    explanation: 'Kayıtları güncellemek için UPDATE ... SET ... WHERE kullanılır. Sorgu filtreleri WHERE ile belirtilir.'
+  },
+  {
+    id: 73,
+    category: 'subquery',
+    type: 'code',
+    question: 'Elektronik kategorisindeki ürünlerin ortalama fiyatının altında kalan elektronik ürünleri alt sorgularla getiren ifadeyi tamamlayın.',
+    snippet: '___1___ * ___2___ urun \n___3___ Fiyat < (___4___ ___5___(Fiyat) ___6___ urun ___7___ KategoriNo ___8___ KategoriNo = (___9___ KategoriNo ___10___ kategori ___11___ KategoriAd = \'Elektronik\')) \n___12___ KategoriNo = (___13___ KategoriNo ___14___ kategori ___15___ KategoriAd = \'Elektronik\') \n___16___ Fiyat;',
+    blanks: ['SELECT', 'FROM', 'WHERE', 'SELECT', 'AVG', 'FROM', 'GROUP BY', 'HAVING', 'SELECT', 'FROM', 'WHERE', 'AND', 'SELECT', 'FROM', 'WHERE', 'ORDER BY'],
+    explanation: 'Koşulları birleştirmek için AND kullanılır. Alt sorgu ve dış sorgu WHERE kelimeleriyle filtrelenir ve ORDER BY ile sıralanır.'
+  },
+  {
+    id: 74,
+    category: 'subquery',
+    type: 'code',
+    question: 'Veritabanı oluşturma ve sınıf tablosu oluşturma DDL ifadelerini tamamlayın.',
+    snippet: 'SHOW DATABASES; \nSHOW TABLES; \nCREATE ___1___ IF ___2___ EXISTS sinif ( \n  SinifNo INT ___3___ ___4___, \n  SinifAd VARCHAR(20) \n);',
+    blanks: ['TABLE', 'NOT', 'PRIMARY KEY', 'AUTO_INCREMENT'],
+    explanation: 'SHOW TABLES/DATABASES nesneleri listeler. CREATE TABLE IF NOT EXISTS tablo yapısını güvenli şekilde oluşturur.'
+  },
+  {
+    id: 75,
+    category: 'subquery',
+    type: 'code',
+    question: 'Her şehirdeki müşterilerin sayısını listeleyen ve müşteri sayısı 2\'den fazla olan şehirleri getiren sorguyu yazın.',
+    snippet: '___1___ M.Sehir, ___2___(M.Sehir) ___3___ musteri ___4___ M ___5___ Sehir ___6___ 2 < ___7___(M.Sehir);',
+    blanks: ['SELECT', 'COUNT', 'FROM', 'AS', 'GROUP BY', 'HAVING', 'COUNT'],
+    explanation: 'Sorgu çıktısı SELECT ile belirlenir. GROUP BY gruplamayı sağlar, gruplanmış veri kriterleri HAVING COUNT ile süzülür.'
+  }
+];

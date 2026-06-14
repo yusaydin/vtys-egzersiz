@@ -2,12 +2,15 @@
     // State Variables
     let questions = [];
     let currentLesson = localStorage.getItem('selected_lesson') || 'ders8';
+    let currentDifficulty = localStorage.getItem('selected_difficulty') || 'easy';
     let currentFilteredQuestions = [];
     let currentIndex = 0;
     let userAnswers = {};
 
     // Elements
     const lessonFilter = document.getElementById('lesson-filter');
+    const difficultyFilter = document.getElementById('difficulty-filter');
+    const difficultyFilterContainer = document.getElementById('difficulty-filter-container');
     const categoryFilter = document.getElementById('category-filter');
     const typeFilter = document.getElementById('type-filter');
     const questionsGrid = document.getElementById('questions-grid');
@@ -116,10 +119,11 @@
           dashboardSubtitle.innerText = "Dr. Öğr. Üyesi Hüseyin COŞKUN'un Ders 9 (T-SQL ve Saklı Yordamlar) sunumuna dayalı 50 soruluk sınavı tamamladınız.";
         }
       } else if (lessonId === 'ders10') {
-        headerTitle.innerText = "VTYS Egzersiz (Market SQL Sorguları)";
-        docTitle.innerText = "VTYS Egzersiz - Market SQL Sorguları";
+        const diffText = currentDifficulty === 'hard' ? " (Zor)" : " (Kolay)";
+        headerTitle.innerText = "VTYS Egzersiz (Market SQL Sorguları" + diffText + ")";
+        docTitle.innerText = "VTYS Egzersiz - Market SQL Sorguları" + diffText;
         if (dashboardSubtitle) {
-          dashboardSubtitle.innerText = "Market veritabanı üzerindeki JOIN birleştirmeleri ve Alt Sorgular (Subqueries) içeren 75 soruluk uygulamalı sınavı tamamladınız.";
+          dashboardSubtitle.innerText = `Market veritabanı üzerindeki JOIN birleştirmeleri ve Alt Sorgular (Subqueries) içeren 75 soruluk uygulamalı (${currentDifficulty === 'hard' ? 'Zor' : 'Kolay'}) sınavı tamamladınız.`;
         }
       }
     }
@@ -129,12 +133,17 @@
       localStorage.setItem('selected_lesson', lessonId);
       lessonFilter.value = lessonId;
       
-      if (lessonId === 'ders8') {
-        questions = questionsDers8;
-      } else if (lessonId === 'ders9') {
-        questions = questionsDers9;
-      } else if (lessonId === 'ders10') {
-        questions = questionsDers10;
+      if (lessonId === 'ders10') {
+        difficultyFilterContainer.style.display = 'block';
+        difficultyFilter.value = currentDifficulty;
+        questions = (currentDifficulty === 'hard') ? questionsDers10Zor : questionsDers10;
+      } else {
+        difficultyFilterContainer.style.display = 'none';
+        if (lessonId === 'ders8') {
+          questions = questionsDers8;
+        } else if (lessonId === 'ders9') {
+          questions = questionsDers9;
+        }
       }
       
       loadProgress();
@@ -885,11 +894,18 @@
       dashStatus.innerText = status;
     }
 
+    function getProgressKey() {
+      if (currentLesson === 'ders10') {
+        return `db_quiz_answers_ders10_${currentDifficulty}`;
+      }
+      return `db_quiz_answers_${currentLesson}`;
+    }
+
     // Reset Quiz
     function resetQuiz() {
       if (confirm("Tüm cevaplarınızı sıfırlayıp sınava baştan başlamak istediğinize emin misiniz?")) {
         userAnswers = {};
-        localStorage.removeItem(`db_quiz_answers_${currentLesson}`);
+        localStorage.removeItem(getProgressKey());
         quizArea.style.display = 'block';
         dashboardArea.style.display = 'none';
         stopConfetti();
@@ -899,11 +915,11 @@
 
     // Save/Load Local Storage
     function saveProgress() {
-      localStorage.setItem(`db_quiz_answers_${currentLesson}`, JSON.stringify(userAnswers));
+      localStorage.setItem(getProgressKey(), JSON.stringify(userAnswers));
     }
 
     function loadProgress() {
-      const saved = localStorage.getItem(`db_quiz_answers_${currentLesson}`);
+      const saved = localStorage.getItem(getProgressKey());
       if (saved) {
         userAnswers = JSON.parse(saved);
       } else {
@@ -998,6 +1014,12 @@
 
     lessonFilter.addEventListener('change', () => {
       loadQuestionsForLesson(lessonFilter.value);
+    });
+
+    difficultyFilter.addEventListener('change', () => {
+      currentDifficulty = difficultyFilter.value;
+      localStorage.setItem('selected_difficulty', currentDifficulty);
+      loadQuestionsForLesson(currentLesson);
     });
 
     btnCheck.addEventListener('click', checkAnswer);
