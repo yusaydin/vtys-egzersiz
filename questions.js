@@ -2466,7 +2466,7 @@ const questionsDers10 = [
     id: 21,
     category: 'joins',
     type: 'code',
-    question: '100 TL ve üzerinde satış yapan her bir kasiyerin adını ve toplam satış tutarını listeleyen sorguyu tamamlayın.',
+    question: '100 TL ve üzerinde satış yapan her bir kasiyerin adını ve toplam satış tutarını listeleyen ve bunları ürün numarasına göre sıralayan sorguyu tamamlayın.',
     snippet: 'SELECT k.Ad, ___1___(u.Fiyat * s.Adet) \nFROM satis AS s \nINNER JOIN kasiyer AS k ON s.KasiyerNo = k.KasiyerNo\n___2___ JOIN urun AS u ON s.UrunNo = u.UrunNo\n___3___ ___4___ k.Ad\n___5___ 100 <= SUM(u.Fiyat * s.Adet)\n___6___ BY u.UrunNo;',
     blanks: ['SUM', 'INNER', 'GROUP', 'BY', 'HAVING', 'ORDER'],
     explanation: 'Toplam tutar filtrelemesi gruplamadan sonra HAVING ile kontrol edilir (100 <= SUM(...)). Sıralama ORDER BY ile yapılır.'
@@ -2592,7 +2592,7 @@ const questionsDers10 = [
     id: 35,
     category: 'joins',
     type: 'code',
-    question: 'Her bir kasiyerin yaptığı toplam satış işlemleri sayısını bulup, en az satış yapan kasiyeri sıralama ve limit kullanarak bulan sorguyu tamamlayın.',
+    question: 'Her bir kasiyerin yaptığı toplam satış işlemleri sayısını bulup, en az satış yapan kasiyeri işlem sayısına göre artan sırada sıralayarak ve LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: 'SELECT K.Ad, COUNT(*) \nFROM Satis AS S \n___1___ JOIN kasiyer AS K ON K.KasiyerNo = S.KasiyerNo \n___2___ ___3___ K.KasiyerNo \n___4___ ___5___ COUNT(*) ___6___ \n___7___ 0, 1;',
     blanks: ['INNER', 'GROUP', 'BY', 'ORDER', 'BY', 'ASC', 'LIMIT'],
     explanation: 'En az satış yapanı bulmak için COUNT(*) değerine göre ORDER BY COUNT Extent (ASC) sıralama yapılır ve LIMIT 0,1 ile ilk satır alınır.'
@@ -2655,7 +2655,7 @@ const questionsDers10 = [
     id: 42,
     category: 'subquery',
     type: 'code',
-    question: '\'Elektronik\' kategorisindeki ortalama fiyatın altındaki elektronik ürünleri listeleyen karmaşık alt sorguyu tamamlayın.',
+    question: '\'Elektronik\' kategorisindeki ortalama fiyatın altındaki elektronik ürünleri listeleyen ve ürün fiyatına göre sıralayan karmaşık alt sorguyu tamamlayın.',
     snippet: 'SELECT * FROM urun \nWHERE Fiyat < (SELECT ___1___(Fiyat) FROM urun ___2___ BY KategoriNo ___3___ KategoriNo = (SELECT KategoriNo FROM kategori WHERE KategoriAd = \'Elektronik\'))\n___4___ KategoriNo = (___5___ KategoriNo FROM kategori ___6___ KategoriAd = \'Elektronik\')\nORDER BY Fiyat;',
     blanks: ['AVG', 'GROUP', 'HAVING', 'AND', 'SELECT', 'WHERE'],
     explanation: 'İçeride Elektronik kategorisinin ortalamasını bulmak için GROUP BY ve HAVING kullanılır. Dış sorguda da kategorinin Elektronik olması AND KategoriNo = (SELECT...) ile sınırlanır.'
@@ -2754,7 +2754,7 @@ const questionsDers10 = [
     id: 53,
     category: 'subquery',
     type: 'code',
-    question: 'Kasiyerler arasında en az satış kaydı girmiş (en az adet değil, en az işlem) kasiyeri bulmak için LIMIT kullanan sorguyu tamamlayın.',
+    question: 'Kasiyerler arasında en az satış kaydı girmiş (en az adet değil, en az işlem) kasiyeri işlem sayısına göre artan sırada sıralayıp LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: 'SELECT K.Ad, COUNT(*) \nFROM satis AS S \nINNER JOIN kasiyer AS K ON K.KasiyerNo = S.KasiyerNo \n___1___ ___2___ S.KasiyerNo \n___3___ ___4___(*) \n___5___ 0, 1;',
     blanks: ['GROUP', 'BY', 'ORDER', 'BY', 'LIMIT'],
     explanation: 'İşlem sayılarını bulmak için GROUP BY ile kasiyerler gruplanır. ORDER BY COUNT(*) artan sıralama yapar. LIMIT 0, 1 en az olan ilk kaydı alır.'
@@ -2772,7 +2772,7 @@ const questionsDers10 = [
     id: 55,
     category: 'subquery',
     type: 'code',
-    question: 'Tarih boyunca en çok satış yapılan ayı (toplam adet veya işlem bazında) bulan sorguyu tamamlayın.',
+    question: 'Tarih boyunca en çok satış yapılan ayı işlem sayısına göre azalan sırada sıralayıp LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(S.Tarih), COUNT(*) \nFROM satis AS S \n___2___ ___3___ MONTH(S.Tarih) \n___4___ ___5___ COUNT(*) ___6___ \n___7___ 0, 1;',
     blanks: ['MONTH', 'GROUP', 'BY', 'ORDER', 'BY', 'DESC', 'LIMIT'],
     explanation: 'MONTH(Tarih) bazında gruplanır. ORDER BY COUNT(*) DESC ile çoktan aza sıralanıp LIMIT 0,1 ile en üstteki kayıt seçilir.'
@@ -2835,7 +2835,7 @@ const questionsDers10 = [
     id: 62,
     category: 'subquery',
     type: 'code',
-    question: '\'İçecek\' kategorisindeki ürünlerde %20 indirim yaparak ürün adı, normal fiyat ve indirimli fiyatı listeleyen sorguyu tamamlayın.',
+    question: '\'İçecek\' kategorisindeki ürünlerde %20 indirim yaparak ürün adı, normal fiyat ve indirimli fiyatı listeleyen ve fiyata göre artan sırada sıralayan sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Fiyat, Fiyat * 0.8 AS \'İndirimli Fiyat\' \nFROM urun \n___2___ Kategori ___3___ (\'İçecek\') \n___4___ ___5___ Fiyat ___6___;',
     blanks: ['SELECT', 'WHERE', 'IN', 'ORDER', 'BY', 'ASC'],
     explanation: '%20 indirimli fiyat Fiyat * 0.8 ile hesaplanır. Kategori filtresi WHERE Kategori IN (\'İçecek\') ile yapılır ve ORDER BY Fiyat ASC ile sıralanır.'
@@ -2916,7 +2916,7 @@ const questionsDers10 = [
     id: 71,
     category: 'subquery',
     type: 'code',
-    question: 'Fiyatı 5 TL ile 20 TL arasında (sınırlar dahil) olan ürünleri filtreleyip sıralayan sorguyu tamamlayın.',
+    question: 'Fiyatı 5 TL ile 20 TL arasında (sınırlar dahil) olan ürünleri filtreleyip fiyata göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ * FROM market.urun \n___2___ Fiyat ___3___ 5 ___4___ 20 \n___5___ BY Fiyat;',
     blanks: ['SELECT', 'WHERE', 'BETWEEN', 'AND', 'ORDER'],
     explanation: 'BETWEEN ... AND ... yapısı belirtilen aralıktaki değerleri filtreler. ORDER BY sıralama yapar.'
@@ -2934,7 +2934,7 @@ const questionsDers10 = [
     id: 73,
     category: 'subquery',
     type: 'code',
-    question: 'Elektronik kategorisindeki ürünlerin ortalama fiyatının altında kalan elektronik ürünleri alt sorgularla getiren ifadeyi tamamlayın.',
+    question: 'Elektronik kategorisindeki ürünlerin ortalama fiyatının altında kalan elektronik ürünleri alt sorgularla getiren ve ürün fiyatına göre sıralayan ifadeyi tamamlayın.',
     snippet: 'SELECT * FROM urun \n___1___ Fiyat < (SELECT AVG(Fiyat) FROM urun GROUP BY KategoriNo HAVING KategoriNo = (SELECT KategoriNo FROM kategori WHERE KategoriAd = \'Elektronik\')) \n___2___ KategoriNo = (SELECT KategoriNo FROM kategori ___3___ KategoriAd = \'Elektronik\') \n___4___ ___5___ Fiyat;',
     blanks: ['WHERE', 'AND', 'WHERE', 'ORDER', 'BY'],
     explanation: 'Koşulları birleştirmek için AND kullanılır. Alt sorgu ve dış sorgu WHERE kelimeleriyle filtrelenir ve ORDER BY ile sıralanır.'
@@ -3145,7 +3145,7 @@ const questionsDers10Zor = [
     id: 21,
     category: 'joins',
     type: 'code',
-    question: '100 TL ve üzerinde satış yapan her bir kasiyerin adını ve toplam satış tutarını listeleyen sorguyu tamamlayın.',
+    question: '100 TL ve üzerinde satış yapan her bir kasiyerin adını ve toplam satış tutarını listeleyen ve bunları ürün numarasına göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ k.Ad, ___2___(u.Fiyat * s.Adet) \n___3___ satis ___4___ s \n___5___ kasiyer ___6___ k ___7___ s.KasiyerNo = k.KasiyerNo\n___8___ urun ___9___ u ___10___ s.UrunNo = u.UrunNo\n___11___ k.Ad\n___12___ 100 <= ___13___(u.Fiyat * s.Adet)\n___14___ u.UrunNo;',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'SUM', 'ORDER BY'],
     explanation: 'Toplam tutar filtrelemesi gruplamadan sonra HAVING ile kontrol edilir (100 <= SUM(...)). Sıralama ORDER BY ile yapılır.'
@@ -3271,7 +3271,7 @@ const questionsDers10Zor = [
     id: 35,
     category: 'joins',
     type: 'code',
-    question: 'Her bir kasiyerin yaptığı toplam satış işlemleri sayısını bulup, en az satış yapan kasiyeri sıralama ve limit kullanarak bulan sorguyu tamamlayın.',
+    question: 'Her bir kasiyerin yaptığı toplam satış işlemleri sayısını bulup, en az satış yapan kasiyeri işlem sayısına göre artan sırada sıralayarak ve LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: '___1___ K.Ad, ___2___(*) \n___3___ Satis ___4___ S \n___5___ kasiyer ___6___ K ___7___ K.KasiyerNo = S.KasiyerNo \n___8___ K.KasiyerNo \n___9___ ___10___(*) ___11___ \n___12___ 0, 1;',
     blanks: ['SELECT', 'COUNT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY', 'COUNT', 'ASC', 'LIMIT'],
     explanation: 'En az satış yapanı bulmak için COUNT(*) değerine göre ORDER BY COUNT Extent (ASC) sıralama yapılır ve LIMIT 0,1 ile ilk satır alınır.'
@@ -3334,7 +3334,7 @@ const questionsDers10Zor = [
     id: 42,
     category: 'subquery',
     type: 'code',
-    question: '\'Elektronik\' kategorisindeki ortalama fiyatın altındaki elektronik ürünleri listeleyen karmaşık alt sorguyu tamamlayın.',
+    question: '\'Elektronik\' kategorisindeki ortalama fiyatın altındaki elektronik ürünleri listeleyen ve ürün fiyatına göre sıralayan karmaşık alt sorguyu tamamlayın.',
     snippet: '___1___ * ___2___ urun \n___3___ Fiyat < (___4___ ___5___(Fiyat) ___6___ urun ___7___ KategoriNo ___8___ KategoriNo = (___9___ KategoriNo ___10___ kategori ___11___ KategoriAd = \'Elektronik\'))\n___12___ KategoriNo = (___13___ KategoriNo ___14___ kategori ___15___ KategoriAd = \'Elektronik\')\n___16___ Fiyat;',
     blanks: ['SELECT', 'FROM', 'WHERE', 'SELECT', 'AVG', 'FROM', 'GROUP BY', 'HAVING', 'SELECT', 'FROM', 'WHERE', 'AND', 'SELECT', 'FROM', 'WHERE', 'ORDER BY'],
     explanation: 'İçeride Elektronik kategorisinin ortalamasını bulmak için GROUP BY ve HAVING kullanılır. Dış sorguda da kategorinin Elektronik olması AND KategoriNo = (SELECT...) ile sınırlanır.'
@@ -3433,7 +3433,7 @@ const questionsDers10Zor = [
     id: 53,
     category: 'subquery',
     type: 'code',
-    question: 'Kasiyerler arasında en az satış kaydı girmiş (en az adet değil, en az işlem) kasiyeri bulmak için LIMIT kullanan sorguyu tamamlayın.',
+    question: 'Kasiyerler arasında en az satış kaydı girmiş (en az adet değil, en az işlem) kasiyeri işlem sayısına göre artan sırada sıralayıp LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: '___1___ K.Ad, ___2___(*) \n___3___ satis ___4___ S \n___5___ kasiyer ___6___ K ___7___ K.KasiyerNo = S.KasiyerNo \n___8___ S.KasiyerNo \n___9___(*) \n___10___ 0, 1;',
     blanks: ['SELECT', 'COUNT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY', 'LIMIT'],
     explanation: 'İşlem sayılarını bulmak için GROUP BY ile kasiyerler gruplanır. ORDER BY COUNT(*) artan sıralama yapar. LIMIT 0, 1 en az olan ilk kaydı alır.'
@@ -3451,7 +3451,7 @@ const questionsDers10Zor = [
     id: 55,
     category: 'subquery',
     type: 'code',
-    question: 'Tarih boyunca en çok satış yapılan ayı (toplam adet veya işlem bazında) bulan sorguyu tamamlayın.',
+    question: 'Tarih boyunca en çok satış yapılan ayı işlem sayısına göre azalan sırada sıralayıp LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: '___1___ ___2___(S.Tarih), ___3___(*) \n___4___ satis ___5___ S \n___6___ ___7___(S.Tarih) \n___8___ ___9___(*) ___10___ \n___11___ 0, 1;',
     blanks: ['SELECT', 'MONTH', 'COUNT', 'FROM', 'AS', 'GROUP BY', 'MONTH', 'ORDER BY', 'COUNT', 'DESC', 'LIMIT'],
     explanation: 'MONTH(Tarih) bazında gruplanır. ORDER BY COUNT(*) DESC ile çoktan aza sıralanıp LIMIT 0,1 ile en üstteki kayıt seçilir.'
@@ -3514,7 +3514,7 @@ const questionsDers10Zor = [
     id: 62,
     category: 'subquery',
     type: 'code',
-    question: '\'İçecek\' kategorisindeki ürünlerde %20 indirim yaparak ürün adı, normal fiyat ve indirimli fiyatı listeleyen sorguyu tamamlayın.',
+    question: '\'İçecek\' kategorisindeki ürünlerde %20 indirim yaparak ürün adı, normal fiyat ve indirimli fiyatı listeleyen ve fiyata göre artan sırada sıralayan sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Fiyat, Fiyat * 0.8 ___2___ \'İndirimli Fiyat\' \n___3___ urun \n___4___ Kategori ___5___ (\'İçecek\') \n___6___ Fiyat ___7___;',
     blanks: ['SELECT', 'AS', 'FROM', 'WHERE', 'IN', 'ORDER BY', 'ASC'],
     explanation: '%20 indirimli fiyat Fiyat * 0.8 ile hesaplanır. Kategori filtresi WHERE Kategori IN (\'İçecek\') ile yapılır ve ORDER BY Fiyat ASC ile sıralanır.'
@@ -3595,7 +3595,7 @@ const questionsDers10Zor = [
     id: 71,
     category: 'subquery',
     type: 'code',
-    question: 'Fiyatı 5 TL ile 20 TL arasında (sınırlar dahil) olan ürünleri filtreleyip sıralayan sorguyu tamamlayın.',
+    question: 'Fiyatı 5 TL ile 20 TL arasında (sınırlar dahil) olan ürünleri filtreleyip fiyata göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ * ___2___ market.urun \n___3___ Fiyat ___4___ 5 ___5___ 20 \n___6___ Fiyat;',
     blanks: ['SELECT', 'FROM', 'WHERE', 'BETWEEN', 'AND', 'ORDER BY'],
     explanation: 'BETWEEN ... AND ... yapısı belirtilen aralıktaki değerleri filtreler. ORDER BY sıralama yapar.'
@@ -3613,7 +3613,7 @@ const questionsDers10Zor = [
     id: 73,
     category: 'subquery',
     type: 'code',
-    question: 'Elektronik kategorisindeki ürünlerin ortalama fiyatının altında kalan elektronik ürünleri alt sorgularla getiren ifadeyi tamamlayın.',
+    question: 'Elektronik kategorisindeki ürünlerin ortalama fiyatının altında kalan elektronik ürünleri alt sorgularla getiren ve ürün fiyatına göre sıralayan ifadeyi tamamlayın.',
     snippet: '___1___ * ___2___ urun \n___3___ Fiyat < (___4___ ___5___(Fiyat) ___6___ urun ___7___ KategoriNo ___8___ KategoriNo = (___9___ KategoriNo ___10___ kategori ___11___ KategoriAd = \'Elektronik\')) \n___12___ KategoriNo = (___13___ KategoriNo ___14___ kategori ___15___ KategoriAd = \'Elektronik\') \n___16___ Fiyat;',
     blanks: ['SELECT', 'FROM', 'WHERE', 'SELECT', 'AVG', 'FROM', 'GROUP BY', 'HAVING', 'SELECT', 'FROM', 'WHERE', 'AND', 'SELECT', 'FROM', 'WHERE', 'ORDER BY'],
     explanation: 'Koşulları birleştirmek için AND kullanılır. Alt sorgu ve dış sorgu WHERE kelimeleriyle filtrelenir ve ORDER BY ile sıralanır.'
