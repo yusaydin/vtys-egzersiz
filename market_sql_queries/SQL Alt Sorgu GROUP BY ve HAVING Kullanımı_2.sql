@@ -1,0 +1,1 @@
+SELECT AVG(Fiyat) FROM urun GROUP BY KategoriNo HAVING KategoriNo=(SELECT KategoriNo FROM kategori WHERE KategoriAd='Elektronik')

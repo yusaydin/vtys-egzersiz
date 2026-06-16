@@ -1,0 +1,1 @@
+SELECT DATEDIFF(NOW(),'1984-06-05') AS "Furkan Kaç Günlük"

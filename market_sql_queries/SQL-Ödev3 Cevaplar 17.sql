@@ -1,0 +1,6 @@
+SELECT SU.Ad,COUNT(*),MONTH(S.Tarih) 
+FROM satis AS S
+INNER JOIN sube AS SU
+ON SU.SubeNo = S.SubeNo
+GROUP BY SU.SubeNo,MONTH(S.Tarih)
+

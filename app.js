@@ -28,6 +28,15 @@
     const explanationBox = document.getElementById('explanation-box');
     const explanationText = document.getElementById('explanation-text');
     const progressBar = document.getElementById('progress-bar');
+
+    // SQL Modal Elements
+    const btnShowSql = document.getElementById('btn-show-sql');
+    const sqlModal = document.getElementById('sql-modal');
+    const sqlModalClose = document.getElementById('sql-modal-close');
+    const sqlModalCode = document.getElementById('sql-modal-code');
+    const sqlModalTitle = document.getElementById('sql-modal-title');
+    const sqlModalCopy = document.getElementById('sql-modal-copy');
+    const sqlModalDownload = document.getElementById('sql-modal-download');
     
     // Header Stats
     const headerCorrect = document.getElementById('header-correct');
@@ -245,6 +254,13 @@
       }
 
       const q = currentFilteredQuestions[currentIndex];
+
+      // Show or hide Source SQL button
+      if (q && q.sql_file) {
+        btnShowSql.style.display = 'inline-flex';
+      } else {
+        btnShowSql.style.display = 'none';
+      }
 
       // Highlight active sidebar item
       document.querySelectorAll('.q-btn').forEach(b => b.classList.remove('current'));
@@ -1041,6 +1057,94 @@
     function showResultBanner(isCorrect, q) {
       console.log("Result banner:", isCorrect, q.id);
     }
+
+    // SQL Modal Controller
+    let activeSQLContent = "";
+    let activeSQLFilename = "";
+
+    function openSQLModal(filename) {
+      sqlModalTitle.innerText = filename;
+      sqlModalCode.innerHTML = "Yükleniyor...";
+      sqlModal.classList.add('active');
+      activeSQLFilename = filename;
+
+      fetch('market_sql_queries/' + encodeURIComponent(filename))
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Dosya yüklenemedi.");
+          }
+          return response.text();
+        })
+        .then(text => {
+          activeSQLContent = text;
+          sqlModalCode.innerHTML = highlightSQL(text);
+        })
+        .catch(err => {
+          sqlModalCode.innerText = "Hata: SQL dosyası yüklenirken bir sorun oluştu.\n" + err.message;
+          activeSQLContent = "";
+        });
+    }
+
+    function closeSQLModal() {
+      sqlModal.classList.remove('active');
+    }
+
+    btnShowSql.addEventListener('click', () => {
+      const q = currentFilteredQuestions[currentIndex];
+      if (q && q.sql_file) {
+        openSQLModal(q.sql_file);
+      }
+    });
+
+    sqlModalClose.addEventListener('click', closeSQLModal);
+
+    // Close when clicking outside of modal content
+    sqlModal.addEventListener('click', (e) => {
+      if (e.target === sqlModal) {
+        closeSQLModal();
+      }
+    });
+
+    // Close on Escape key
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeSQLModal();
+      }
+    });
+
+    // Copy to clipboard
+    sqlModalCopy.addEventListener('click', () => {
+      if (!activeSQLContent) return;
+      navigator.clipboard.writeText(activeSQLContent)
+        .then(() => {
+          const originalText = sqlModalCopy.innerText;
+          sqlModalCopy.innerText = "Kopyalandı! ✓";
+          sqlModalCopy.classList.remove('btn-secondary');
+          sqlModalCopy.classList.add('btn-primary');
+          setTimeout(() => {
+            sqlModalCopy.innerText = originalText;
+            sqlModalCopy.classList.remove('btn-primary');
+            sqlModalCopy.classList.add('btn-secondary');
+          }, 2000);
+        })
+        .catch(err => {
+          alert("Kopyalanamadı: " + err);
+        });
+    });
+
+    // Download file
+    sqlModalDownload.addEventListener('click', () => {
+      if (!activeSQLContent || !activeSQLFilename) return;
+      const blob = new Blob([activeSQLContent], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = activeSQLFilename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
 
     // Run!
     skipToggle.checked = skipQuestionsEnabled;

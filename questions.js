@@ -2289,6 +2289,7 @@ const questionsDers10 = [
     question: '1 nolu müşterinin satın aldığı ürünlerin adını, fiyatını ve müşteri numarasını listeleyen sorguyu tamamlayın.',
     snippet: '___1___ U.UrunAd, U.Fiyat, S.MusteriNo \nFROM satis ___2___ S\n___3___ JOIN urun AS U\n___4___ U.UrunNo = S.UrunNo\n___5___ S.MusteriNo = 1;',
     blanks: ['SELECT', 'AS', 'INNER', 'ON', 'WHERE'],
+    sql_file: 'SQL 1 nolu müşterinin satın aldığı ürünlerin listelenmesi.sql',
     explanation: 'SELECT kolonları listeler. satis tablosuna S alias\'ı verilir. urun tablosu U alias\'ı ile INNER JOIN yapılarak ON kelimesiyle ilişkilendirilir. Müşteri filtresi WHERE ile uygulanır.'
   },
   {
@@ -2298,6 +2299,7 @@ const questionsDers10 = [
     question: '1 nolu müşterinin satın aldığı ürünlerin toplam tutarını ve müşteri numarasını veren aggregate sorgusunu yazın.',
     snippet: 'SELECT ___1___(U.Fiyat * S.Adet), S.MusteriNo \nFROM satis ___2___ S\n___3___ JOIN urun AS U\n___4___ U.UrunNo = S.UrunNo\n___5___ S.MusteriNo = 1;',
     blanks: ['SUM', 'AS', 'INNER', 'ON', 'WHERE'],
+    sql_file: 'SQL 1 nolu müşterinin satın aldığı ürünlerin toplam tutarı.sql',
     explanation: 'SUM fonksiyonu toplam tutarı (fiyat * adet) hesaplar. Tablolar INNER JOIN ile birleştirilir ve ON birleşme koşulu belirlenir.'
   },
   {
@@ -2307,6 +2309,7 @@ const questionsDers10 = [
     question: '2 nolu kasiyerin içinde bulunduğumuz ayda yaptığı toplam satış tutarı sorgusunu tamamlayın.',
     snippet: 'SELECT ___1___(U.Fiyat * S.Adet) \nFROM satis AS S\nINNER ___2___ urun AS U\n___3___ U.UrunNo = S.UrunNo\n___4___ S.KasiyerNo = 2\nAND ___5___(S.Tarih) = MONTH(NOW());',
     blanks: ['SUM', 'JOIN', 'ON', 'WHERE', 'MONTH'],
+    sql_file: 'SQL 2 nolu kasiyerin bu ay yaptığı toplam satış tutarı.sql',
     explanation: 'SUM fonksiyonu toplam tutarı hesaplar. Tablolar INNER JOIN ile bağlanır. MONTH() fonksiyonu tarihin ay bilgisini alıp NOW() (bugün) ile karşılaştırır.'
   },
   {
@@ -2316,6 +2319,7 @@ const questionsDers10 = [
     question: '\'Nevbahar\' isimli kasiyerin bu ay yaptığı toplam satış tutarını hesaplayan 3\'lü JOIN sorgusunu tamamlayın.',
     snippet: 'SELECT SUM(U.Fiyat * S.Adet) \nFROM satis AS S\n___1___ JOIN urun AS U ___2___ U.UrunNo = S.UrunNo\n___3___ JOIN kasiyer AS K ___4___ K.KasiyerNo = S.KasiyerNo\n___5___ K.Ad = \'Nevbahar\'\nAND MONTH(S.Tarih) = ___6___(NOW());',
     blanks: ['INNER', 'ON', 'INNER', 'ON', 'WHERE', 'MONTH'],
+    sql_file: 'SQL Meltem isimli kasiyerin bu ay yaptığı toplam satış tutarı.sql',
     explanation: 'Satis, urun ve kasiyer tabloları INNER JOIN ile bağlanır. Nevbahar ismine göre filtreleme WHERE ile yapılır. NOW() fonksiyonunun ayı MONTH() ile karşılaştırılır.'
   },
   {
@@ -2325,6 +2329,7 @@ const questionsDers10 = [
     question: 'Alışveriş yapmayan (satis tablosunda kaydı bulunmayan) müşterilerin adını, müşteri numarasını ve telefonunu listelemek için eksik JOIN ve filtre kelimelerini tamamlayın.',
     snippet: 'SELECT M.Ad, M.MusteriNo, M.Telefon \nFROM musteri ___1___ M\n___2___ ___3___ satis AS S\n___4___ S.MusteriNo = M.MusteriNo\n___5___ S.MusteriNo ___6___;',
     blanks: ['AS', 'LEFT', 'JOIN', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Alışveriş yapmayan müşterilerin listelenmesi.sql',
     explanation: 'Müşterilerin tamamını getirmek ve satış yapmayanları bulmak için LEFT JOIN kullanılır. Satış kaydı olmayanlar WHERE koşulunda IS NULL ile elenir.'
   },
   {
@@ -2334,6 +2339,7 @@ const questionsDers10 = [
     question: 'Satış yapmayan kasiyerleri ad ve soyadlarını birleştirerek ve kasiyer numarasıyla listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(K.Ad, \' \', K.Soyad) ___2___ \'Ad Soyad\', S.KasiyerNo \nFROM kasiyer AS K\n___3___ JOIN satis AS S\n___4___ K.KasiyerNo = S.KasiyerNo\n___5___ S.KasiyerNo ___6___;',
     blanks: ['CONCAT', 'AS', 'LEFT', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Satış Yapmayan Kasiyerlerin Listelenmesi.sql',
     explanation: 'CONCAT fonksiyonu ad ve soyadı araya boşluk koyarak birleştirir. LEFT JOIN ile kasiyerler satıs ile birleştirilir. Satış yapmayanlar IS NULL ile filtrelenir.'
   },
   {
@@ -2343,6 +2349,7 @@ const questionsDers10 = [
     question: 'Satis tablosunda hiç kaydı bulunmayan satış yapmamış şubeleri RIGHT JOIN kullanarak listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT SU.SubeNo, S.SubeNo, SU.Ad \nFROM satis AS S\n___1___ ___2___ sube ___3___ SU\n___4___ S.SubeNo = SU.SubeNo\n___5___ S.SubeNo ___6___;',
     blanks: ['RIGHT', 'JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Satış Yapmayan Şubelerin Listelenmesi.sql',
     explanation: 'Şubeler sağ tablo (RIGHT JOIN) yapılarak tüm şubeler listelenir ve satis tablosundaki karşılığı IS NULL olanlar elenir.'
   },
   {
@@ -2352,6 +2359,7 @@ const questionsDers10 = [
     question: 'Hiç satışı yapılmamış ürünleri RIGHT JOIN kullanarak listeleyen ve ürün numarasına göre sıralayan sorguyu tamamlayın.',
     snippet: 'SELECT S.SatisNo, U.UrunAd, S.UrunNo \nFROM satis AS S\n___1___ JOIN urun AS U ___2___ S.UrunNo = U.UrunNo\n___3___ S.UrunNo ___4___\n___5___ ___6___ S.UrunNo;',
     blanks: ['RIGHT', 'ON', 'WHERE', 'IS NULL', 'ORDER', 'BY'],
+    sql_file: 'SQL Satışı Yapılmayan Ürünlerin Listelenmesi.sql',
     explanation: 'Ürünler sağda olduğu için RIGHT JOIN kullanılır. Satışı olmayanları filtrelemek için WHERE S.UrunNo IS NULL yazılır ve ORDER BY ile sıralanır.'
   },
   {
@@ -2361,6 +2369,7 @@ const questionsDers10 = [
     question: 'Bünyesinde hiçbir ürün barındırmayan (ürünü olmayan) kategorileri listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT K.KategoriAd \nFROM kategori AS K \n___1___ JOIN urun AS U\n___2___ K.KategoriNo = U.KategoriNo\n___3___ U.KategoriNo ___4___;',
     blanks: ['LEFT', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Ürünü olmayan kategorilerin listelenmesi.sql',
     explanation: 'Kategori sol tablo kabul edilip LEFT JOIN ile urun tablosuna bağlanır. Ürünü olmayan kategoriler WHERE U.KategoriNo IS NULL ile tespit edilir.'
   },
   {
@@ -2370,6 +2379,7 @@ const questionsDers10 = [
     question: 'Ürünü olmayan markaları RIGHT JOIN ile marka tablosunu sağda tutarak listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT M.MarkaAd \nFROM urun ___1___ U  \n___2___ JOIN marka AS M\n___3___ M.MarkaNo = U.MarkaNo\n___4___ U.UrunNo ___5___;',
     blanks: ['AS', 'RIGHT', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Ürünü olmayan markaların listelenmesi.sql',
     explanation: 'Markaları sağ tablo tutarak RIGHT JOIN ile ürünlerle birleştiririz. Ürünü olmayan markalar WHERE U.UrunNo IS NULL ile bulunur.'
   },
   {
@@ -2379,6 +2389,7 @@ const questionsDers10 = [
     question: 'Ürün adlarını, kategori adlarını ve marka adlarını birlikte listeleyen 3\'lü INNER JOIN sorgusunu tamamlayın.',
     snippet: 'SELECT UrunAd, KategoriAd, MarkaAd\n___1___ urun AS u \n___2___ JOIN kategori AS k ___3___ k.KategoriNo = u.KategoriNo\n___4___ JOIN marka AS m ___5___ m.MarkaNo = u.MarkaNo;',
     blanks: ['FROM', 'INNER', 'ON', 'INNER', 'ON'],
+    sql_file: 'Uygulama Soru-2.sql',
     explanation: 'Üç tabloyu birleştirmek için FROM ifadesi ve iki adet INNER JOIN ile bunlara karşılık gelen ON birleştirme şartları yazılır.'
   },
   {
@@ -2388,6 +2399,7 @@ const questionsDers10 = [
     question: 'Kategori adı \'Baharat\' olan ürünleri ve kategori adlarını INNER JOIN kullanarak listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT UrunAd, KategoriAd \nFROM urun AS u \n___1___ ___2___ kategori AS k\n___3___ k.KategoriNo = u.KategoriNo\n___4___ k.KategoriAd ___5___ (\'Baharat\');',
     blanks: ['INNER', 'JOIN', 'ON', 'WHERE', 'IN'],
+    sql_file: 'SQL Kategorite Göre Listeleme.sql',
     explanation: 'Tablolar INNER JOIN ... ON ile bağlanır, ardından WHERE k.KategoriAd IN (\'Baharat\') veya \'=\' ile filtrelenir.'
   },
   {
@@ -2397,6 +2409,7 @@ const questionsDers10 = [
     question: 'Hangi markadan kaç adet ürün olduğunu bulan, adet sayısı 1\'den büyük olan markaları listeleyen aggregate sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(U.MarkaNo) AS \'Adet\', M.MarkaAd AS \'Marka Ad\'\nFROM urun AS U\nINNER JOIN marka AS M ___2___ M.MarkaNo = U.MarkaNo\n___3___ ___4___ M.MarkaNo\n___5___ 1 < ___6___(U.MarkaNo);',
     blanks: ['COUNT', 'ON', 'GROUP', 'BY', 'HAVING', 'COUNT'],
+    sql_file: 'SQL Hangi Markadan kaç adet ürün olduğunu bulan sorgu.sql',
     explanation: 'COUNT aggregate fonksiyonudur. Markaya göre gruplama GROUP BY ile yapılır. Gruplanmış sonuçlardaki filtreleme HAVING COUNT(...) ile gerçekleştirilir.'
   },
   {
@@ -2406,6 +2419,7 @@ const questionsDers10 = [
     question: 'Her bir kasiyerin bu ay yaptığı toplam satış tutarını kasiyer adı ve oranıyla birlikte hesaplayan sorguyu tamamlayın.',
     snippet: 'SELECT K.Ad, S.KasiyerNo, ___1___(S.Adet * U.Fiyat) \nFROM satis AS S\n___2___ JOIN urun AS U ___3___ U.UrunNo = S.UrunNo\n___4___ JOIN kasiyer AS K ___5___ K.KasiyerNo = S.KasiyerNo\nWHERE MONTH(NOW()) = MONTH(S.Tarih) \nAND YEAR(NOW()) = YEAR(S.Tarih)\n___6___ ___7___ S.KasiyerNo;',
     blanks: ['SUM', 'INNER', 'ON', 'INNER', 'ON', 'GROUP', 'BY'],
+    sql_file: 'SQL Her bir kasiyerin bu ay yaptığı satış tutarının bulunması.sql',
     explanation: 'SUM satış tutarını toplar. Tablolar INNER JOIN ve ON ile bağlanır. Kasiyere göre gruplamak için GROUP BY S.KasiyerNo kullanılır.'
   },
   {
@@ -2415,6 +2429,7 @@ const questionsDers10 = [
     question: 'Her bir şubenin bugün yaptığı toplam satış tutarını bulan sorguyu tamamlayın.',
     snippet: 'SELECT SU.Ad, ___1___(S.Adet * U.Fiyat) \nFROM satis AS S\nINNER JOIN urun AS U ON U.UrunNo = S.UrunNo\nINNER JOIN sube AS SU ___2___ SU.SubeNo = S.SubeNo\n___3___ ___4___(NOW(), S.Tarih) = 0\n___5___ ___6___ S.SubeNo;',
     blanks: ['SUM', 'ON', 'WHERE', 'DATEDIFF', 'GROUP', 'BY'],
+    sql_file: 'SQL Her bir şubenin bugün yaptığı satış tutarının bulunması.sql',
     explanation: 'DATEDIFF(NOW(), Tarih) = 0 bugün yapılan satışları filtreler. Şubeye göre toplam tutar için SUM fonksiyonu ve GROUP BY kullanılır.'
   },
   {
@@ -2424,6 +2439,7 @@ const questionsDers10 = [
     question: 'Hangi kategoride kaç çeşit ürün olduğunu bulup kategori adıyla listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(U.UrunNo) AS \'Adet\', K.KategoriAd AS \'Kategori Adı\' \nFROM kategori AS K\n___2___ JOIN urun AS U\n___3___ U.KategoriNo = K.KategoriNo\n___4___ ___5___ K.KategoriNo;',
     blanks: ['COUNT', 'INNER', 'ON', 'GROUP', 'BY'],
+    sql_file: 'SQL Her kategoride kaç çeşit ürün olduğunun bulunması.sql',
     explanation: 'COUNT(UrunNo) kategorideki ürün sayısını verir. INNER JOIN ile kategoriler bağlanır ve GROUP BY ile gruplama yapılır.'
   },
   {
@@ -2433,6 +2449,7 @@ const questionsDers10 = [
     question: 'Bu yıl yapılan satışları ay bazında gruplayarak, her ayın toplam satış tutarını hesaplayan sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(S.Adet * U.Fiyat), ___2___(S.Tarih)\nFROM urun AS U\nINNER JOIN satis AS S ON U.UrunNo = S.UrunNo\n___3___ YEAR(S.Tarih) = ___4___(NOW())\n___5___ ___6___ MONTH(S.Tarih);',
     blanks: ['SUM', 'MONTH', 'WHERE', 'YEAR', 'GROUP', 'BY'],
+    sql_file: 'SQL Her yıl her ay toplam satış tutarını bulunması.sql',
     explanation: 'Aylık gruplama MONTH(Tarih) ile yapılır. Bu yıl filtresi YEAR(Tarih) = YEAR(NOW()) ile WHERE altında uygulanır.'
   },
   {
@@ -2442,6 +2459,7 @@ const questionsDers10 = [
     question: 'Her kategorinin ortalama fiyat bilgisini bulan görünümü (VIEW) oluşturan veya değiştiren sorguyu tamamlayın.',
     snippet: '___1___ ___2___ ortalamaFiyatKategori AS\nSELECT ___3___(Fiyat) AS \'OrtalamaFiyat\', K.KategoriAd \nFROM urun AS U\nINNER JOIN kategori AS K ___4___ K.KategoriNo = U.KategoriNo\n___5___ ___6___ K.KategoriAd;',
     blanks: ['ALTER', 'VIEW', 'AVG', 'ON', 'GROUP', 'BY'],
+    sql_file: 'SQL Kategori Ortalama Fiyat.sql',
     explanation: 'ALTER VIEW görünümü güncellemeye yarar. Ortalama için AVG kullanılır. Kategorilere göre gruplama GROUP BY ile sağlanır.'
   },
   {
@@ -2451,6 +2469,7 @@ const questionsDers10 = [
     question: 'Müşterilerin satın almış oldukları ürünlerin adını, fiyatını, satış tarihini ve müşteri bilgilerini listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT M.Ad, M.Soyad, U.UrunNo, U.UrunAd, U.Fiyat, S.Tarih \n___1___ satis AS S\n___2___ JOIN urun AS U\n___3___ S.UrunNo = U.UrunNo\n___4___ JOIN musteri AS M\n___5___ M.MusteriNo = S.MusteriNo;',
     blanks: ['FROM', 'INNER', 'ON', 'INNER', 'ON'],
+    sql_file: 'Uygulama Soru-1.sql',
     explanation: 'FROM tablo belirtir. satis tablosu urun ve musteri tablolarıyla INNER JOIN ve ON koşulları üzerinden birleştirilir.'
   },
   {
@@ -2460,6 +2479,7 @@ const questionsDers10 = [
     question: 'Her bir kasiyerin toplam kaç liralık satış yaptığını kasiyer adına göre gruplayıp ürün numarasına göre sıralayan sorguyu tamamlayın.',
     snippet: 'SELECT k.Ad AS \'Kasiyer Adı\', ___1___(u.Fiyat * s.Adet) \nFROM satis AS s \n___2___ JOIN kasiyer AS k ___3___ s.KasiyerNo = k.KasiyerNo\n___4___ JOIN urun AS u ___5___ s.UrunNo = u.UrunNo\n___6___ BY k.Ad\n___7___ BY u.UrunNo;',
     blanks: ['SUM', 'INNER', 'ON', 'INNER', 'ON', 'GROUP', 'ORDER'],
+    sql_file: 'Uygulama Soru-10.sql',
     explanation: 'Toplam tutar SUM ile hesaplanır. Kasiyer ve ürün tabloları INNER JOIN ile bağlanır. GROUP BY kasiyer adına göre yapılırken, ORDER BY ile ürün numarasına göre sıralanır.'
   },
   {
@@ -2469,6 +2489,7 @@ const questionsDers10 = [
     question: '100 TL ve üzerinde satış yapan her bir kasiyerin adını ve toplam satış tutarını listeleyen ve bunları ürün numarasına göre sıralayan sorguyu tamamlayın.',
     snippet: 'SELECT k.Ad, ___1___(u.Fiyat * s.Adet) \nFROM satis AS s \nINNER JOIN kasiyer AS k ON s.KasiyerNo = k.KasiyerNo\n___2___ JOIN urun AS u ON s.UrunNo = u.UrunNo\n___3___ ___4___ k.Ad\n___5___ 100 <= SUM(u.Fiyat * s.Adet)\n___6___ BY u.UrunNo;',
     blanks: ['SUM', 'INNER', 'GROUP', 'BY', 'HAVING', 'ORDER'],
+    sql_file: 'Uygulama Soru-12.sql',
     explanation: 'Toplam tutar filtrelemesi gruplamadan sonra HAVING ile kontrol edilir (100 <= SUM(...)). Sıralama ORDER BY ile yapılır.'
   },
   {
@@ -2478,6 +2499,7 @@ const questionsDers10 = [
     question: 'Müşterilerin hangi markalardan alışveriş yaptığını listeleyen 4 tablolu sorguyu tamamlayın.',
     snippet: 'SELECT mu.MusteriNo, mu.Ad, u.UrunAd, m.MarkaNo, m.MarkaAd \nFROM market.musteri AS mu\n___1___ JOIN market.satis AS s ___2___ mu.MusteriNo = s.MusteriNo\n___3___ JOIN market.urun AS u ___4___ s.UrunNo = u.UrunNo\n___5___ JOIN market.marka AS m ___6___ u.MarkaNo = m.MarkaNo;',
     blanks: ['INNER', 'ON', 'INNER', 'ON', 'INNER', 'ON'],
+    sql_file: 'Uygulama Soru-14.sql',
     explanation: '4 tablo (musteri, satis, urun, marka) sırayla INNER JOIN ... ON ilişkileriyle birbirine bağlanır.'
   },
   {
@@ -2487,6 +2509,7 @@ const questionsDers10 = [
     question: 'Her bir şubenin toplam kaç liralık satış yaptığını bulup şube adına göre gruplayıp ürün noya göre sıralayan sorguyu tamamlayın.',
     snippet: 'SELECT su.Ad AS \'Şube Adı\', ___1___(u.Fiyat * s.Adet) AS \'Toplam Satış Tutarı\' \nFROM satis AS s \n___2___ JOIN sube AS su ___3___ s.SubeNo = su.SubeNo\n___4___ JOIN urun AS u ___5___ s.UrunNo = u.UrunNo\n___6___ BY su.Ad\n___7___ BY u.UrunNo;',
     blanks: ['SUM', 'INNER', 'ON', 'INNER', 'ON', 'GROUP', 'ORDER'],
+    sql_file: 'Uygulama Soru-16.sql',
     explanation: 'Toplam tutar SUM ile hesaplanır, sube ve urun tabloları birleştirilir, GROUP BY şube adına göre, ORDER BY ise ürün noya göre sıralar.'
   },
   {
@@ -2496,6 +2519,7 @@ const questionsDers10 = [
     question: 'Her bir müşterinin hangi kategoriden kaç adet ürün aldığını müşteri numarası ve kategori adıyla listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT M.MusteriNo, M.Ad, K.KategoriAd, ___1___(S.Adet) AS \'Adet\' \nFROM satis AS S\n___2___ JOIN urun AS U ___3___ U.UrunNo = S.UrunNo\n___4___ JOIN musteri AS M ON M.MusteriNo = S.MusteriNo\n___5___ JOIN kategori AS K ON K.KategoriNo = U.KategoriNo\n___6___ BY M.MusteriNo, K.KategoriNo;',
     blanks: ['SUM', 'INNER', 'ON', 'INNER', 'INNER', 'GROUP'],
+    sql_file: 'Uygulama Soru-4.sql',
     explanation: 'Miktar toplamak için SUM(Adet) kullanılır. 4 tablo JOIN ile birleştirildikten sonra hem müşteri no hem kategori noya göre GROUP BY uygulanır.'
   },
   {
@@ -2505,6 +2529,7 @@ const questionsDers10 = [
     question: 'Her markadan 2 adetten fazla ürün alan müşterilerin ad soyad, marka ve adet bilgilerini listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT m.MusteriNo, m.ad, m.Soyad, ma.MarkaAd, SUM(s.Adet) AS \'Adet\' \nFROM market.musteri AS m \n___1___ JOIN market.satis AS s ON m.MusteriNo = s.MusteriNo\n___2___ JOIN market.urun AS u ON s.UrunNo = u.UrunNo\n___3___ JOIN market.marka AS ma ON u.MarkaNo = ma.MarkaNo\n___4___ BY m.MusteriNo, ma.MarkaNo\n___5___ 2 < ___6___(s.Adet);',
     blanks: ['INNER', 'INNER', 'INNER', 'GROUP', 'HAVING', 'SUM'],
+    sql_file: 'Uygulama Soru-6.sql',
     explanation: 'Müşteri, satış, ürün ve marka tabloları INNER JOIN ile bağlanır. Müşteri ve Marka bazında GROUP BY yapıldıktan sonra HAVING SUM(Adet) > 2 filtresi uygulanır.'
   },
   {
@@ -2514,6 +2539,7 @@ const questionsDers10 = [
     question: 'Müşterilerin hangi markalardan alışveriş yaptığını listeleyen ve 4 tabloyu birbirine bağlayan sorguyu yazın.',
     snippet: 'SELECT m.MusteriNo, m.ad, m.Soyad, ma.MarkaAd, SUM(s.Adet) AS \'Adet\' \nFROM market.musteri AS m \n___1___ JOIN market.satis AS s ___2___ m.MusteriNo = s.MusteriNo\n___3___ JOIN market.urun AS u ___4___ s.UrunNo = u.UrunNo\n___5___ JOIN market.marka AS ma ___6___ u.MarkaNo = ma.MarkaNo\nGROUP BY m.Ad, ma.MarkaAd;',
     blanks: ['INNER', 'ON', 'INNER', 'ON', 'INNER', 'ON'],
+    sql_file: 'Uygulama Soru-5.sql',
     explanation: 'Müşteri, satış, ürün ve marka tabloları sırasıyla INNER JOIN ... ON bağlantılarıyla birleştirilerek listelenir.'
   },
   {
@@ -2523,6 +2549,7 @@ const questionsDers10 = [
     question: 'Müşterilerin hangi kategorilerden alışveriş yaptığını gösteren 4 tablolu birleşik sorguyu tamamlayın.',
     snippet: 'SELECT m.MusteriNo, m.Ad, u.UrunAd, k.KategoriNo, k.KategoriAd \nFROM market.musteri AS m \n___1___ JOIN market.satis AS s ___2___ m.MusteriNo = s.MusteriNo\n___3___ JOIN market.urun AS u ON s.UrunNo = u.UrunNo\n___4___ JOIN market.kategori AS k ___5___ u.KategoriNo = k.KategoriNo;',
     blanks: ['INNER', 'ON', 'INNER', 'INNER', 'ON'],
+    sql_file: 'Uygulama Soru-2.sql',
     explanation: 'Bu 4 tablolu sorguda musteri, satis, urun ve kategori tabloları INNER JOIN kullanılarak birleştirilmiştir.'
   },
   {
@@ -2532,6 +2559,7 @@ const questionsDers10 = [
     question: 'Her bir müşterinin satın almış olduğu toplam ürün adedini veren JOIN ve gruplama sorgusunu tamamlayın.',
     snippet: 'SELECT M.MusteriNo, ___1___(S.Adet) AS \'Adet\' \nFROM satis AS S \n___2___ JOIN urun AS U ON U.UrunNo = S.UrunNo\n___3___ JOIN musteri AS M ON M.MusteriNo = S.MusteriNo\n___4___ ___5___ M.MusteriNo;',
     blanks: ['SUM', 'INNER', 'INNER', 'GROUP', 'BY'],
+    sql_file: 'Uygulama Soru-3.sql',
     explanation: 'SUM aggregate fonksiyonudur. Müşteri noya göre gruplamak için GROUP BY M.MusteriNo kullanılır.'
   },
   {
@@ -2541,6 +2569,7 @@ const questionsDers10 = [
     question: 'Ürünlerin markalarını getirirken, markası tanımlanmamış ürünlerin de listelenmesini sağlayan LEFT OUTER JOIN sorgusunu tamamlayın.',
     snippet: 'SELECT UrunAd, MarkaAd \nFROM urun ___1___ ___2___ ___3___ marka \n___4___ urun.MarkaNo = marka.MarkaNo;',
     blanks: ['LEFT', 'OUTER', 'JOIN', 'ON'],
+    sql_file: 'Uygulama Soru-14.sql',
     explanation: 'Sol taraftaki (urun) tüm kayıtları ve sağ taraftaki (marka) eşleşenleri getirmek için LEFT OUTER JOIN kullanılır.'
   },
   {
@@ -2550,6 +2579,7 @@ const questionsDers10 = [
     question: 'Marka tablosunu sol, ürün tablosunu sağ alarak tüm ürünleri ve marka adlarını listeleyen RIGHT OUTER JOIN sorgusunu tamamlayın.',
     snippet: 'SELECT UrunAd, MarkaAd \nFROM marka ___1___ ___2___ ___3___ urun \n___4___ urun.MarkaNo = marka.MarkaNo;',
     blanks: ['RIGHT', 'OUTER', 'JOIN', 'ON'],
+    sql_file: 'SQL Outer Join Sorguları.sql',
     explanation: 'Sağ taraftaki (urun) tüm kayıtları ve sol taraftaki (marka) eşleşenleri getirmek için RIGHT OUTER JOIN kullanılır.'
   },
   {
@@ -2559,6 +2589,7 @@ const questionsDers10 = [
     question: 'Ürün, kategori ve marka adlarını birleştiren \'v_UrunBilgileri\' isimli bir VIEW (görünüm) oluşturan sorguyu tamamlayın.',
     snippet: '___1___ ___2___ v_UrunBilgileri ___3___ \nSELECT U.UrunAd, K.KategoriAd, M.MarkaAd \nFROM market.urun AS U \n___4___ JOIN kategori AS K ON K.KategoriNo = U.KategoriNo\n___5___ JOIN marka AS M ON M.MarkaNo = U.MarkaNo;',
     blanks: ['CREATE', 'VIEW', 'AS', 'INNER', 'INNER'],
+    sql_file: 'Uygulama Soru-13.sql',
     explanation: 'CREATE VIEW ad AS formatı ile görünüm oluşturulur. Tablolar INNER JOIN ile birbirine bağlanır.'
   },
   {
@@ -2568,6 +2599,7 @@ const questionsDers10 = [
     question: 'Kasiyerlerin yaptıkları satışları ürün bazında gruplayarak toplam ürün adedi ve toplam satış tutarını hesaplayan sorguyu tamamlayın.',
     snippet: 'SELECT k.KasiyerNo, k.ad, k.Soyad, u.UrunNo, u.fiyat, \n  ___1___(u.UrunNo) AS \'toplamUrun\', \n  (s.Adet * u.Fiyat * SUM(u.UrunNo)) AS \'toplamFiyat\' \nFROM market.kasiyer AS k \n___2___ JOIN market.satis AS s ___3___ k.KasiyerNo = s.KasiyerNo\n___4___ JOIN market.urun AS u ___5___ s.SatisNo = u.UrunNo\n___6___ BY k.ad, u.UrunNo;',
     blanks: ['SUM', 'INNER', 'ON', 'INNER', 'ON', 'GROUP'],
+    sql_file: 'Uygulama Soru-10.sql',
     explanation: 'Kasiyer bazında satışları ürün noya göre gruplamak için GROUP BY kullanılır. JOIN ve ON koşullarıyla tablolar bağlanır.'
   },
   {
@@ -2577,6 +2609,7 @@ const questionsDers10 = [
     question: 'Şubelerin her ay gerçekleştirdiği satış işlemleri sayısını şube ve ay bazında listeleyen gruplanmış sorguyu tamamlayın.',
     snippet: 'SELECT SU.Ad, ___1___(*), ___2___(S.Tarih) \nFROM satis AS S \n___3___ JOIN sube AS SU ON SU.SubeNo = S.SubeNo \n___4___ ___5___ SU.SubeNo, ___6___(S.Tarih);',
     blanks: ['COUNT', 'MONTH', 'INNER', 'GROUP', 'BY', 'MONTH'],
+    sql_file: 'SQL-Ödev3 Cevaplar 17.sql',
     explanation: 'İşlem sayısı için COUNT(*), ay numarası için MONTH() fonksiyonu kullanılır. Şube ve aya göre GROUP BY uygulanır.'
   },
   {
@@ -2586,6 +2619,7 @@ const questionsDers10 = [
     question: 'Marka adı \'HP\' olmayan ve kategorisi \'Laptop\' olan ürünlerin toplam fiyatını veren 3\'lü birleşik sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(U.Fiyat) \nFROM urun AS U \n___2___ JOIN marka AS M ON M.MarkaNo = U.MarkaNo \n___3___ JOIN kategori AS K ON K.KategoriNo = U.KategoriNo \n___4___ M.MarkaAd <> \'HP\' ___5___ K.KategoriAd = \'Laptop\';',
     blanks: ['SUM', 'INNER', 'INNER', 'WHERE', 'AND'],
+    sql_file: 'SQL-Ödev3 Cevaplar 1-3-4-5.sql',
     explanation: 'Toplam hesaplamak için SUM kullanılır. Tablolar INNER JOIN ile bağlanır ve filtreler WHERE ve AND ile belirtilir.'
   },
   {
@@ -2595,6 +2629,7 @@ const questionsDers10 = [
     question: 'Her bir kasiyerin yaptığı toplam satış işlemleri sayısını bulup, en az satış yapan kasiyeri işlem sayısına göre artan sırada sıralayarak ve LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: 'SELECT K.Ad, COUNT(*) \nFROM Satis AS S \n___1___ JOIN kasiyer AS K ON K.KasiyerNo = S.KasiyerNo \n___2___ ___3___ K.KasiyerNo \n___4___ ___5___ COUNT(*) ___6___ \n___7___ 0, 1;',
     blanks: ['INNER', 'GROUP', 'BY', 'ORDER', 'BY', 'ASC', 'LIMIT'],
+    sql_file: 'SQL-Ödev3 Cevaplar 13.sql',
     explanation: 'En az satış yapanı bulmak için COUNT(*) değerine göre ORDER BY COUNT Extent (ASC) sıralama yapılır ve LIMIT 0,1 ile ilk satır alınır.'
   },
   {
@@ -2604,6 +2639,7 @@ const questionsDers10 = [
     question: 'Peynir kategorisindeki satış adetlerini aylara göre gruplayarak listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(S.Tarih), ___2___(*) \nFROM urun AS U \n___3___ JOIN satis AS S ON S.UrunNo = U.UrunNo \n___4___ JOIN kategori AS K ON K.KategoriNo = U.KategoriNo \n___5___ K.KategoriAd = \'Peynir\' \n___6___ BY MONTH(S.Tarih);',
     blanks: ['MONTH', 'COUNT', 'INNER', 'INNER', 'WHERE', 'GROUP'],
+    sql_file: 'SQL-Ödev3 Cevaplar 15.sql',
     explanation: 'Aylık gruplama için MONTH() fonksiyonu, JOIN bağlantıları ve filtreleme için WHERE, gruplama için ise GROUP BY kullanılır.'
   },
   {
@@ -2613,6 +2649,7 @@ const questionsDers10 = [
     question: 'Ürünlerin toplam fiyatının 5000\'den büyük olduğu kategorileri ve toplam fiyatlarını veren gruplanmış sorguyu tamamlayın.',
     snippet: 'SELECT K.KategoriAd, ___1___(U.Fiyat) \nFROM urun AS U \n___2___ JOIN kategori AS K ___3___ K.KategoriNo = U.KategoriNo \n___4___ BY K.KategoriAd \n___5___ 5000 < ___6___(U.Fiyat);',
     blanks: ['SUM', 'INNER', 'ON', 'GROUP', 'HAVING', 'SUM'],
+    sql_file: 'SQL-Ödev3 Cevaplar 10.sql',
     explanation: 'Gruplanmış verilerde aggregate koşullarını filtrelemek için HAVING ifadesi kullanılır. Toplam fiyat SUM ile alınır.'
   },
   {
@@ -2622,6 +2659,7 @@ const questionsDers10 = [
     question: 'Şehir adları \'a\' harfiyle başlamayan müşterilerin benzersiz şehir listesini veren sorguyu tamamlayın.',
     snippet: '___1___ ___2___(Sehir) ___3___ musteri \n___4___ Sehir ___5___ ___6___ \'a%\';',
     blanks: ['SELECT', 'DISTINCT', 'FROM', 'WHERE', 'NOT', 'LIKE'],
+    sql_file: 'SQL-Ödev3 Cevaplar 1-3-4-5.sql',
     explanation: 'Benzersiz değerler için DISTINCT, \'a\' harfi ile başlamayanlar için NOT LIKE \'a%\' kalıbı kullanılır.'
   },
   {
@@ -2631,6 +2669,7 @@ const questionsDers10 = [
     question: '1, 2 ve 3 numaralı kategorilerdeki ürünlerin fiyatlarının tamamının (hepsinin) altında fiyata sahip ürünleri ALL kullanarak listeleyin.',
     snippet: 'SELECT * FROM urun \n___1___ Fiyat < ___2___ (___3___ Fiyat ___4___ urun ___5___ KategoriNo ___6___ (1,2,3));',
     blanks: ['WHERE', 'ALL', 'SELECT', 'FROM', 'WHERE', 'IN'],
+    sql_file: 'SQL Alt Sorgu ALL Kullanımı.sql',
     explanation: 'Alt sorgudaki tüm fiyatların altında olmasını sağlamak için \'< ALL\' ifadesi ve alt sorguda \'IN (1,2,3)\' filtresi kullanılır.'
   },
   {
@@ -2640,6 +2679,7 @@ const questionsDers10 = [
     question: '1, 2 ve 3 numaralı kategorilerdeki ürünlerin herhangi birinin fiyatının üstünde fiyata sahip ürünleri ANY kullanarak listeleyin.',
     snippet: 'SELECT * FROM urun \n___1___ Fiyat > ___2___ (___3___ Fiyat ___4___ urun ___5___ KategoriNo ___6___ (1,2,3));',
     blanks: ['WHERE', 'ANY', 'SELECT', 'FROM', 'WHERE', 'IN'],
+    sql_file: 'SQL Alt Sorgu ANY Kullanımı.sql',
     explanation: '\'ANY\' alt sorgudaki değerlerden herhangi biriyle eşleşmenin yeterli olduğunu belirtir. Fiyat > ANY (...) şeklinde kullanılır.'
   },
   {
@@ -2649,6 +2689,7 @@ const questionsDers10 = [
     question: 'Ürünlerin fiyatı, genel ortalama fiyattan küçük olan ürünleri listeleyen ve fiyata göre sıralayan alt sorgulu ifadeyi tamamlayın.',
     snippet: 'SELECT * FROM urun \n___1___ Fiyat < (___2___ ___3___(Fiyat) ___4___ urun) \n___5___ ___6___ Fiyat;',
     blanks: ['WHERE', 'SELECT', 'AVG', 'FROM', 'ORDER', 'BY'],
+    sql_file: 'SQL Alt Sorgu AVG Kullanma.sql',
     explanation: 'AVG(Fiyat) ortalama fiyatı bulur. Dış sorguda WHERE Fiyat < (Alt Sorgu) ile ortalamanın altındakiler filtrelenir ve ORDER BY ile sıralanır.'
   },
   {
@@ -2658,6 +2699,7 @@ const questionsDers10 = [
     question: '\'Elektronik\' kategorisindeki ortalama fiyatın altındaki elektronik ürünleri listeleyen ve ürün fiyatına göre sıralayan karmaşık alt sorguyu tamamlayın.',
     snippet: 'SELECT * FROM urun \nWHERE Fiyat < (SELECT ___1___(Fiyat) FROM urun ___2___ BY KategoriNo ___3___ KategoriNo = (SELECT KategoriNo FROM kategori WHERE KategoriAd = \'Elektronik\'))\n___4___ KategoriNo = (___5___ KategoriNo FROM kategori ___6___ KategoriAd = \'Elektronik\')\nORDER BY Fiyat;',
     blanks: ['AVG', 'GROUP', 'HAVING', 'AND', 'SELECT', 'WHERE'],
+    sql_file: 'SQL Alt Sorgu GROUP BY ve HAVING Kullanımı.sql',
     explanation: 'İçeride Elektronik kategorisinin ortalamasını bulmak için GROUP BY ve HAVING kullanılır. Dış sorguda da kategorinin Elektronik olması AND KategoriNo = (SELECT...) ile sınırlanır.'
   },
   {
@@ -2667,6 +2709,7 @@ const questionsDers10 = [
     question: '7. aydan önce satılan ürünlerin listesini alt sorguda IN kullanarak getiren sorguyu tamamlayın.',
     snippet: 'SELECT * FROM market.urun \n___1___ UrunNo ___2___ (SELECT UrunNo FROM market.satis ___3___ ___4___(Tarih) < 7);',
     blanks: ['WHERE', 'IN', 'WHERE', 'MONTH'],
+    sql_file: 'SQL Alt Sorgu IN Kullanımı.sql',
     explanation: 'Belirli bir aydan önce satılan ürünlerin numaraları alt sorguda MONTH(Tarih) < 7 ile çekilir ve dış sorguda WHERE UrunNo IN (...) ile listelenir.'
   },
   {
@@ -2676,6 +2719,7 @@ const questionsDers10 = [
     question: 'Ürün eklerken marka numarasını ve kategori numarasını alt sorgu ile ilgili tablolardan çekerek INSERT yapan sorguyu tamamlayın.',
     snippet: '___1___ ___2___ market.urun (UrunAd, MarkaNo, KategoriNo, Fiyat, SonKullanmaTarih, Ozellik) \n___3___ (\'Vestel Buzdolabı\', (___4___ MarkaNo FROM marka WHERE MarkaAd = \'Boron\'), (___5___ KategoriNo FROM kategori WHERE KategoriAd = \'Elektronik\'), 4800, \'2023-12-01\', \'Nofrost\');',
     blanks: ['INSERT', 'INTO', 'VALUES', 'SELECT', 'SELECT'],
+    sql_file: 'SQL Alt Sorgu Kayıt Ekleme.sql',
     explanation: 'INSERT INTO ... VALUES yapısında, değerler listesinde statik sayılar yerine alt sorgulardan dönen tekil veriler SELECT ile kullanılabilir.'
   },
   {
@@ -2685,6 +2729,7 @@ const questionsDers10 = [
     question: '\'Vestel Buzdolabı\' adlı ürünün marka numarasını alt sorgu ile \'Vestel\' markası olarak güncelleyen sorguyu tamamlayın.',
     snippet: '___1___ market.urun \n___2___ MarkaNo = (___3___ MarkaNo FROM marka WHERE MarkaAd = \'Vestel\') \nWHERE UrunNo = (___4___ UrunNo ___5___ urun WHERE UrunAd = \'Vestel Buzdolabı\');',
     blanks: ['UPDATE', 'SET', 'SELECT', 'SELECT', 'FROM'],
+    sql_file: 'SQL Alt Sorgu Kayıt Güncelleme.sql',
     explanation: 'UPDATE table SET sütun = (SELECT...) WHERE sütun = (SELECT...) yapısıyla dinamik alt sorgulu güncelleme yapılır.'
   },
   {
@@ -2694,6 +2739,7 @@ const questionsDers10 = [
     question: '2021 yılı mart (3) veya kasım (11) aylarında yapılan satışları alt sorgu yardımıyla silen sorguyu tamamlayın.',
     snippet: '___1___ ___2___ satis \nWHERE Tarih ___3___ (SELECT s.Tarih FROM market.satis AS S \nWHERE ___4___(s.Tarih) = 2021 AND ___5___(s.Tarih) IN (3,11));',
     blanks: ['DELETE', 'FROM', 'IN', 'YEAR', 'MONTH'],
+    sql_file: 'SQL Alt Sorgu Kayıt Silme.sql',
     explanation: 'DELETE FROM table WHERE ... şeklinde silme yapılır. Tarihleri eşleştirmek için YEAR() ve MONTH() fonksiyonlarından yararlanılır.'
   },
   {
@@ -2703,6 +2749,7 @@ const questionsDers10 = [
     question: 'Müşteri tablosunda kayıtlı olup satis tablosunda hiç kaydı bulunmayan müşterileri alt sorgu (NOT IN) mantığıyla listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT * FROM musteri \n___1___ MusteriNo ___2___ (___3___ MusteriNo ___4___ satis ___5___ MusteriNo ___6___ NOT NULL);',
     blanks: ['WHERE', 'NOT IN', 'SELECT', 'FROM', 'WHERE', 'IS'],
+    sql_file: 'SQL 7. aydan önce satılan ürünlerin listelenmesi.sql',
     explanation: 'NOT IN kullanarak alt sorgudaki listede yer almayan müşteriler elenir. Alt sorguda \'WHERE MusteriNo IS NOT NULL\' yapılması performans ve doğruluk açısından önemlidir.'
   },
   {
@@ -2712,6 +2759,7 @@ const questionsDers10 = [
     question: 'Ürünlerin son kullanma tarihine bugün itibariyle kaç gün kaldığını DATEDIFF kullanarak listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT UrunAd AS \'Ürün Adı\', SonKullanmaTarihi, \n___1___(SonKullanmaTarihi, ___2___()) ___3___ \'Kaç Gün Var\' \n___4___ urun\n___5___ SonKullanmaTarihi > ___6___();',
     blanks: ['DATEDIFF', 'NOW', 'AS', 'FROM', 'WHERE', 'NOW'],
+    sql_file: 'SQL Son Kullanma Tarihine Kac Gun var.sql',
     explanation: 'DATEDIFF iki tarih arasındaki gün farkını hesaplar. NOW() anlık zamanı verir. Filtreleme WHERE ile yapılır.'
   },
   {
@@ -2721,6 +2769,7 @@ const questionsDers10 = [
     question: 'Son kullanma tarihine 1 ile 7 gün arasında (1 hafta) süre kalmış ürünleri listelemek için BETWEEN kelimesini kullanan sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Fiyat, ___2___(SonKullanmaTarih, ___3___()) AS \'Kalan Gün\'\nFROM market.urun \nWHERE DATEDIFF(SonKullanmaTarih, NOW()) ___4___ 1 ___5___ 7;',
     blanks: ['SELECT', 'DATEDIFF', 'NOW', 'BETWEEN', 'AND'],
+    sql_file: 'SQL Kategorite Göre Listeleme.sql',
     explanation: 'İki sınır arasındaki değerleri seçmek için BETWEEN min AND max yapısı kullanılır. DATEDIFF ile kalan gün bulunur.'
   },
   {
@@ -2730,6 +2779,7 @@ const questionsDers10 = [
     question: 'Son kullanma tarihi geçmiş (kalan gün sayısı sıfırdan küçük) olan ürünleri bulan sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Fiyat, ___2___(SonKullanmaTarih, ___3___()) AS \'Gecen Gun\' \n___4___ market.urun \n___5___ DATEDIFF(SonKullanmaTarih, NOW()) < 0;',
     blanks: ['SELECT', 'DATEDIFF', 'NOW', 'FROM', 'WHERE'],
+    sql_file: 'SQL WHERE Son Kullanma Tarih.sql',
     explanation: 'Tarihi geçmiş ürünleri bulmak için DATEDIFF(SonKullanmaTarih, NOW()) değerinin < 0 (sıfırdan küçük) olması kontrol edilir.'
   },
   {
@@ -2739,6 +2789,7 @@ const questionsDers10 = [
     question: 'En yüksek fiyata sahip ürünün adı, markası, SKT ve fiyatını getiren alt sorgulu ifadeyi tamamlayın.',
     snippet: 'SELECT U.UrunAd, M.MarkaAd, U.SonKullanmaTarih, U.Fiyat \nFROM urun AS U \n___1___ JOIN marka AS M ___2___ M.MarkaNo = U.MarkaNo \n___3___ Fiyat = (___4___ ___5___(Fiyat) FROM urun);',
     blanks: ['INNER', 'ON', 'WHERE', 'SELECT', 'MAX'],
+    sql_file: 'SQL-Ödev3 Cevaplar 12sql.sql',
     explanation: 'MAX(Fiyat) alt sorguda en yüksek fiyatı döner. Dış sorgu WHERE Fiyat = (en yüksek fiyat) olan satırı getirir.'
   },
   {
@@ -2748,6 +2799,7 @@ const questionsDers10 = [
     question: 'Adı \'Sinan\' olan müşterinin adını \'Petek\' olarak alt sorgulu WHERE koşuluyla güncelleyen sorguyu tamamlayın.',
     snippet: '___1___ musteri ___2___ Ad = \'Petek\' \n___3___ MusteriNo = (___4___ MusteriNo ___5___ musteri WHERE Ad = \'Sinan\');',
     blanks: ['UPDATE', 'SET', 'WHERE', 'SELECT', 'FROM'],
+    sql_file: 'SQL-Ödev3 Cevaplar 1-3-4-5.sql',
     explanation: 'UPDATE table SET ad = \'Yeni\' WHERE no = (SELECT no FROM table WHERE ad = \'Eski\') yapısı kullanılır.'
   },
   {
@@ -2757,6 +2809,7 @@ const questionsDers10 = [
     question: 'Kasiyerler arasında en az satış kaydı girmiş (en az adet değil, en az işlem) kasiyeri işlem sayısına göre artan sırada sıralayıp LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: 'SELECT K.Ad, COUNT(*) \nFROM satis AS S \nINNER JOIN kasiyer AS K ON K.KasiyerNo = S.KasiyerNo \n___1___ ___2___ S.KasiyerNo \n___3___ ___4___(*) \n___5___ 0, 1;',
     blanks: ['GROUP', 'BY', 'ORDER', 'BY', 'LIMIT'],
+    sql_file: 'SQL-Ödev3 Cevaplar 13.sql',
     explanation: 'İşlem sayılarını bulmak için GROUP BY ile kasiyerler gruplanır. ORDER BY COUNT(*) artan sıralama yapar. LIMIT 0, 1 en az olan ilk kaydı alır.'
   },
   {
@@ -2766,6 +2819,7 @@ const questionsDers10 = [
     question: '\'Peynir\' kategorisindeki ürünlerin aylara göre satış adetlerinin toplamını listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(S.Tarih), ___2___(S.Adet) \nFROM urun AS U \nINNER JOIN satis AS S ON S.UrunNo = U.UrunNo \nINNER JOIN kategori AS K ON K.KategoriNo = U.KategoriNo \n___3___ K.KategoriAd = \'Peynir\' \n___4___ ___5___ MONTH(S.Tarih);',
     blanks: ['MONTH', 'SUM', 'WHERE', 'GROUP', 'BY'],
+    sql_file: 'SQL Her bir kasiyerin bu ay yaptığı satış tutarının bulunması.sql',
     explanation: 'MONTH(Tarih) fonksiyonu ay bilgisine göre gruplamayı sağlar. Filtreleme WHERE ile Peynir kategorisi için yapılır.'
   },
   {
@@ -2775,6 +2829,7 @@ const questionsDers10 = [
     question: 'Tarih boyunca en çok satış yapılan ayı işlem sayısına göre azalan sırada sıralayıp LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: 'SELECT ___1___(S.Tarih), COUNT(*) \nFROM satis AS S \n___2___ ___3___ MONTH(S.Tarih) \n___4___ ___5___ COUNT(*) ___6___ \n___7___ 0, 1;',
     blanks: ['MONTH', 'GROUP', 'BY', 'ORDER', 'BY', 'DESC', 'LIMIT'],
+    sql_file: 'SQL-Ödev3 Cevaplar 16.sql',
     explanation: 'MONTH(Tarih) bazında gruplanır. ORDER BY COUNT(*) DESC ile çoktan aza sıralanıp LIMIT 0,1 ile en üstteki kayıt seçilir.'
   },
   {
@@ -2784,6 +2839,7 @@ const questionsDers10 = [
     question: 'Şubelerin aylık bazda kaç adet satış yaptığını (şube adı ve ay numarasıyla) listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT SU.Ad, COUNT(*), ___1___(S.Tarih) \nFROM satis AS S \nINNER JOIN sube AS SU ___2___ SU.SubeNo = S.SubeNo \n___3___ ___4___ SU.SubeNo, ___5___(S.Tarih);',
     blanks: ['MONTH', 'ON', 'GROUP', 'BY', 'MONTH'],
+    sql_file: 'SQL-Ödev3 Cevaplar 17.sql',
     explanation: 'Şubeler ve satis tablosu ON ile birleştirilir. Gruplama hem şube noya hem de MONTH(Tarih)\'e göre çoklu olarak yapılır.'
   },
   {
@@ -2793,6 +2849,7 @@ const questionsDers10 = [
     question: 'Ürün tablosundaki \'Kategori\' sütununu \'KategoriNo\' olarak değiştirip yabancı anahtar (FOREIGN KEY) ilişkisi ekleyen sorguyu tamamlayın.',
     snippet: '___1___ ___2___ market.urun \n___3___ COLUMN Kategori KategoriNo INT(11) NOT NULL; \nALTER TABLE market.urun \n___4___ ___5___ fk_kategori \n___6___ KEY (KategoriNo) ___7___ market.kategori (KategoriNo);',
     blanks: ['ALTER', 'TABLE', 'CHANGE', 'ADD', 'CONSTRAINT', 'FOREIGN', 'REFERENCES'],
+    sql_file: 'SQL Yabancı Anahtar Kategori.sql',
     explanation: 'CHANGE COLUMN sütun adını ve türünü değiştirir. ADD CONSTRAINT ... FOREIGN KEY (...) REFERENCES tablo (sütun) yabancı anahtarı tanımlar.'
   },
   {
@@ -2802,6 +2859,7 @@ const questionsDers10 = [
     question: 'Ürün tablosundaki \'Marka\' sütununu \'MarkaNo\' olarak değiştirip yabancı anahtar (FOREIGN KEY) tanımlayan sorguyu tamamlayın.',
     snippet: '___1___ TABLE market.urun \n___2___ COLUMN Marka MarkaNo INT(11) NOT NULL; \nALTER TABLE market.urun \n___3___ CONSTRAINT fk_marka \n___4___ KEY (MarkaNo) ___5___ market.marka (MarkaNo);',
     blanks: ['ALTER', 'CHANGE', 'ADD', 'FOREIGN', 'REFERENCES'],
+    sql_file: 'SQL Yabancı Anahtar Marka.sql',
     explanation: 'Sütun adını değiştirmek için ALTER TABLE urun CHANGE COLUMN, ilişki eklemek için ise ADD CONSTRAINT ... FOREIGN KEY ... REFERENCES kullanılır.'
   },
   {
@@ -2811,6 +2869,7 @@ const questionsDers10 = [
     question: 'Bugün satılan ürünleri, adetlerini ve tutarlarını (fiyat*adet) listeleyen sorguyu tamamlayın.',
     snippet: 'SELECT U.UrunNo, U.UrunAd, U.Fiyat, S.Adet, (U.Fiyat * S.Adet) ___1___ \'Tutar\' \nFROM satis AS S \nINNER JOIN urun AS U ___2___ U.UrunNo = S.UrunNo \n___3___ ___4___(Tarih) = DAY(NOW()) \n___5___ MONTH(Tarih) = MONTH(NOW());',
     blanks: ['AS', 'ON', 'WHERE', 'DAY', 'AND'],
+    sql_file: 'SQL Bugün hangi ürünlerin satıldığının listelenmesi.sql',
     explanation: 'Yeni hesaplanan kolona AS ile takma isim verilir. Bugün filtresi için DAY(Tarih) = DAY(NOW()) AND MONTH(Tarih) = MONTH(NOW()) kontrol edilir.'
   },
   {
@@ -2820,6 +2879,7 @@ const questionsDers10 = [
     question: 'Bugün toplam kaç adet (farklı işlemlerin toplam adedi değil, satılan toplam adet) ürün satıldığını bulan sorguyu tamamlayın.',
     snippet: '___1___ ___2___(Adet) AS \'Toplam Adet\' \nFROM satis \n___3___ DAY(Tarih) = DAY(NOW()) \n___4___ MONTH(Tarih) = ___5___(NOW());',
     blanks: ['SELECT', 'SUM', 'WHERE', 'AND', 'MONTH'],
+    sql_file: 'SQL Bu ay yapılan toplam satış tutarı.sql',
     explanation: 'Toplam miktarı bulmak için COUNT yerine SUM(Adet) kullanılır. Tarih filtreleri WHERE and AND ile gün-ay kontrolüyle verilir.'
   },
   {
@@ -2829,6 +2889,7 @@ const questionsDers10 = [
     question: 'Kategori ve Marka tablolarına yabancı anahtarla (FOREIGN KEY REFERENCES) bağlı bir ürün tablosu oluşturma şemasını tamamlayın.',
     snippet: 'CREATE TABLE urun ( \n  UrunNo INT(11) NOT NULL ___1___, \n  UrunAd VARCHAR(45) NOT NULL, \n  MarkaNo INT(11) NOT NULL, \n  KategoriNo INT(11) NOT NULL, \n  ___2___ KEY (UrunNo), \n  ___3___ fk_kategori ___4___ KEY (KategoriNo) ___5___ kategori (KategoriNo) \n);',
     blanks: ['AUTO_INCREMENT', 'PRIMARY', 'CONSTRAINT', 'FOREIGN', 'REFERENCES'],
+    sql_file: '2_Urun Tablosu Oluşturma.sql',
     explanation: 'Otomatik artan sütun için AUTO_INCREMENT, birincil anahtar için PRIMARY KEY, yabancı anahtar için CONSTRAINT ... FOREIGN KEY ... REFERENCES kullanılır.'
   },
   {
@@ -2838,6 +2899,7 @@ const questionsDers10 = [
     question: '\'İçecek\' kategorisindeki ürünlerde %20 indirim yaparak ürün adı, normal fiyat ve indirimli fiyatı listeleyen ve fiyata göre artan sırada sıralayan sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Fiyat, Fiyat * 0.8 AS \'İndirimli Fiyat\' \nFROM urun \n___2___ Kategori ___3___ (\'İçecek\') \n___4___ ___5___ Fiyat ___6___;',
     blanks: ['SELECT', 'WHERE', 'IN', 'ORDER', 'BY', 'ASC'],
+    sql_file: 'SQL Icecek Kategorisindeki Ürünlerde 20 indirim yaparak listeleme.sql',
     explanation: '%20 indirimli fiyat Fiyat * 0.8 ile hesaplanır. Kategori filtresi WHERE Kategori IN (\'İçecek\') ile yapılır ve ORDER BY Fiyat ASC ile sıralanır.'
   },
   {
@@ -2847,6 +2909,7 @@ const questionsDers10 = [
     question: 'Ürünleri adına göre sıralayıp 3. kayıttan itibaren 5 adet listeleyen (Sayfalama - Pagination) sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Kategori, Marka \nFROM urun \n___2___ ___3___ UrunAd ___4___ \n___5___ 3, 5;',
     blanks: ['SELECT', 'ORDER', 'BY', 'ASC', 'LIMIT'],
+    sql_file: 'SQL Belirli Sayıda urun Listeleme Sayfalama.sql',
     explanation: 'Sıralama için ORDER BY UrunAd ASC kullanılır. Sayfalama için LIMIT offset, count (yani LIMIT 3, 5) kullanılır.'
   },
   {
@@ -2856,6 +2919,7 @@ const questionsDers10 = [
     question: 'Telefon numarası \'505\' ile başlayan müşterilerin sayısını bulan sorguyu yazın.',
     snippet: '___1___ ___2___(*) ___3___ musteri ___4___ Telefon ___5___ \'505%\';',
     blanks: ['SELECT', 'COUNT', 'FROM', 'WHERE', 'LIKE'],
+    sql_file: 'SQL-Ödev3 Cevaplar 8.sql',
     explanation: 'Kayıt sayısını bulmak için COUNT(*), eşleşme için WHERE ve LIKE kullanılır.'
   },
   {
@@ -2865,6 +2929,7 @@ const questionsDers10 = [
     question: 'Müşterileri şehirlerine göre gruplayayıp her şehirde kaç müşteri olduğunu listeleyen sorguyu yazın.',
     snippet: '___1___ Sehir, ___2___(*) FROM musteri ___3___ ___4___ Sehir;',
     blanks: ['SELECT', 'COUNT', 'GROUP', 'BY'],
+    sql_file: 'SQL-Ödev3 Cevaplar 9.sql',
     explanation: 'Şehirlere göre gruplayarak saymak için COUNT ve GROUP BY Sehir kullanılır.'
   },
   {
@@ -2874,6 +2939,7 @@ const questionsDers10 = [
     question: 'Belirtilen doğum tarihinden (1984-06-05) bugüne kadar geçen toplam gün sayısını hesaplayan DATEDIFF sorgusunu tamamlayın.',
     snippet: '___1___ ___2___(___3___(), \'1984-06-05\') ___4___ \'Furkan Kaç Günlük\';',
     blanks: ['SELECT', 'DATEDIFF', 'NOW', 'AS'],
+    sql_file: 'SQL_Furkan Kac Gunluk.sql',
     explanation: 'DATEDIFF iki tarih arasındaki farkı gün olarak döner. NOW() bugünü ifade eder.'
   },
   {
@@ -2883,6 +2949,7 @@ const questionsDers10 = [
     question: 'Elektronik kategorisinin ortalama ürün fiyatını GROUP BY ve HAVING alt sorgusuyla bulan sorguyu tamamlayın.',
     snippet: '___1___ ___2___(Fiyat) ___3___ urun ___4___ ___5___ KategoriNo ___6___ KategoriNo = (SELECT KategoriNo FROM kategori WHERE KategoriAd = \'Elektronik\');',
     blanks: ['SELECT', 'AVG', 'FROM', 'GROUP', 'BY', 'HAVING'],
+    sql_file: 'SQL Alt Sorgu GROUP BY ve HAVING Kullanımı.sql',
     explanation: 'Kategori bazında gruplandıktan sonra HAVING koşulunda Elektronik kategorisinin nosu alt sorgudan çekilir.'
   },
   {
@@ -2892,6 +2959,7 @@ const questionsDers10 = [
     question: 'MarkaEkle saklı yordamında parametre modlarını (IN/OUT), SQLEXCEPTION Handler bildirimini ve INSERT ifadesini tamamlayın.',
     snippet: 'CREATE PROCEDURE MarkaEkle (___1___ P_Marka VARCHAR(45), IN P_MarkaNo INT, P_Ekleyen INT, ___2___ O_Durum TEXT) \nBEGIN \n  DECLARE EXIT ___3___ FOR SQLEXCEPTION \n  BEGIN \n    SET O_Durum = \'Hata oluştu\'; \n  END; \n  ___4___ ___5___ marka(No, Marka, Ekleyen) ___6___ (P_MarkaNo, P_Marka, P_Ekleyen); \nEND',
     blanks: ['IN', 'OUT', 'HANDLER', 'INSERT', 'INTO', 'VALUES'],
+    sql_file: '2_Urun Tablosu Oluşturma.sql',
     explanation: 'Saklı yordam parametreleri IN veya OUT olabilir. Hataları yakalamak için HANDLER tanımlanır.'
   },
   {
@@ -2901,6 +2969,7 @@ const questionsDers10 = [
     question: 'UrunEkle saklı yordamı (procedure) içinde yer alan INSERT bloğunu ve OUT parametresine değer atama kelimesini yazın.',
     snippet: 'CREATE PROCEDURE UrunEkle (IN P_UrunAd VARCHAR(100), IN P_MarkaNo INT, IN P_KategoriNo INT, IN P_Fiyat FLOAT, OUT Sonuc VARCHAR(50)) \nBEGIN \n  ___1___ ___2___ urun (Ad, MarkaNo, KategoriNo, Fiyat) \n  ___3___ (P_UrunAd, P_MarkaNo, P_KategoriNo, P_Fiyat); \n  ___4___ Sonuc = \'Ürün Eklendi\'; \nEND',
     blanks: ['INSERT', 'INTO', 'VALUES', 'SET'],
+    sql_file: 'SQL-Ödev3 Cevaplar 10.sql',
     explanation: 'Veri ekleme işlemi INSERT INTO ... VALUES ile yapılır. Parametrelere veya değişkenlere değer atamak için SET kullanılır.'
   },
   {
@@ -2910,6 +2979,7 @@ const questionsDers10 = [
     question: 'Bir ürünün son kullanma tarihine kalan gün sayısını hesaplayan saklı fonksiyonu (FUNCTION) tamamlayın.',
     snippet: 'CREATE FUNCTION SonKullanmaZamanHesapla (P_SonKullanmaTarih DATE) ___1___ INT \nBEGIN \n  ___2___ KalanZaman INT; \n  ___3___ KalanZaman = DATEDIFF(P_SonKullanmaTarih, NOW()); \n  ___4___ KalanZaman; \nEND',
     blanks: ['RETURNS', 'DECLARE', 'SET', 'RETURN'],
+    sql_file: 'SQL Her bir kasiyerin bu ay yaptığı satış tutarının bulunması.sql',
     explanation: 'MySQL fonksiyonlarında dönüş tipi RETURNS ile, gövde içi değişkenler DECLARE ile tanımlanır. Değer döndürme RETURN ile yapılır.'
   },
   {
@@ -2919,6 +2989,7 @@ const questionsDers10 = [
     question: 'Fiyatı 5 TL ile 20 TL arasında (sınırlar dahil) olan ürünleri filtreleyip fiyata göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ * FROM market.urun \n___2___ Fiyat ___3___ 5 ___4___ 20 \n___5___ BY Fiyat;',
     blanks: ['SELECT', 'WHERE', 'BETWEEN', 'AND', 'ORDER'],
+    sql_file: 'SQL WHERE Fiyat Kıyaslama.sql',
     explanation: 'BETWEEN ... AND ... yapısı belirtilen aralıktaki değerleri filtreler. ORDER BY sıralama yapar.'
   },
   {
@@ -2928,6 +2999,7 @@ const questionsDers10 = [
     question: 'Müşteri tablosunda adı \'Sinan\' olan müşterileri \'Petek\' olarak güncelleyen ve boş telefon numarası olanları seçen sorguları tamamlayın.',
     snippet: '___1___ musteri ___2___ Ad = \'Petek\' ___3___ Ad = \'Sinan\';\nSELECT * FROM musteri ___4___ Telefon = \'\';',
     blanks: ['UPDATE', 'SET', 'WHERE', 'WHERE'],
+    sql_file: 'SQL Ürünü olmayan kategorilerin listelenmesi.sql',
     explanation: 'Kayıtları güncellemek için UPDATE ... SET ... WHERE kullanılır. Sorgu filtreleri WHERE ile belirtilir.'
   },
   {
@@ -2937,6 +3009,7 @@ const questionsDers10 = [
     question: 'Elektronik kategorisindeki ürünlerin ortalama fiyatının altında kalan elektronik ürünleri alt sorgularla getiren ve ürün fiyatına göre sıralayan ifadeyi tamamlayın.',
     snippet: 'SELECT * FROM urun \n___1___ Fiyat < (SELECT AVG(Fiyat) FROM urun GROUP BY KategoriNo HAVING KategoriNo = (SELECT KategoriNo FROM kategori WHERE KategoriAd = \'Elektronik\')) \n___2___ KategoriNo = (SELECT KategoriNo FROM kategori ___3___ KategoriAd = \'Elektronik\') \n___4___ ___5___ Fiyat;',
     blanks: ['WHERE', 'AND', 'WHERE', 'ORDER', 'BY'],
+    sql_file: 'SQL Alt Sorgu GROUP BY ve HAVING Kullanımı.sql',
     explanation: 'Koşulları birleştirmek için AND kullanılır. Alt sorgu ve dış sorgu WHERE kelimeleriyle filtrelenir ve ORDER BY ile sıralanır.'
   },
   {
@@ -2946,6 +3019,7 @@ const questionsDers10 = [
     question: 'Veritabanı oluşturma ve sınıf tablosu oluşturma DDL ifadelerini tamamlayın.',
     snippet: '___1___ DATABASES; \n___2___ TABLES; \nCREATE ___3___ IF NOT ___4___ sinif ( \n  SinifNo INT ___5___ KEY AUTO_INCREMENT, \n  SinifAd VARCHAR(20) \n);',
     blanks: ['SHOW', 'SHOW', 'TABLE', 'EXISTS', 'PRIMARY'],
+    sql_file: '1_Veritabani_Tablo_Olusturma.sql',
     explanation: 'SHOW TABLES/DATABASES nesneleri listeler. CREATE TABLE IF NOT EXISTS tablo yapısını güvenli şekilde oluşturur.'
   },
   {
@@ -2955,6 +3029,7 @@ const questionsDers10 = [
     question: 'Her şehirdeki müşterilerin sayısını listeleyen ve müşteri sayısı 2\'den fazla olan şehirleri getiren sorguyu yazın.',
     snippet: '___1___ M.Sehir, ___2___(M.Sehir) FROM musteri AS M ___3___ ___4___ Sehir ___5___ 2 < ___6___(M.Sehir);',
     blanks: ['SELECT', 'COUNT', 'GROUP', 'BY', 'HAVING', 'COUNT'],
+    sql_file: 'SQL-Ödev3 Cevaplar 11.sql',
     explanation: 'Sorgu çıktısı SELECT ile belirlenir. GROUP BY gruplamayı sağlar, gruplanmış veri kriterleri HAVING COUNT ile süzülür.'
   }
 ];
@@ -2968,6 +3043,7 @@ const questionsDers10Zor = [
     question: '1 nolu müşterinin satın aldığı ürünlerin adını, fiyatını ve müşteri numarasını listeleyen sorguyu tamamlayın.',
     snippet: '___1___ U.UrunAd, U.Fiyat, S.MusteriNo \n___2___ satis ___3___ S\n___4___ urun ___5___ U\n___6___ U.UrunNo = S.UrunNo\n___7___ S.MusteriNo = 1;',
     blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE'],
+    sql_file: 'SQL 1 nolu müşterinin satın aldığı ürünlerin listelenmesi.sql',
     explanation: 'SELECT kolonları listeler. satis tablosuna S alias\'ı verilir. urun tablosu U alias\'ı ile INNER JOIN yapılarak ON kelimesiyle ilişkilendirilir. Müşteri filtresi WHERE ile uygulanır.'
   },
   {
@@ -2977,6 +3053,7 @@ const questionsDers10Zor = [
     question: '1 nolu müşterinin satın aldığı ürünlerin toplam tutarını ve müşteri numarasını veren aggregate sorgusunu yazın.',
     snippet: '___1___ ___2___(U.Fiyat * S.Adet), S.MusteriNo \n___3___ satis ___4___ S\n___5___ urun ___6___ U\n___7___ U.UrunNo = S.UrunNo\n___8___ S.MusteriNo = 1;',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE'],
+    sql_file: 'SQL 1 nolu müşterinin satın aldığı ürünlerin toplam tutarı.sql',
     explanation: 'SUM fonksiyonu toplam tutarı (fiyat * adet) hesaplar. Tablolar INNER JOIN ile birleştirilir ve ON birleşme koşulu belirlenir.'
   },
   {
@@ -2986,6 +3063,7 @@ const questionsDers10Zor = [
     question: '2 nolu kasiyerin içinde bulunduğumuz ayda yaptığı toplam satış tutarı sorgusunu tamamlayın.',
     snippet: '___1___ ___2___(U.Fiyat * S.Adet) \n___3___ satis ___4___ S\n___5___ urun ___6___ U\n___7___ U.UrunNo = S.UrunNo\n___8___ S.KasiyerNo = 2\n___9___ ___10___(S.Tarih) = ___11___(___12___());',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'AND', 'MONTH', 'MONTH', 'NOW'],
+    sql_file: 'SQL 2 nolu kasiyerin bu ay yaptığı toplam satış tutarı.sql',
     explanation: 'SUM fonksiyonu toplam tutarı hesaplar. Tablolar INNER JOIN ile bağlanır. MONTH() fonksiyonu tarihin ay bilgisini alıp NOW() (bugün) ile karşılaştırır.'
   },
   {
@@ -2995,6 +3073,7 @@ const questionsDers10Zor = [
     question: '\'Nevbahar\' isimli kasiyerin bu ay yaptığı toplam satış tutarını hesaplayan 3\'lü JOIN sorgusunu tamamlayın.',
     snippet: '___1___ ___2___(U.Fiyat * S.Adet) \n___3___ satis ___4___ S\n___5___ urun ___6___ U ___7___ U.UrunNo = S.UrunNo\n___8___ kasiyer ___9___ K ___10___ K.KasiyerNo = S.KasiyerNo\n___11___ K.Ad = \'Nevbahar\'\n___12___ ___13___(S.Tarih) = ___14___(___15___());',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'AND', 'MONTH', 'MONTH', 'NOW'],
+    sql_file: 'SQL Meltem isimli kasiyerin bu ay yaptığı toplam satış tutarı.sql',
     explanation: 'Satis, urun ve kasiyer tabloları INNER JOIN ile bağlanır. Nevbahar ismine göre filtreleme WHERE ile yapılır. NOW() fonksiyonunun ayı MONTH() ile karşılaştırılır.'
   },
   {
@@ -3004,6 +3083,7 @@ const questionsDers10Zor = [
     question: 'Alışveriş yapmayan (satis tablosunda kaydı bulunmayan) müşterilerin adını, müşteri numarasını ve telefonunu listelemek için eksik JOIN ve filtre kelimelerini tamamlayın.',
     snippet: '___1___ M.Ad, M.MusteriNo, M.Telefon \n___2___ musteri ___3___ M\n___4___ satis ___5___ S\n___6___ S.MusteriNo = M.MusteriNo\n___7___ S.MusteriNo ___8___;',
     blanks: ['SELECT', 'FROM', 'AS', 'LEFT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Alışveriş yapmayan müşterilerin listelenmesi.sql',
     explanation: 'Müşterilerin tamamını getirmek ve satış yapmayanları bulmak için LEFT JOIN kullanılır. Satış kaydı olmayanlar WHERE koşulunda IS NULL ile elenir.'
   },
   {
@@ -3013,6 +3093,7 @@ const questionsDers10Zor = [
     question: 'Satış yapmayan kasiyerleri ad ve soyadlarını birleştirerek ve kasiyer numarasıyla listeleyen sorguyu tamamlayın.',
     snippet: '___1___ ___2___(K.Ad, \' \', K.Soyad) ___3___ \'Ad Soyad\', S.KasiyerNo \n___4___ kasiyer ___5___ K\n___6___ satis ___7___ S\n___8___ K.KasiyerNo = S.KasiyerNo\n___9___ S.KasiyerNo ___10___;',
     blanks: ['SELECT', 'CONCAT', 'AS', 'FROM', 'AS', 'LEFT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Satış Yapmayan Kasiyerlerin Listelenmesi.sql',
     explanation: 'CONCAT fonksiyonu ad ve soyadı araya boşluk koyarak birleştirir. LEFT JOIN ile kasiyerler satıs ile birleştirilir. Satış yapmayanlar IS NULL ile filtrelenir.'
   },
   {
@@ -3022,6 +3103,7 @@ const questionsDers10Zor = [
     question: 'Satis tablosunda hiç kaydı bulunmayan satış yapmamış şubeleri RIGHT JOIN kullanarak listeleyen sorguyu tamamlayın.',
     snippet: '___1___ SU.SubeNo, S.SubeNo, SU.Ad \n___2___ satis ___3___ S\n___4___ sube ___5___ SU\n___6___ S.SubeNo = SU.SubeNo\n___7___ S.SubeNo ___8___;',
     blanks: ['SELECT', 'FROM', 'AS', 'RIGHT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Satış Yapmayan Şubelerin Listelenmesi.sql',
     explanation: 'Şubeler sağ tablo (RIGHT JOIN) yapılarak tüm şubeler listelenir ve satis tablosundaki karşılığı IS NULL olanlar elenir.'
   },
   {
@@ -3031,6 +3113,7 @@ const questionsDers10Zor = [
     question: 'Hiç satışı yapılmamış ürünleri RIGHT JOIN kullanarak listeleyen ve ürün numarasına göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ S.SatisNo, U.UrunAd, S.UrunNo \n___2___ satis ___3___ S\n___4___ urun ___5___ U ___6___ S.UrunNo = U.UrunNo\n___7___ S.UrunNo ___8___\n___9___ S.UrunNo;',
     blanks: ['SELECT', 'FROM', 'AS', 'RIGHT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL', 'ORDER BY'],
+    sql_file: 'SQL Satışı Yapılmayan Ürünlerin Listelenmesi.sql',
     explanation: 'Ürünler sağda olduğu için RIGHT JOIN kullanılır. Satışı olmayanları filtrelemek için WHERE S.UrunNo IS NULL yazılır ve ORDER BY ile sıralanır.'
   },
   {
@@ -3040,6 +3123,7 @@ const questionsDers10Zor = [
     question: 'Bünyesinde hiçbir ürün barındırmayan (ürünü olmayan) kategorileri listeleyen sorguyu tamamlayın.',
     snippet: '___1___ K.KategoriAd \n___2___ kategori ___3___ K \n___4___ urun ___5___ U\n___6___ K.KategoriNo = U.KategoriNo\n___7___ U.KategoriNo ___8___;',
     blanks: ['SELECT', 'FROM', 'AS', 'LEFT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Ürünü olmayan kategorilerin listelenmesi.sql',
     explanation: 'Kategori sol tablo kabul edilip LEFT JOIN ile urun tablosuna bağlanır. Ürünü olmayan kategoriler WHERE U.KategoriNo IS NULL ile tespit edilir.'
   },
   {
@@ -3049,6 +3133,7 @@ const questionsDers10Zor = [
     question: 'Ürünü olmayan markaları RIGHT JOIN ile marka tablosunu sağda tutarak listeleyen sorguyu tamamlayın.',
     snippet: '___1___ M.MarkaAd \n___2___ urun ___3___ U  \n___4___ marka ___5___ M\n___6___ M.MarkaNo = U.MarkaNo\n___7___ U.UrunNo ___8___;',
     blanks: ['SELECT', 'FROM', 'AS', 'RIGHT JOIN', 'AS', 'ON', 'WHERE', 'IS NULL'],
+    sql_file: 'SQL Ürünü olmayan markaların listelenmesi.sql',
     explanation: 'Markaları sağ tablo tutarak RIGHT JOIN ile ürünlerle birleştiririz. Ürünü olmayan markalar WHERE U.UrunNo IS NULL ile bulunur.'
   },
   {
@@ -3058,6 +3143,7 @@ const questionsDers10Zor = [
     question: 'Ürün adlarını, kategori adlarını ve marka adlarını birlikte listeleyen 3\'lü INNER JOIN sorgusunu tamamlayın.',
     snippet: '___1___ UrunAd, KategoriAd, MarkaAd\n___2___ urun ___3___ u \n___4___ kategori ___5___ k ___6___ k.KategoriNo = u.KategoriNo\n___7___ marka ___8___ m ___9___ m.MarkaNo = u.MarkaNo;',
     blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    sql_file: 'Uygulama Soru-2.sql',
     explanation: 'Üç tabloyu birleştirmek için FROM ifadesi ve iki adet INNER JOIN ile bunlara karşılık gelen ON birleştirme şartları yazılır.'
   },
   {
@@ -3067,6 +3153,7 @@ const questionsDers10Zor = [
     question: 'Kategori adı \'Baharat\' olan ürünleri ve kategori adlarını INNER JOIN kullanarak listeleyen sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, KategoriAd \n___2___ urun ___3___ u \n___4___ kategori ___5___ k\n___6___ k.KategoriNo = u.KategoriNo\n___7___ k.KategoriAd ___8___ (\'Baharat\');',
     blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'IN'],
+    sql_file: 'SQL Kategorite Göre Listeleme.sql',
     explanation: 'Tablolar INNER JOIN ... ON ile bağlanır, ardından WHERE k.KategoriAd IN (\'Baharat\') veya \'=\' ile filtrelenir.'
   },
   {
@@ -3076,6 +3163,7 @@ const questionsDers10Zor = [
     question: 'Hangi markadan kaç adet ürün olduğunu bulan, adet sayısı 1\'den büyük olan markaları listeleyen aggregate sorguyu tamamlayın.',
     snippet: '___1___ ___2___(U.MarkaNo) ___3___ \'Adet\', M.MarkaAd ___4___ \'Marka Ad\'\n___5___ urun ___6___ U\n___7___ marka ___8___ M ___9___ M.MarkaNo = U.MarkaNo\n___10___ M.MarkaNo\n___11___ 1 < ___12___(U.MarkaNo);',
     blanks: ['SELECT', 'COUNT', 'AS', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'COUNT'],
+    sql_file: 'SQL Hangi Markadan kaç adet ürün olduğunu bulan sorgu.sql',
     explanation: 'COUNT aggregate fonksiyonudur. Markaya göre gruplama GROUP BY ile yapılır. Gruplanmış sonuçlardaki filtreleme HAVING COUNT(...) ile gerçekleştirilir.'
   },
   {
@@ -3085,6 +3173,7 @@ const questionsDers10Zor = [
     question: 'Her bir kasiyerin bu ay yaptığı toplam satış tutarını kasiyer adı ve oranıyla birlikte hesaplayan sorguyu tamamlayın.',
     snippet: '___1___ K.Ad, S.KasiyerNo, ___2___(S.Adet * U.Fiyat) \n___3___ satis ___4___ S\n___5___ urun ___6___ U ___7___ U.UrunNo = S.UrunNo\n___8___ kasiyer ___9___ K ___10___ K.KasiyerNo = S.KasiyerNo\n___11___ ___12___(___13___()) = ___14___(S.Tarih) \n___15___ ___16___(___17___()) = ___18___(S.Tarih)\n___19___ S.KasiyerNo;',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'MONTH', 'NOW', 'MONTH', 'AND', 'YEAR', 'NOW', 'YEAR', 'GROUP BY'],
+    sql_file: 'SQL Her bir kasiyerin bu ay yaptığı satış tutarının bulunması.sql',
     explanation: 'SUM satış tutarını toplar. Tablolar INNER JOIN ve ON ile bağlanır. Kasiyere göre gruplamak için GROUP BY S.KasiyerNo kullanılır.'
   },
   {
@@ -3094,6 +3183,7 @@ const questionsDers10Zor = [
     question: 'Her bir şubenin bugün yaptığı toplam satış tutarını bulan sorguyu tamamlayın.',
     snippet: '___1___ SU.Ad, ___2___(S.Adet * U.Fiyat) \n___3___ satis ___4___ S\n___5___ urun ___6___ U ___7___ U.UrunNo = S.UrunNo\n___8___ sube ___9___ SU ___10___ SU.SubeNo = S.SubeNo\n___11___ ___12___(___13___(), S.Tarih) = 0\n___14___ S.SubeNo;',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'DATEDIFF', 'NOW', 'GROUP BY'],
+    sql_file: 'SQL Her bir şubenin bugün yaptığı satış tutarının bulunması.sql',
     explanation: 'DATEDIFF(NOW(), Tarih) = 0 bugün yapılan satışları filtreler. Şubeye göre toplam tutar için SUM fonksiyonu ve GROUP BY kullanılır.'
   },
   {
@@ -3103,6 +3193,7 @@ const questionsDers10Zor = [
     question: 'Hangi kategoride kaç çeşit ürün olduğunu bulup kategori adıyla listeleyen sorguyu tamamlayın.',
     snippet: '___1___ ___2___(U.UrunNo) ___3___ \'Adet\', K.KategoriAd ___4___ \'Kategori Adı\' \n___5___ kategori ___6___ K\n___7___ urun ___8___ U\n___9___ U.KategoriNo = K.KategoriNo\n___10___ K.KategoriNo;',
     blanks: ['SELECT', 'COUNT', 'AS', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    sql_file: 'SQL Her kategoride kaç çeşit ürün olduğunun bulunması.sql',
     explanation: 'COUNT(UrunNo) kategorideki ürün sayısını verir. INNER JOIN ile kategoriler bağlanır ve GROUP BY ile gruplama yapılır.'
   },
   {
@@ -3112,6 +3203,7 @@ const questionsDers10Zor = [
     question: 'Bu yıl yapılan satışları ay bazında gruplayarak, her ayın toplam satış tutarını hesaplayan sorguyu tamamlayın.',
     snippet: '___1___ ___2___(S.Adet * U.Fiyat), ___3___(S.Tarih)\n___4___ urun ___5___ U\n___6___ satis ___7___ S ___8___ U.UrunNo = S.UrunNo\n___9___ ___10___(S.Tarih) = ___11___(___12___())\n___13___ ___14___(S.Tarih);',
     blanks: ['SELECT', 'SUM', 'MONTH', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'YEAR', 'YEAR', 'NOW', 'GROUP BY', 'MONTH'],
+    sql_file: 'SQL Her yıl her ay toplam satış tutarını bulunması.sql',
     explanation: 'Aylık gruplama MONTH(Tarih) ile yapılır. Bu yıl filtresi YEAR(Tarih) = YEAR(NOW()) ile WHERE altında uygulanır.'
   },
   {
@@ -3121,6 +3213,7 @@ const questionsDers10Zor = [
     question: 'Her kategorinin ortalama fiyat bilgisini bulan görünümü (VIEW) oluşturan veya değiştiren sorguyu tamamlayın.',
     snippet: '___1___ ___2___ ortalamaFiyatKategori ___3___\n___4___ ___5___(Fiyat) ___6___ \'OrtalamaFiyat\', K.KategoriAd \n___7___ urun ___8___ U\n___9___ kategori ___10___ K ___11___ K.KategoriNo = U.KategoriNo\n___12___ K.KategoriAd;',
     blanks: ['ALTER', 'VIEW', 'AS', 'SELECT', 'AVG', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    sql_file: 'SQL Kategori Ortalama Fiyat.sql',
     explanation: 'ALTER VIEW görünümü güncellemeye yarar. Ortalama için AVG kullanılır. Kategorilere göre gruplama GROUP BY ile sağlanır.'
   },
   {
@@ -3130,6 +3223,7 @@ const questionsDers10Zor = [
     question: 'Müşterilerin satın almış oldukları ürünlerin adını, fiyatını, satış tarihini ve müşteri bilgilerini listeleyen sorguyu tamamlayın.',
     snippet: '___1___ M.Ad, M.Soyad, U.UrunNo, U.UrunAd, U.Fiyat, S.Tarih \n___2___ satis ___3___ S\n___4___ urun ___5___ U\n___6___ S.UrunNo = U.UrunNo\n___7___ musteri ___8___ M\n___9___ M.MusteriNo = S.MusteriNo;',
     blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    sql_file: 'Uygulama Soru-1.sql',
     explanation: 'FROM tablo belirtir. satis tablosu urun ve musteri tablolarıyla INNER JOIN ve ON koşulları üzerinden birleştirilir.'
   },
   {
@@ -3139,6 +3233,7 @@ const questionsDers10Zor = [
     question: 'Her bir kasiyerin toplam kaç liralık satış yaptığını kasiyer adına göre gruplayıp ürün numarasına göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ k.Ad ___2___ \'Kasiyer Adı\', ___3___(u.Fiyat * s.Adet) \n___4___ satis ___5___ s \n___6___ kasiyer ___7___ k ___8___ s.KasiyerNo = k.KasiyerNo\n___9___ urun ___10___ u ___11___ s.UrunNo = u.UrunNo\n___12___ k.Ad\n___13___ u.UrunNo;',
     blanks: ['SELECT', 'AS', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY'],
+    sql_file: 'Uygulama Soru-10.sql',
     explanation: 'Toplam tutar SUM ile hesaplanır. Kasiyer ve ürün tabloları INNER JOIN ile bağlanır. GROUP BY kasiyer adına göre yapılırken, ORDER BY ile ürün numarasına göre sıralanır.'
   },
   {
@@ -3148,6 +3243,7 @@ const questionsDers10Zor = [
     question: '100 TL ve üzerinde satış yapan her bir kasiyerin adını ve toplam satış tutarını listeleyen ve bunları ürün numarasına göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ k.Ad, ___2___(u.Fiyat * s.Adet) \n___3___ satis ___4___ s \n___5___ kasiyer ___6___ k ___7___ s.KasiyerNo = k.KasiyerNo\n___8___ urun ___9___ u ___10___ s.UrunNo = u.UrunNo\n___11___ k.Ad\n___12___ 100 <= ___13___(u.Fiyat * s.Adet)\n___14___ u.UrunNo;',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'SUM', 'ORDER BY'],
+    sql_file: 'Uygulama Soru-12.sql',
     explanation: 'Toplam tutar filtrelemesi gruplamadan sonra HAVING ile kontrol edilir (100 <= SUM(...)). Sıralama ORDER BY ile yapılır.'
   },
   {
@@ -3157,6 +3253,7 @@ const questionsDers10Zor = [
     question: 'Müşterilerin hangi markalardan alışveriş yaptığını listeleyen 4 tablolu sorguyu tamamlayın.',
     snippet: '___1___ mu.MusteriNo, mu.Ad, u.UrunAd, m.MarkaNo, m.MarkaAd \n___2___ market.musteri ___3___ mu\n___4___ market.satis ___5___ s ___6___ mu.MusteriNo = s.MusteriNo\n___7___ market.urun ___8___ u ___9___ s.UrunNo = u.UrunNo\n___10___ market.marka ___11___ m ___12___ u.MarkaNo = m.MarkaNo;',
     blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    sql_file: 'Uygulama Soru-14.sql',
     explanation: '4 tablo (musteri, satis, urun, marka) sırayla INNER JOIN ... ON ilişkileriyle birbirine bağlanır.'
   },
   {
@@ -3166,6 +3263,7 @@ const questionsDers10Zor = [
     question: 'Her bir şubenin toplam kaç liralık satış yaptığını bulup şube adına göre gruplayıp ürün noya göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ su.Ad ___2___ \'Şube Adı\', ___3___(u.Fiyat * s.Adet) ___4___ \'Toplam Satış Tutarı\' \n___5___ satis ___6___ s \n___7___ sube ___8___ su ___9___ s.SubeNo = su.SubeNo\n___10___ urun ___11___ u ___12___ s.UrunNo = u.UrunNo\n___13___ su.Ad\n___14___ u.UrunNo;',
     blanks: ['SELECT', 'AS', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY'],
+    sql_file: 'Uygulama Soru-16.sql',
     explanation: 'Toplam tutar SUM ile hesaplanır, sube ve urun tabloları birleştirilir, GROUP BY şube adına göre, ORDER BY ise ürün noya göre sıralar.'
   },
   {
@@ -3175,6 +3273,7 @@ const questionsDers10Zor = [
     question: 'Her bir müşterinin hangi kategoriden kaç adet ürün aldığını müşteri numarası ve kategori adıyla listeleyen sorguyu tamamlayın.',
     snippet: '___1___ M.MusteriNo, M.Ad, K.KategoriAd, ___2___(S.Adet) ___3___ \'Adet\' \n___4___ satis ___5___ S\n___6___ urun ___7___ U ___8___ U.UrunNo = S.UrunNo\n___9___ musteri ___10___ M ___11___ M.MusteriNo = S.MusteriNo\n___12___ kategori ___13___ K ___14___ K.KategoriNo = U.KategoriNo\n___15___ M.MusteriNo, K.KategoriNo;',
     blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    sql_file: 'Uygulama Soru-4.sql',
     explanation: 'Miktar toplamak için SUM(Adet) kullanılır. 4 tablo JOIN ile birleştirildikten sonra hem müşteri no hem kategori noya göre GROUP BY uygulanır.'
   },
   {
@@ -3184,6 +3283,7 @@ const questionsDers10Zor = [
     question: 'Her markadan 2 adetten fazla ürün alan müşterilerin ad soyad, marka ve adet bilgilerini listeleyen sorguyu tamamlayın.',
     snippet: '___1___ m.MusteriNo, m.ad, m.Soyad, ma.MarkaAd, ___2___(s.Adet) ___3___ \'Adet\' \n___4___ market.musteri ___5___ m \n___6___ market.satis ___7___ s ___8___ m.MusteriNo = s.MusteriNo\n___9___ market.urun ___10___ u ___11___ s.UrunNo = u.UrunNo\n___12___ market.marka ___13___ ma ___14___ u.MarkaNo = ma.MarkaNo\n___15___ m.MusteriNo, ma.MarkaNo\n___16___ 2 < ___17___(s.Adet);',
     blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'SUM'],
+    sql_file: 'Uygulama Soru-6.sql',
     explanation: 'Müşteri, satış, ürün ve marka tabloları INNER JOIN ile bağlanır. Müşteri ve Marka bazında GROUP BY yapıldıktan sonra HAVING SUM(Adet) > 2 filtresi uygulanır.'
   },
   {
@@ -3193,6 +3293,7 @@ const questionsDers10Zor = [
     question: 'Müşterilerin hangi markalardan alışveriş yaptığını listeleyen ve 4 tabloyu birbirine bağlayan sorguyu yazın.',
     snippet: '___1___ m.MusteriNo, m.ad, m.Soyad, ma.MarkaAd, ___2___(s.Adet) ___3___ \'Adet\' \n___4___ market.musteri ___5___ m \n___6___ market.satis ___7___ s ___8___ m.MusteriNo = s.MusteriNo\n___9___ market.urun ___10___ u ___11___ s.UrunNo = u.UrunNo\n___12___ market.marka ___13___ ma ___14___ u.MarkaNo = ma.MarkaNo\n___15___ m.Ad, ma.MarkaAd;',
     blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    sql_file: 'Uygulama Soru-5.sql',
     explanation: 'Müşteri, satış, ürün ve marka tabloları sırasıyla INNER JOIN ... ON bağlantılarıyla birleştirilerek listelenir.'
   },
   {
@@ -3202,6 +3303,7 @@ const questionsDers10Zor = [
     question: 'Müşterilerin hangi kategorilerden alışveriş yaptığını gösteren 4 tablolu birleşik sorguyu tamamlayın.',
     snippet: '___1___ m.MusteriNo, m.Ad, u.UrunAd, k.KategoriNo, k.KategoriAd \n___2___ market.musteri ___3___ m \n___4___ market.satis ___5___ s ___6___ m.MusteriNo = s.MusteriNo\n___7___ market.urun ___8___ u ___9___ s.UrunNo = u.UrunNo\n___10___ market.kategori ___11___ k ___12___ u.KategoriNo = k.KategoriNo;',
     blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    sql_file: 'Uygulama Soru-2.sql',
     explanation: 'Bu 4 tablolu sorguda musteri, satis, urun ve kategori tabloları INNER JOIN kullanılarak birleştirilmiştir.'
   },
   {
@@ -3211,6 +3313,7 @@ const questionsDers10Zor = [
     question: 'Her bir müşterinin satın almış olduğu toplam ürün adedini veren JOIN ve gruplama sorgusunu tamamlayın.',
     snippet: '___1___ M.MusteriNo, ___2___(S.Adet) ___3___ \'Adet\' \n___4___ satis ___5___ S \n___6___ urun ___7___ U ___8___ U.UrunNo = S.UrunNo\n___9___ musteri ___10___ M ___11___ M.MusteriNo = S.MusteriNo\n___12___ M.MusteriNo;',
     blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    sql_file: 'Uygulama Soru-3.sql',
     explanation: 'SUM aggregate fonksiyonudur. Müşteri noya göre gruplamak için GROUP BY M.MusteriNo kullanılır.'
   },
   {
@@ -3220,6 +3323,7 @@ const questionsDers10Zor = [
     question: 'Ürünlerin markalarını getirirken, markası tanımlanmamış ürünlerin de listelenmesini sağlayan LEFT OUTER JOIN sorgusunu tamamlayın.',
     snippet: '___1___ UrunAd, MarkaAd \n___2___ urun ___3___ marka \n___4___ urun.MarkaNo = marka.MarkaNo;',
     blanks: ['SELECT', 'FROM', 'LEFT OUTER JOIN', 'ON'],
+    sql_file: 'Uygulama Soru-14.sql',
     explanation: 'Sol taraftaki (urun) tüm kayıtları ve sağ taraftaki (marka) eşleşenleri getirmek için LEFT OUTER JOIN kullanılır.'
   },
   {
@@ -3229,6 +3333,7 @@ const questionsDers10Zor = [
     question: 'Marka tablosunu sol, ürün tablosunu sağ alarak tüm ürünleri ve marka adlarını listeleyen RIGHT OUTER JOIN sorgusunu tamamlayın.',
     snippet: '___1___ UrunAd, MarkaAd \n___2___ marka ___3___ urun \n___4___ urun.MarkaNo = marka.MarkaNo;',
     blanks: ['SELECT', 'FROM', 'RIGHT OUTER JOIN', 'ON'],
+    sql_file: 'SQL Outer Join Sorguları.sql',
     explanation: 'Sağ taraftaki (urun) tüm kayıtları ve sol taraftaki (marka) eşleşenleri getirmek için RIGHT OUTER JOIN kullanılır.'
   },
   {
@@ -3238,6 +3343,7 @@ const questionsDers10Zor = [
     question: 'Ürün, kategori ve marka adlarını birleştiren \'v_UrunBilgileri\' isimli bir VIEW (görünüm) oluşturan sorguyu tamamlayın.',
     snippet: 'CREATE ___1___ v_UrunBilgileri ___2___ \n___3___ U.UrunAd, K.KategoriAd, M.MarkaAd \n___4___ market.urun ___5___ U \n___6___ kategori ___7___ K ___8___ K.KategoriNo = U.KategoriNo\n___9___ marka ___10___ M ___11___ M.MarkaNo = U.MarkaNo;',
     blanks: ['VIEW', 'AS', 'SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON'],
+    sql_file: 'Uygulama Soru-13.sql',
     explanation: 'CREATE VIEW ad AS formatı ile görünüm oluşturulur. Tablolar INNER JOIN ile birbirine bağlanır.'
   },
   {
@@ -3247,6 +3353,7 @@ const questionsDers10Zor = [
     question: 'Kasiyerlerin yaptıkları satışları ürün bazında gruplayarak toplam ürün adedi ve toplam satış tutarını hesaplayan sorguyu tamamlayın.',
     snippet: '___1___ k.KasiyerNo, k.ad, k.Soyad, u.UrunNo, u.fiyat, \n  ___2___(u.UrunNo) ___3___ \'toplamUrun\', \n  (s.Adet * u.Fiyat * ___4___(u.UrunNo)) ___5___ \'toplamFiyat\' \n___6___ market.kasiyer ___7___ k \n___8___ market.satis ___9___ s ___10___ k.KasiyerNo = s.KasiyerNo\n___11___ market.urun ___12___ u ___13___ s.SatisNo = u.UrunNo\n___14___ k.ad, u.UrunNo;',
     blanks: ['SELECT', 'SUM', 'AS', 'SUM', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'GROUP BY'],
+    sql_file: 'Uygulama Soru-10.sql',
     explanation: 'Kasiyer bazında satışları ürün noya göre gruplamak için GROUP BY kullanılır. JOIN ve ON koşullarıyla tablolar bağlanır.'
   },
   {
@@ -3256,6 +3363,7 @@ const questionsDers10Zor = [
     question: 'Şubelerin her ay gerçekleştirdiği satış işlemleri sayısını şube ve ay bazında listeleyen gruplanmış sorguyu tamamlayın.',
     snippet: '___1___ SU.Ad, ___2___(*), ___3___(S.Tarih) \n___4___ satis ___5___ S \n___6___ sube ___7___ SU ___8___ SU.SubeNo = S.SubeNo \n___9___ SU.SubeNo, ___10___(S.Tarih);',
     blanks: ['SELECT', 'COUNT', 'MONTH', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'MONTH'],
+    sql_file: 'SQL-Ödev3 Cevaplar 17.sql',
     explanation: 'İşlem sayısı için COUNT(*), ay numarası için MONTH() fonksiyonu kullanılır. Şube ve aya göre GROUP BY uygulanır.'
   },
   {
@@ -3265,6 +3373,7 @@ const questionsDers10Zor = [
     question: 'Marka adı \'HP\' olmayan ve kategorisi \'Laptop\' olan ürünlerin toplam fiyatını veren 3\'lü birleşik sorguyu tamamlayın.',
     snippet: '___1___ ___2___(U.Fiyat) \n___3___ urun ___4___ U \n___5___ marka ___6___ M ___7___ M.MarkaNo = U.MarkaNo \n___8___ kategori ___9___ K ___10___ K.KategoriNo = U.KategoriNo \n___11___ M.MarkaAd <> \'HP\' ___12___ K.KategoriAd = \'Laptop\';',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'AND'],
+    sql_file: 'SQL-Ödev3 Cevaplar 1-3-4-5.sql',
     explanation: 'Toplam hesaplamak için SUM kullanılır. Tablolar INNER JOIN ile bağlanır ve filtreler WHERE ve AND ile belirtilir.'
   },
   {
@@ -3274,6 +3383,7 @@ const questionsDers10Zor = [
     question: 'Her bir kasiyerin yaptığı toplam satış işlemleri sayısını bulup, en az satış yapan kasiyeri işlem sayısına göre artan sırada sıralayarak ve LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: '___1___ K.Ad, ___2___(*) \n___3___ Satis ___4___ S \n___5___ kasiyer ___6___ K ___7___ K.KasiyerNo = S.KasiyerNo \n___8___ K.KasiyerNo \n___9___ ___10___(*) ___11___ \n___12___ 0, 1;',
     blanks: ['SELECT', 'COUNT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY', 'COUNT', 'ASC', 'LIMIT'],
+    sql_file: 'SQL-Ödev3 Cevaplar 13.sql',
     explanation: 'En az satış yapanı bulmak için COUNT(*) değerine göre ORDER BY COUNT Extent (ASC) sıralama yapılır ve LIMIT 0,1 ile ilk satır alınır.'
   },
   {
@@ -3283,6 +3393,7 @@ const questionsDers10Zor = [
     question: 'Peynir kategorisindeki satış adetlerini aylara göre gruplayarak listeleyen sorguyu tamamlayın.',
     snippet: '___1___ ___2___(S.Tarih), ___3___(*) \n___4___ urun ___5___ U \n___6___ satis ___7___ S ___8___ S.UrunNo = U.UrunNo \n___9___ kategori ___10___ K ___11___ K.KategoriNo = U.KategoriNo \n___12___ K.KategoriAd = \'Peynir\' \n___13___ ___14___(S.Tarih);',
     blanks: ['SELECT', 'MONTH', 'COUNT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'GROUP BY', 'MONTH'],
+    sql_file: 'SQL-Ödev3 Cevaplar 15.sql',
     explanation: 'Aylık gruplama için MONTH() fonksiyonu, JOIN bağlantıları ve filtreleme için WHERE, gruplama için ise GROUP BY kullanılır.'
   },
   {
@@ -3292,6 +3403,7 @@ const questionsDers10Zor = [
     question: 'Ürünlerin toplam fiyatının 5000\'den büyük olduğu kategorileri ve toplam fiyatlarını veren gruplanmış sorguyu tamamlayın.',
     snippet: '___1___ K.KategoriAd, ___2___(U.Fiyat) \n___3___ urun ___4___ U \n___5___ kategori ___6___ K ___7___ K.KategoriNo = U.KategoriNo \n___8___ K.KategoriAd \n___9___ 5000 < ___10___(U.Fiyat);',
     blanks: ['SELECT', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'HAVING', 'SUM'],
+    sql_file: 'SQL-Ödev3 Cevaplar 10.sql',
     explanation: 'Gruplanmış verilerde aggregate koşullarını filtrelemek için HAVING ifadesi kullanılır. Toplam fiyat SUM ile alınır.'
   },
   {
@@ -3301,6 +3413,7 @@ const questionsDers10Zor = [
     question: 'Şehir adları \'a\' harfiyle başlamayan müşterilerin benzersiz şehir listesini veren sorguyu tamamlayın.',
     snippet: '___1___ DISTINCT(Sehir) ___2___ musteri \n___3___ Sehir ___4___ ___5___ \'a%\';',
     blanks: ['SELECT', 'FROM', 'WHERE', 'NOT', 'LIKE'],
+    sql_file: 'SQL-Ödev3 Cevaplar 1-3-4-5.sql',
     explanation: 'Benzersiz değerler için DISTINCT, \'a\' harfi ile başlamayanlar için NOT LIKE \'a%\' kalıbı kullanılır.'
   },
   {
@@ -3310,6 +3423,7 @@ const questionsDers10Zor = [
     question: '1, 2 ve 3 numaralı kategorilerdeki ürünlerin fiyatlarının tamamının (hepsinin) altında fiyata sahip ürünleri ALL kullanarak listeleyin.',
     snippet: '___1___ * ___2___ urun \n___3___ Fiyat < ___4___ (___5___ Fiyat ___6___ urun ___7___ KategoriNo ___8___ (1,2,3));',
     blanks: ['SELECT', 'FROM', 'WHERE', 'ALL', 'SELECT', 'FROM', 'WHERE', 'IN'],
+    sql_file: 'SQL Alt Sorgu ALL Kullanımı.sql',
     explanation: 'Alt sorgudaki tüm fiyatların altında olmasını sağlamak için \'< ALL\' ifadesi ve alt sorguda \'IN (1,2,3)\' filtresi kullanılır.'
   },
   {
@@ -3319,6 +3433,7 @@ const questionsDers10Zor = [
     question: '1, 2 ve 3 numaralı kategorilerdeki ürünlerin herhangi birinin fiyatının üstünde fiyata sahip ürünleri ANY kullanarak listeleyin.',
     snippet: '___1___ * ___2___ urun \n___3___ Fiyat > ___4___ (___5___ Fiyat ___6___ urun ___7___ KategoriNo ___8___ (1,2,3));',
     blanks: ['SELECT', 'FROM', 'WHERE', 'ANY', 'SELECT', 'FROM', 'WHERE', 'IN'],
+    sql_file: 'SQL Alt Sorgu ANY Kullanımı.sql',
     explanation: '\'ANY\' alt sorgudaki değerlerden herhangi biriyle eşleşmenin yeterli olduğunu belirtir. Fiyat > ANY (...) şeklinde kullanılır.'
   },
   {
@@ -3328,6 +3443,7 @@ const questionsDers10Zor = [
     question: 'Ürünlerin fiyatı, genel ortalama fiyattan küçük olan ürünleri listeleyen ve fiyata göre sıralayan alt sorgulu ifadeyi tamamlayın.',
     snippet: '___1___ * ___2___ urun \n___3___ Fiyat < (___4___ ___5___(Fiyat) ___6___ urun) \n___7___ Fiyat;',
     blanks: ['SELECT', 'FROM', 'WHERE', 'SELECT', 'AVG', 'FROM', 'ORDER BY'],
+    sql_file: 'SQL Alt Sorgu AVG Kullanma.sql',
     explanation: 'AVG(Fiyat) ortalama fiyatı bulur. Dış sorguda WHERE Fiyat < (Alt Sorgu) ile ortalamanın altındakiler filtrelenir ve ORDER BY ile sıralanır.'
   },
   {
@@ -3337,6 +3453,7 @@ const questionsDers10Zor = [
     question: '\'Elektronik\' kategorisindeki ortalama fiyatın altındaki elektronik ürünleri listeleyen ve ürün fiyatına göre sıralayan karmaşık alt sorguyu tamamlayın.',
     snippet: '___1___ * ___2___ urun \n___3___ Fiyat < (___4___ ___5___(Fiyat) ___6___ urun ___7___ KategoriNo ___8___ KategoriNo = (___9___ KategoriNo ___10___ kategori ___11___ KategoriAd = \'Elektronik\'))\n___12___ KategoriNo = (___13___ KategoriNo ___14___ kategori ___15___ KategoriAd = \'Elektronik\')\n___16___ Fiyat;',
     blanks: ['SELECT', 'FROM', 'WHERE', 'SELECT', 'AVG', 'FROM', 'GROUP BY', 'HAVING', 'SELECT', 'FROM', 'WHERE', 'AND', 'SELECT', 'FROM', 'WHERE', 'ORDER BY'],
+    sql_file: 'SQL Alt Sorgu GROUP BY ve HAVING Kullanımı.sql',
     explanation: 'İçeride Elektronik kategorisinin ortalamasını bulmak için GROUP BY ve HAVING kullanılır. Dış sorguda da kategorinin Elektronik olması AND KategoriNo = (SELECT...) ile sınırlanır.'
   },
   {
@@ -3346,6 +3463,7 @@ const questionsDers10Zor = [
     question: '7. aydan önce satılan ürünlerin listesini alt sorguda IN kullanarak getiren sorguyu tamamlayın.',
     snippet: '___1___ * ___2___ market.urun \n___3___ UrunNo ___4___ (___5___ UrunNo ___6___ market.satis ___7___ ___8___(Tarih) < 7);',
     blanks: ['SELECT', 'FROM', 'WHERE', 'IN', 'SELECT', 'FROM', 'WHERE', 'MONTH'],
+    sql_file: 'SQL Alt Sorgu IN Kullanımı.sql',
     explanation: 'Belirli bir aydan önce satılan ürünlerin numaraları alt sorguda MONTH(Tarih) < 7 ile çekilir ve dış sorguda WHERE UrunNo IN (...) ile listelenir.'
   },
   {
@@ -3355,6 +3473,7 @@ const questionsDers10Zor = [
     question: 'Ürün eklerken marka numarasını ve kategori numarasını alt sorgu ile ilgili tablolardan çekerek INSERT yapan sorguyu tamamlayın.',
     snippet: '___1___ market.urun (UrunAd, MarkaNo, KategoriNo, Fiyat, SonKullanmaTarih, Ozellik) \n___2___ (\'Vestel Buzdolabı\', (___3___ MarkaNo ___4___ marka ___5___ MarkaAd = \'Boron\'), (___6___ KategoriNo ___7___ kategori ___8___ KategoriAd = \'Elektronik\'), 4800, \'2023-12-01\', \'Nofrost\');',
     blanks: ['INSERT INTO', 'VALUES', 'SELECT', 'FROM', 'WHERE', 'SELECT', 'FROM', 'WHERE'],
+    sql_file: 'SQL Alt Sorgu Kayıt Ekleme.sql',
     explanation: 'INSERT INTO ... VALUES yapısında, değerler listesinde statik sayılar yerine alt sorgulardan dönen tekil veriler SELECT ile kullanılabilir.'
   },
   {
@@ -3364,6 +3483,7 @@ const questionsDers10Zor = [
     question: '\'Vestel Buzdolabı\' adlı ürünün marka numarasını alt sorgu ile \'Vestel\' markası olarak güncelleyen sorguyu tamamlayın.',
     snippet: '___1___ market.urun \n___2___ MarkaNo = (___3___ MarkaNo ___4___ marka ___5___ MarkaAd = \'Vestel\') \n___6___ UrunNo = (___7___ UrunNo ___8___ urun ___9___ UrunAd = \'Vestel Buzdolabı\');',
     blanks: ['UPDATE', 'SET', 'SELECT', 'FROM', 'WHERE', 'WHERE', 'SELECT', 'FROM', 'WHERE'],
+    sql_file: 'SQL Alt Sorgu Kayıt Güncelleme.sql',
     explanation: 'UPDATE table SET sütun = (SELECT...) WHERE sütun = (SELECT...) yapısıyla dinamik alt sorgulu güncelleme yapılır.'
   },
   {
@@ -3373,6 +3493,7 @@ const questionsDers10Zor = [
     question: '2021 yılı mart (3) veya kasım (11) aylarında yapılan satışları alt sorgu yardımıyla silen sorguyu tamamlayın.',
     snippet: '___1___ satis \n___2___ Tarih ___3___ (___4___ s.Tarih ___5___ market.satis ___6___ S \n___7___ ___8___(s.Tarih) = 2021 ___9___ ___10___(s.Tarih) ___11___ (3,11));',
     blanks: ['DELETE FROM', 'WHERE', 'IN', 'SELECT', 'FROM', 'AS', 'WHERE', 'YEAR', 'AND', 'MONTH', 'IN'],
+    sql_file: 'SQL Alt Sorgu Kayıt Silme.sql',
     explanation: 'DELETE FROM table WHERE ... şeklinde silme yapılır. Tarihleri eşleştirmek için YEAR() ve MONTH() fonksiyonlarından yararlanılır.'
   },
   {
@@ -3382,6 +3503,7 @@ const questionsDers10Zor = [
     question: 'Müşteri tablosunda kayıtlı olup satis tablosunda hiç kaydı bulunmayan müşterileri alt sorgu (NOT IN) mantığıyla listeleyen sorguyu tamamlayın.',
     snippet: '___1___ * ___2___ musteri \n___3___ MusteriNo ___4___ ___5___ (___6___ MusteriNo ___7___ satis ___8___ MusteriNo ___9___ ___10___ ___11___);',
     blanks: ['SELECT', 'FROM', 'WHERE', 'NOT', 'IN', 'SELECT', 'FROM', 'WHERE', 'IS', 'NOT', 'NULL'],
+    sql_file: 'SQL 7. aydan önce satılan ürünlerin listelenmesi.sql',
     explanation: 'NOT IN kullanarak alt sorgudaki listede yer almayan müşteriler elenir. Alt sorguda \'WHERE MusteriNo IS NOT NULL\' yapılması performans ve doğruluk açısından önemlidir.'
   },
   {
@@ -3391,6 +3513,7 @@ const questionsDers10Zor = [
     question: 'Ürünlerin son kullanma tarihine bugün itibariyle kaç gün kaldığını DATEDIFF kullanarak listeleyen sorguyu tamamlayın.',
     snippet: '___1___ UrunAd ___2___ \'Ürün Adı\', SonKullanmaTarihi, \n___3___(SonKullanmaTarihi, ___4___()) ___5___ \'Kaç Gün Var\' \n___6___ urun\n___7___ SonKullanmaTarihi > ___8___();',
     blanks: ['SELECT', 'AS', 'DATEDIFF', 'NOW', 'AS', 'FROM', 'WHERE', 'NOW'],
+    sql_file: 'SQL Son Kullanma Tarihine Kac Gun var.sql',
     explanation: 'DATEDIFF iki tarih arasındaki gün farkını hesaplar. NOW() anlık zamanı verir. Filtreleme WHERE ile yapılır.'
   },
   {
@@ -3400,6 +3523,7 @@ const questionsDers10Zor = [
     question: 'Son kullanma tarihine 1 ile 7 gün arasında (1 hafta) süre kalmış ürünleri listelemek için BETWEEN kelimesini kullanan sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Fiyat, ___2___(SonKullanmaTarih, ___3___()) ___4___ \'Kalan Gün\'\n___5___ market.urun \n___6___ ___7___(SonKullanmaTarih, ___8___()) ___9___ 1 ___10___ 7;',
     blanks: ['SELECT', 'DATEDIFF', 'NOW', 'AS', 'FROM', 'WHERE', 'DATEDIFF', 'NOW', 'BETWEEN', 'AND'],
+    sql_file: 'SQL Kategorite Göre Listeleme.sql',
     explanation: 'İki sınır arasındaki değerleri seçmek için BETWEEN min AND max yapısı kullanılır. DATEDIFF ile kalan gün bulunur.'
   },
   {
@@ -3409,6 +3533,7 @@ const questionsDers10Zor = [
     question: 'Son kullanma tarihi geçmiş (kalan gün sayısı sıfırdan küçük) olan ürünleri bulan sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Fiyat, ___2___(SonKullanmaTarih, ___3___()) ___4___ \'Gecen Gun\' \n___5___ market.urun \n___6___ ___7___(SonKullanmaTarih, ___8___()) < 0;',
     blanks: ['SELECT', 'DATEDIFF', 'NOW', 'AS', 'FROM', 'WHERE', 'DATEDIFF', 'NOW'],
+    sql_file: 'SQL WHERE Son Kullanma Tarih.sql',
     explanation: 'Tarihi geçmiş ürünleri bulmak için DATEDIFF(SonKullanmaTarih, NOW()) değerinin < 0 (sıfırdan küçük) olması kontrol edilir.'
   },
   {
@@ -3418,6 +3543,7 @@ const questionsDers10Zor = [
     question: 'En yüksek fiyata sahip ürünün adı, markası, SKT ve fiyatını getiren alt sorgulu ifadeyi tamamlayın.',
     snippet: '___1___ U.UrunAd, M.MarkaAd, U.SonKullanmaTarih, U.Fiyat \n___2___ urun ___3___ U \n___4___ marka ___5___ M ___6___ M.MarkaNo = U.MarkaNo \n___7___ Fiyat = (___8___ ___9___(Fiyat) ___10___ urun);',
     blanks: ['SELECT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'SELECT', 'MAX', 'FROM'],
+    sql_file: 'SQL-Ödev3 Cevaplar 12sql.sql',
     explanation: 'MAX(Fiyat) alt sorguda en yüksek fiyatı döner. Dış sorgu WHERE Fiyat = (en yüksek fiyat) olan satırı getirir.'
   },
   {
@@ -3427,6 +3553,7 @@ const questionsDers10Zor = [
     question: 'Adı \'Sinan\' olan müşterinin adını \'Petek\' olarak alt sorgulu WHERE koşuluyla güncelleyen sorguyu tamamlayın.',
     snippet: '___1___ musteri ___2___ Ad = \'Petek\' \n___3___ MusteriNo = (___4___ MusteriNo ___5___ musteri ___6___ Ad = \'Sinan\');',
     blanks: ['UPDATE', 'SET', 'WHERE', 'SELECT', 'FROM', 'WHERE'],
+    sql_file: 'SQL-Ödev3 Cevaplar 1-3-4-5.sql',
     explanation: 'UPDATE table SET ad = \'Yeni\' WHERE no = (SELECT no FROM table WHERE ad = \'Eski\') yapısı kullanılır.'
   },
   {
@@ -3436,6 +3563,7 @@ const questionsDers10Zor = [
     question: 'Kasiyerler arasında en az satış kaydı girmiş (en az adet değil, en az işlem) kasiyeri işlem sayısına göre artan sırada sıralayıp LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: '___1___ K.Ad, ___2___(*) \n___3___ satis ___4___ S \n___5___ kasiyer ___6___ K ___7___ K.KasiyerNo = S.KasiyerNo \n___8___ S.KasiyerNo \n___9___(*) \n___10___ 0, 1;',
     blanks: ['SELECT', 'COUNT', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'ORDER BY', 'LIMIT'],
+    sql_file: 'SQL-Ödev3 Cevaplar 13.sql',
     explanation: 'İşlem sayılarını bulmak için GROUP BY ile kasiyerler gruplanır. ORDER BY COUNT(*) artan sıralama yapar. LIMIT 0, 1 en az olan ilk kaydı alır.'
   },
   {
@@ -3445,6 +3573,7 @@ const questionsDers10Zor = [
     question: '\'Peynir\' kategorisindeki ürünlerin aylara göre satış adetlerinin toplamını listeleyen sorguyu tamamlayın.',
     snippet: '___1___ ___2___(S.Tarih), ___3___(S.Adet) \n___4___ urun ___5___ U \n___6___ satis ___7___ S ___8___ S.UrunNo = U.UrunNo \n___9___ kategori ___10___ K ___11___ K.KategoriNo = U.KategoriNo \n___12___ K.KategoriAd = \'Peynir\' \n___13___ ___14___(S.Tarih);',
     blanks: ['SELECT', 'MONTH', 'SUM', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'GROUP BY', 'MONTH'],
+    sql_file: 'SQL Her bir kasiyerin bu ay yaptığı satış tutarının bulunması.sql',
     explanation: 'MONTH(Tarih) fonksiyonu ay bilgisine göre gruplamayı sağlar. Filtreleme WHERE ile Peynir kategorisi için yapılır.'
   },
   {
@@ -3454,6 +3583,7 @@ const questionsDers10Zor = [
     question: 'Tarih boyunca en çok satış yapılan ayı işlem sayısına göre azalan sırada sıralayıp LIMIT kullanarak bulan sorguyu tamamlayın.',
     snippet: '___1___ ___2___(S.Tarih), ___3___(*) \n___4___ satis ___5___ S \n___6___ ___7___(S.Tarih) \n___8___ ___9___(*) ___10___ \n___11___ 0, 1;',
     blanks: ['SELECT', 'MONTH', 'COUNT', 'FROM', 'AS', 'GROUP BY', 'MONTH', 'ORDER BY', 'COUNT', 'DESC', 'LIMIT'],
+    sql_file: 'SQL-Ödev3 Cevaplar 16.sql',
     explanation: 'MONTH(Tarih) bazında gruplanır. ORDER BY COUNT(*) DESC ile çoktan aza sıralanıp LIMIT 0,1 ile en üstteki kayıt seçilir.'
   },
   {
@@ -3463,6 +3593,7 @@ const questionsDers10Zor = [
     question: 'Şubelerin aylık bazda kaç adet satış yaptığını (şube adı ve ay numarasıyla) listeleyen sorguyu tamamlayın.',
     snippet: '___1___ SU.Ad, ___2___(*), ___3___(S.Tarih) \n___4___ satis ___5___ S \n___6___ sube ___7___ SU ___8___ SU.SubeNo = S.SubeNo \n___9___ SU.SubeNo, ___10___(S.Tarih);',
     blanks: ['SELECT', 'COUNT', 'MONTH', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'GROUP BY', 'MONTH'],
+    sql_file: 'SQL-Ödev3 Cevaplar 17.sql',
     explanation: 'Şubeler ve satis tablosu ON ile birleştirilir. Gruplama hem şube noya hem de MONTH(Tarih)\'e göre çoklu olarak yapılır.'
   },
   {
@@ -3472,6 +3603,7 @@ const questionsDers10Zor = [
     question: 'Ürün tablosundaki \'Kategori\' sütununu \'KategoriNo\' olarak değiştirip yabancı anahtar (FOREIGN KEY) ilişkisi ekleyen sorguyu tamamlayın.',
     snippet: '___1___ market.urun \n___2___ Kategori KategoriNo INT(11) ___3___ ___4___; \n___5___ market.urun \n___6___ fk_kategori \n___7___ (KategoriNo) ___8___ market.kategori (KategoriNo);',
     blanks: ['ALTER TABLE', 'CHANGE COLUMN', 'NOT', 'NULL', 'ALTER TABLE', 'ADD CONSTRAINT', 'FOREIGN KEY', 'REFERENCES'],
+    sql_file: 'SQL Yabancı Anahtar Kategori.sql',
     explanation: 'CHANGE COLUMN sütun adını ve türünü değiştirir. ADD CONSTRAINT ... FOREIGN KEY (...) REFERENCES tablo (sütun) yabancı anahtarı tanımlar.'
   },
   {
@@ -3481,6 +3613,7 @@ const questionsDers10Zor = [
     question: 'Ürün tablosundaki \'Marka\' sütununu \'MarkaNo\' olarak değiştirip yabancı anahtar (FOREIGN KEY) tanımlayan sorguyu tamamlayın.',
     snippet: '___1___ market.urun \n___2___ Marka MarkaNo INT(11) ___3___ ___4___; \n___5___ market.urun \n___6___ fk_marka \n___7___ (MarkaNo) ___8___ market.marka (MarkaNo);',
     blanks: ['ALTER TABLE', 'CHANGE COLUMN', 'NOT', 'NULL', 'ALTER TABLE', 'ADD CONSTRAINT', 'FOREIGN KEY', 'REFERENCES'],
+    sql_file: 'SQL Yabancı Anahtar Marka.sql',
     explanation: 'Sütun adını değiştirmek için ALTER TABLE urun CHANGE COLUMN, ilişki eklemek için ise ADD CONSTRAINT ... FOREIGN KEY ... REFERENCES kullanılır.'
   },
   {
@@ -3490,6 +3623,7 @@ const questionsDers10Zor = [
     question: 'Bugün satılan ürünleri, adetlerini ve tutarlarını (fiyat*adet) listeleyen sorguyu tamamlayın.',
     snippet: '___1___ U.UrunNo, U.UrunAd, U.Fiyat, S.Adet, (U.Fiyat * S.Adet) ___2___ \'Tutar\' \n___3___ satis ___4___ S \n___5___ urun ___6___ U ___7___ U.UrunNo = S.UrunNo \n___8___ ___9___(Tarih) = ___10___(___11___()) \n___12___ ___13___(Tarih) = ___14___(___15___());',
     blanks: ['SELECT', 'AS', 'FROM', 'AS', 'INNER JOIN', 'AS', 'ON', 'WHERE', 'DAY', 'DAY', 'NOW', 'AND', 'MONTH', 'MONTH', 'NOW'],
+    sql_file: 'SQL Bugün hangi ürünlerin satıldığının listelenmesi.sql',
     explanation: 'Yeni hesaplanan kolona AS ile takma isim verilir. Bugün filtresi için DAY(Tarih) = DAY(NOW()) AND MONTH(Tarih) = MONTH(NOW()) kontrol edilir.'
   },
   {
@@ -3499,6 +3633,7 @@ const questionsDers10Zor = [
     question: 'Bugün toplam kaç adet (farklı işlemlerin toplam adedi değil, satılan toplam adet) ürün satıldığını bulan sorguyu tamamlayın.',
     snippet: '___1___ ___2___(Adet) ___3___ \'Toplam Adet\' \n___4___ satis \n___5___ ___6___(Tarih) = ___7___(___8___()) \n___9___ ___10___(Tarih) = ___11___(___12___());',
     blanks: ['SELECT', 'SUM', 'AS', 'FROM', 'WHERE', 'DAY', 'DAY', 'NOW', 'AND', 'MONTH', 'MONTH', 'NOW'],
+    sql_file: 'SQL Bu ay yapılan toplam satış tutarı.sql',
     explanation: 'Toplam miktarı bulmak için COUNT yerine SUM(Adet) kullanılır. Tarih filtreleri WHERE and AND ile gün-ay kontrolüyle verilir.'
   },
   {
@@ -3508,6 +3643,7 @@ const questionsDers10Zor = [
     question: 'Kategori ve Marka tablolarına yabancı anahtarla (FOREIGN KEY REFERENCES) bağlı bir ürün tablosu oluşturma şemasını tamamlayın.',
     snippet: 'CREATE ___1___ urun ( \n  UrunNo INT(11) ___2___ ___3___ ___4___, \n  UrunAd VARCHAR(45) ___5___ ___6___, \n  MarkaNo INT(11) ___7___ ___8___, \n  KategoriNo INT(11) ___9___ ___10___, \n  ___11___ (UrunNo), \n  ___12___ fk_kategori ___13___ (KategoriNo) ___14___ kategori (KategoriNo) \n);',
     blanks: ['TABLE', 'NOT', 'NULL', 'AUTO_INCREMENT', 'NOT', 'NULL', 'NOT', 'NULL', 'NOT', 'NULL', 'PRIMARY KEY', 'CONSTRAINT', 'FOREIGN KEY', 'REFERENCES'],
+    sql_file: '2_Urun Tablosu Oluşturma.sql',
     explanation: 'Otomatik artan sütun için AUTO_INCREMENT, birincil anahtar için PRIMARY KEY, yabancı anahtar için CONSTRAINT ... FOREIGN KEY ... REFERENCES kullanılır.'
   },
   {
@@ -3517,6 +3653,7 @@ const questionsDers10Zor = [
     question: '\'İçecek\' kategorisindeki ürünlerde %20 indirim yaparak ürün adı, normal fiyat ve indirimli fiyatı listeleyen ve fiyata göre artan sırada sıralayan sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Fiyat, Fiyat * 0.8 ___2___ \'İndirimli Fiyat\' \n___3___ urun \n___4___ Kategori ___5___ (\'İçecek\') \n___6___ Fiyat ___7___;',
     blanks: ['SELECT', 'AS', 'FROM', 'WHERE', 'IN', 'ORDER BY', 'ASC'],
+    sql_file: 'SQL Icecek Kategorisindeki Ürünlerde 20 indirim yaparak listeleme.sql',
     explanation: '%20 indirimli fiyat Fiyat * 0.8 ile hesaplanır. Kategori filtresi WHERE Kategori IN (\'İçecek\') ile yapılır ve ORDER BY Fiyat ASC ile sıralanır.'
   },
   {
@@ -3526,6 +3663,7 @@ const questionsDers10Zor = [
     question: 'Ürünleri adına göre sıralayıp 3. kayıttan itibaren 5 adet listeleyen (Sayfalama - Pagination) sorguyu tamamlayın.',
     snippet: '___1___ UrunAd, Kategori, Marka \n___2___ urun \n___3___ UrunAd ___4___ \n___5___ 3, 5;',
     blanks: ['SELECT', 'FROM', 'ORDER BY', 'ASC', 'LIMIT'],
+    sql_file: 'SQL Belirli Sayıda urun Listeleme Sayfalama.sql',
     explanation: 'Sıralama için ORDER BY UrunAd ASC kullanılır. Sayfalama için LIMIT offset, count (yani LIMIT 3, 5) kullanılır.'
   },
   {
@@ -3535,6 +3673,7 @@ const questionsDers10Zor = [
     question: 'Telefon numarası \'505\' ile başlayan müşterilerin sayısını bulan sorguyu yazın.',
     snippet: '___1___ ___2___(*) ___3___ musteri ___4___ Telefon ___5___ \'505%\';',
     blanks: ['SELECT', 'COUNT', 'FROM', 'WHERE', 'LIKE'],
+    sql_file: 'SQL-Ödev3 Cevaplar 8.sql',
     explanation: 'Kayıt sayısını bulmak için COUNT(*), eşleşme için WHERE ve LIKE kullanılır.'
   },
   {
@@ -3544,6 +3683,7 @@ const questionsDers10Zor = [
     question: 'Müşterileri şehirlerine göre gruplayayıp her şehirde kaç müşteri olduğunu listeleyen sorguyu yazın.',
     snippet: '___1___ Sehir, ___2___(*) ___3___ musteri ___4___ Sehir;',
     blanks: ['SELECT', 'COUNT', 'FROM', 'GROUP BY'],
+    sql_file: 'SQL-Ödev3 Cevaplar 9.sql',
     explanation: 'Şehirlere göre gruplayarak saymak için COUNT ve GROUP BY Sehir kullanılır.'
   },
   {
@@ -3553,6 +3693,7 @@ const questionsDers10Zor = [
     question: 'Belirtilen doğum tarihinden (1984-06-05) bugüne kadar geçen toplam gün sayısını hesaplayan DATEDIFF sorgusunu tamamlayın.',
     snippet: '___1___ ___2___(___3___(), \'1984-06-05\') ___4___ \'Furkan Kaç Günlük\';',
     blanks: ['SELECT', 'DATEDIFF', 'NOW', 'AS'],
+    sql_file: 'SQL_Furkan Kac Gunluk.sql',
     explanation: 'DATEDIFF iki tarih arasındaki farkı gün olarak döner. NOW() bugünü ifade eder.'
   },
   {
@@ -3562,6 +3703,7 @@ const questionsDers10Zor = [
     question: 'Elektronik kategorisinin ortalama ürün fiyatını GROUP BY ve HAVING alt sorgusuyla bulan sorguyu tamamlayın.',
     snippet: '___1___ ___2___(Fiyat) ___3___ urun ___4___ KategoriNo ___5___ KategoriNo = (___6___ KategoriNo ___7___ kategori ___8___ KategoriAd = \'Elektronik\');',
     blanks: ['SELECT', 'AVG', 'FROM', 'GROUP BY', 'HAVING', 'SELECT', 'FROM', 'WHERE'],
+    sql_file: 'SQL Alt Sorgu GROUP BY ve HAVING Kullanımı.sql',
     explanation: 'Kategori bazında gruplandıktan sonra HAVING koşulunda Elektronik kategorisinin nosu alt sorgudan çekilir.'
   },
   {
@@ -3571,6 +3713,7 @@ const questionsDers10Zor = [
     question: 'MarkaEkle saklı yordamında parametre modlarını (IN/OUT), SQLEXCEPTION Handler bildirimini ve INSERT ifadesini tamamlayın.',
     snippet: 'CREATE ___1___ MarkaEkle (___2___ P_Marka VARCHAR(45), ___3___ P_MarkaNo INT, P_Ekleyen INT, OUT O_Durum TEXT) \n___4___ \n  ___5___ ___6___ ___7___ ___8___ ___9___ \n  ___10___ \n    ___11___ O_Durum = \'Hata oluştu\'; \n  ___12___; \n  ___13___ marka(No, Marka, Ekleyen) ___14___ (P_MarkaNo, P_Marka, P_Ekleyen); \n___15___',
     blanks: ['PROCEDURE', 'IN', 'IN', 'BEGIN', 'DECLARE', 'EXIT', 'HANDLER', 'FOR', 'SQLEXCEPTION', 'BEGIN', 'SET', 'END', 'INSERT INTO', 'VALUES', 'END'],
+    sql_file: '2_Urun Tablosu Oluşturma.sql',
     explanation: 'Saklı yordam parametreleri IN veya OUT olabilir. Hataları yakalamak için HANDLER tanımlanır.'
   },
   {
@@ -3580,6 +3723,7 @@ const questionsDers10Zor = [
     question: 'UrunEkle saklı yordamı (procedure) içinde yer alan INSERT bloğunu ve OUT parametresine değer atama kelimesini yazın.',
     snippet: 'CREATE ___1___ UrunEkle (___2___ P_UrunAd VARCHAR(100), ___3___ P_MarkaNo INT, ___4___ P_KategoriNo INT, ___5___ P_Fiyat FLOAT, OUT Sonuc VARCHAR(50)) \n___6___ \n  ___7___ urun (Ad, MarkaNo, KategoriNo, Fiyat) \n  ___8___ (P_UrunAd, P_MarkaNo, P_KategoriNo, P_Fiyat); \n  ___9___ Sonuc = \'Ürün Eklendi\'; \n___10___',
     blanks: ['PROCEDURE', 'IN', 'IN', 'IN', 'IN', 'BEGIN', 'INSERT INTO', 'VALUES', 'SET', 'END'],
+    sql_file: 'SQL-Ödev3 Cevaplar 10.sql',
     explanation: 'Veri ekleme işlemi INSERT INTO ... VALUES ile yapılır. Parametrelere veya değişkenlere değer atamak için SET kullanılır.'
   },
   {
@@ -3589,6 +3733,7 @@ const questionsDers10Zor = [
     question: 'Bir ürünün son kullanma tarihine kalan gün sayısını hesaplayan saklı fonksiyonu (FUNCTION) tamamlayın.',
     snippet: 'CREATE ___1___ SonKullanmaZamanHesapla (P_SonKullanmaTarih DATE) ___2___ INT \n___3___ \n  ___4___ KalanZaman INT; \n  ___5___ KalanZaman = ___6___(P_SonKullanmaTarih, ___7___()); \n  ___8___ KalanZaman; \n___9___',
     blanks: ['FUNCTION', 'RETURNS', 'BEGIN', 'DECLARE', 'SET', 'DATEDIFF', 'NOW', 'RETURN', 'END'],
+    sql_file: 'SQL Her bir kasiyerin bu ay yaptığı satış tutarının bulunması.sql',
     explanation: 'MySQL fonksiyonlarında dönüş tipi RETURNS ile, gövde içi değişkenler DECLARE ile tanımlanır. Değer döndürme RETURN ile yapılır.'
   },
   {
@@ -3598,6 +3743,7 @@ const questionsDers10Zor = [
     question: 'Fiyatı 5 TL ile 20 TL arasında (sınırlar dahil) olan ürünleri filtreleyip fiyata göre sıralayan sorguyu tamamlayın.',
     snippet: '___1___ * ___2___ market.urun \n___3___ Fiyat ___4___ 5 ___5___ 20 \n___6___ Fiyat;',
     blanks: ['SELECT', 'FROM', 'WHERE', 'BETWEEN', 'AND', 'ORDER BY'],
+    sql_file: 'SQL WHERE Fiyat Kıyaslama.sql',
     explanation: 'BETWEEN ... AND ... yapısı belirtilen aralıktaki değerleri filtreler. ORDER BY sıralama yapar.'
   },
   {
@@ -3607,6 +3753,7 @@ const questionsDers10Zor = [
     question: 'Müşteri tablosunda adı \'Sinan\' olan müşterileri \'Petek\' olarak güncelleyen ve boş telefon numarası olanları seçen sorguları tamamlayın.',
     snippet: '___1___ musteri ___2___ Ad = \'Petek\' ___3___ Ad = \'Sinan\';\n___4___ * ___5___ musteri ___6___ Telefon = \'\';',
     blanks: ['UPDATE', 'SET', 'WHERE', 'SELECT', 'FROM', 'WHERE'],
+    sql_file: 'SQL Ürünü olmayan kategorilerin listelenmesi.sql',
     explanation: 'Kayıtları güncellemek için UPDATE ... SET ... WHERE kullanılır. Sorgu filtreleri WHERE ile belirtilir.'
   },
   {
@@ -3616,6 +3763,7 @@ const questionsDers10Zor = [
     question: 'Elektronik kategorisindeki ürünlerin ortalama fiyatının altında kalan elektronik ürünleri alt sorgularla getiren ve ürün fiyatına göre sıralayan ifadeyi tamamlayın.',
     snippet: '___1___ * ___2___ urun \n___3___ Fiyat < (___4___ ___5___(Fiyat) ___6___ urun ___7___ KategoriNo ___8___ KategoriNo = (___9___ KategoriNo ___10___ kategori ___11___ KategoriAd = \'Elektronik\')) \n___12___ KategoriNo = (___13___ KategoriNo ___14___ kategori ___15___ KategoriAd = \'Elektronik\') \n___16___ Fiyat;',
     blanks: ['SELECT', 'FROM', 'WHERE', 'SELECT', 'AVG', 'FROM', 'GROUP BY', 'HAVING', 'SELECT', 'FROM', 'WHERE', 'AND', 'SELECT', 'FROM', 'WHERE', 'ORDER BY'],
+    sql_file: 'SQL Alt Sorgu GROUP BY ve HAVING Kullanımı.sql',
     explanation: 'Koşulları birleştirmek için AND kullanılır. Alt sorgu ve dış sorgu WHERE kelimeleriyle filtrelenir ve ORDER BY ile sıralanır.'
   },
   {
@@ -3625,6 +3773,7 @@ const questionsDers10Zor = [
     question: 'Veritabanı oluşturma ve sınıf tablosu oluşturma DDL ifadelerini tamamlayın.',
     snippet: 'SHOW DATABASES; \nSHOW TABLES; \nCREATE ___1___ IF ___2___ EXISTS sinif ( \n  SinifNo INT ___3___ ___4___, \n  SinifAd VARCHAR(20) \n);',
     blanks: ['TABLE', 'NOT', 'PRIMARY KEY', 'AUTO_INCREMENT'],
+    sql_file: '1_Veritabani_Tablo_Olusturma.sql',
     explanation: 'SHOW TABLES/DATABASES nesneleri listeler. CREATE TABLE IF NOT EXISTS tablo yapısını güvenli şekilde oluşturur.'
   },
   {
@@ -3634,6 +3783,7 @@ const questionsDers10Zor = [
     question: 'Her şehirdeki müşterilerin sayısını listeleyen ve müşteri sayısı 2\'den fazla olan şehirleri getiren sorguyu yazın.',
     snippet: '___1___ M.Sehir, ___2___(M.Sehir) ___3___ musteri ___4___ M ___5___ Sehir ___6___ 2 < ___7___(M.Sehir);',
     blanks: ['SELECT', 'COUNT', 'FROM', 'AS', 'GROUP BY', 'HAVING', 'COUNT'],
+    sql_file: 'SQL-Ödev3 Cevaplar 11.sql',
     explanation: 'Sorgu çıktısı SELECT ile belirlenir. GROUP BY gruplamayı sağlar, gruplanmış veri kriterleri HAVING COUNT ile süzülür.'
   }
 ];
