@@ -3788,6 +3788,249 @@ const questionsDers10Zor = [
   }
 ];
 
+const questionsDers11 = [
+  {
+    id: 1,
+    category: 'function',
+    type: 'choice',
+    question: "MySQL'de kullanıcı tanımlı fonksiyonlar (UDF) ile ilgili aşağıdakilerden hangisi yanlıştır?",
+    options: [
+      "Kullanıcı tanımlı fonksiyonlar CREATE FUNCTION komutuyla oluşturulur.",
+      "Fonksiyonların sadece girdi (IN) parametreleri olabilir.",
+      "Fonksiyonların gövdesinde saklı yordamlar (Stored Procedure) çağrılabilir.",
+      "Fonksiyon tanımlamalarında tek bir değer dönülmesi (RETURN) zorunludur."
+    ],
+    answer: 2,
+    explanation: "Slayt 21'e göre: Fonksiyonlar içerisinde saklı yordamlar (stored procedure) çalıştırılamaz."
+  },
+  {
+    id: 2,
+    category: 'function',
+    type: 'choice',
+    question: "Deterministik (DETERMINISTIC) fonksiyon kavramı aşağıdakilerden hangisini ifade eder?",
+    options: [
+      "Aynı giriş parametreleri için her çağrıda farklı sonuçlar üreten fonksiyonlardır.",
+      "Aynı giriş parametreleri için her zaman aynı sonucu döndüren fonksiyonlardır.",
+      "Sadece INSERT işlemi gerçekleştiğinde otomatik olarak çalışan fonksiyonlardır.",
+      "İçerisinde işlem (transaction) kontrol komutları bulunduran fonksiyonlardır."
+    ],
+    answer: 1,
+    explanation: "Slayt 8'e göre: Deterministik bir fonksiyon, aynı giriş parametreleri için her zaman aynı sonucu döndürür."
+  },
+  {
+    id: 3,
+    category: 'function',
+    type: 'choice',
+    question: "MySQL'de fonksiyon tanımlanırken deterministik olup olmadığı belirtilmezse, varsayılan olarak hangisi kabul edilir?",
+    options: [
+      "DETERMINISTIC",
+      "NOT DETERMINISTIC (Nondeterministik)",
+      "READS SQL DATA",
+      "CONTAINS SQL"
+    ],
+    answer: 1,
+    explanation: "Slayt 8'e göre: Eğer DETERMINISTIC veya NOT DETERMINISTIC ifadeleri belirtilmezse, MySQL varsayılan olarak fonksiyonu nondeterministik (NOT DETERMINISTIC) kabul eder."
+  },
+  {
+    id: 4,
+    category: 'function',
+    type: 'choice',
+    question: "Çok sunuculu replikasyon ortamlarında deterministik olmayan (nondeterministik) fonksiyonların kullanımıyla ilgili hangisi doğrudur?",
+    options: [
+      "Replikasyon ortamında herhangi bir veri tutarsızlığı riski taşımazlar.",
+      "Replikasyon uyumluluğunu bozarak master ve slave sunucularda farklı sonuçlar üretebilir ve veri tutarsızlığına neden olabilirler.",
+      "Statement-Based Logging kullanıldığında otomatik olarak önbelleğe alınırlar.",
+      "Replikasyon ortamlarında her zaman deterministik fonksiyonlara tercih edilmelidir."
+    ],
+    answer: 1,
+    explanation: "Slayt 11 ve 17'ye göre: Non-deterministik fonksiyonlar replikasyon sırasında farklı çıktılar üretebilir ve veri tutarsızlığına neden olabilir."
+  },
+  {
+    id: 5,
+    category: 'function',
+    type: 'choice',
+    question: "MySQL'de sadece çalıştırılan SQL sorgusunun loglandığı ve nondeterministik fonksiyonlarda veri tutarsızlığı riskinin yüksek olduğu loglama yöntemi hangisidir?",
+    options: [
+      "Row-Based Logging (Satır Bazlı)",
+      "Transaction-Based Logging (İşlem Bazlı)",
+      "Statement-Based Logging (Sorgu Bazlı)",
+      "Result-Based Logging (Sonuç Bazlı)"
+    ],
+    answer: 2,
+    explanation: "Slayt 18'e göre: Statement-Based Logging yönteminde sadece sorgu loglanır. Non-deterministik fonksiyonlar kopya sunucuda yeniden çalıştırıldığı için veri tutarsızlığı riski yüksektir."
+  },
+  {
+    id: 6,
+    category: 'function',
+    type: 'choice',
+    question: "Saklı Yordamlar (Stored Procedure) ile Fonksiyonların (Function) karşılaştırılmasına ilişkin hangisi doğrudur?",
+    options: [
+      "Saklı yordamlar SELECT, WHERE ve HAVING komutlarında doğrudan kullanılabilirler.",
+      "Fonksiyonlar transaction (işlem) işlemlerinde kullanılabilir, saklı yordamlar kullanılamaz.",
+      "Fonksiyonlarda girdi (IN) ve çıktı (OUT) parametreleri bulunabilir.",
+      "Saklı yordamlarda hata yakalama (exception handling) kullanılabilirken, fonksiyonlarda hata yakalama kullanılamaz."
+    ],
+    answer: 3,
+    explanation: "Slayt 21'deki karşılaştırma tablosuna göre: Saklı yordamlarda hata yakalama kullanılabilir, fonksiyon tanımlamalarında hata yakalama kullanılamaz."
+  },
+  {
+    id: 7,
+    category: 'function',
+    type: 'code',
+    question: "Dizgi (string) fonksiyonlarından; dizgideki karakter sayısını döndüren LENGTH() ve birden fazla dizgiyi birleştiren CONCAT() fonksiyonlarının kullanımını tamamlayın.",
+    snippet: "SELECT ___1___('Merhaba'), ___2___('Merhaba', ' Dünya');",
+    blanks: ["LENGTH", "CONCAT"],
+    explanation: "LENGTH() karakter uzunluğunu bulur, CONCAT() ise dizgileri birleştirir."
+  },
+  {
+    id: 8,
+    category: 'function',
+    type: 'code',
+    question: "Matematiksel fonksiyonlardan; mutlak değeri döndüren ABS() ve sayıyı aşağı yuvarlayan FLOOR() fonksiyonlarının kullanımını tamamlayın.",
+    snippet: "SELECT ___1___(-42), ___2___(3.7);",
+    blanks: ["ABS", "FLOOR"],
+    explanation: "ABS() mutlak değeri verir (çıktı 42 olur), FLOOR() ise aşağı yuvarlar (çıktı 3 olur)."
+  },
+  {
+    id: 9,
+    category: 'function',
+    type: 'code',
+    question: "Market veritabanında ürünlerin son kullanma tarihine kaç gün kaldığını hesaplayan 'SonKullanmaZamanHesapla' fonksiyonunun tanımındaki boşlukları tamamlayın.",
+    snippet: "CREATE FUNCTION SonKullanmaZamanHesapla (P_SonKullanmaTarih DATE) ___1___ int(11)\nBEGIN\n  DECLARE KalanZaman INT;\n  SET KalanZaman = ___2___(P_SonKullanmaTarih, ___3___());\n  ___4___ KalanZaman;\nEND",
+    blanks: ["RETURNS", "DATEDIFF", "NOW", "RETURN"],
+    explanation: "Fonksiyon dönüş türü RETURNS ifadesiyle, tarih farkı DATEDIFF(tarih1, tarih2) ile, mevcut zaman NOW() ile ve değer döndürme RETURN ile yapılır."
+  },
+  {
+    id: 10,
+    category: 'function',
+    type: 'code',
+    question: "Parametre olarak aldığı sayının karesini alan ve aynı giriş için her zaman aynı sonucu üreten deterministik fonksiyon tanımını tamamlayın.",
+    snippet: "CREATE FUNCTION kare_al(x INT) RETURNS INT\n___1___\nBEGIN\n  ___2___ x * x;\nEND",
+    blanks: ["DETERMINISTIC", "RETURN"],
+    explanation: "Aynı parametrelerle her zaman aynı sonucu veren fonksiyonlar DETERMINISTIC ifadesiyle işaretlenmelidir, değer döndürmek için ise RETURN ifadesi kullanılır."
+  },
+  {
+    id: 11,
+    category: 'trigger',
+    type: 'choice',
+    question: "Tetikleyiciler (Trigger) ile ilgili aşağıdakilerden hangisi yanlıştır?",
+    options: [
+      "Veri tabanındaki bir tablo üzerinde bir DML işlemi gerçekleştirildiğinde otomatik çalışırlar.",
+      "Tetikleyici; INSERT, UPDATE veya DELETE işlemleri öncesinde veya sonrasında çalışacak şekilde tasarlanabilir.",
+      "Her tetikleyici veri tabanındaki tüm tablolara ortak olarak bağlanır ve hepsinde çalışır.",
+      "Tetikleyiciler veri bütünlüğünü sağlamak, otomatik hesaplama yapmak veya log kaydı oluşturmak için kullanılır."
+    ],
+    answer: 2,
+    explanation: "Slayt 25'e göre: 'Tabloya Özel: Her tetikleyici bir tabloya özel olarak tasarlanabilir.' Ortak/genel tetikleyici kavramı yoktur."
+  },
+  {
+    id: 12,
+    category: 'trigger',
+    type: 'choice',
+    question: "Tetikleyicilerde eski veriye ve yeni veriye erişim sağlayan OLD ve NEW ifadelerinin UPDATE (güncelleme) komutu için geçerlilik durumu nedir?",
+    options: [
+      "Sadece OLD ifadesi kullanılabilir.",
+      "Sadece NEW ifadesi kullanılabilir.",
+      "Hem OLD hem de NEW ifadesi kullanılabilir.",
+      "Hiçbiri kullanılamaz."
+    ],
+    answer: 2,
+    explanation: "Slayt 31'e göre: UPDATE işlemi sırasında verinin eski haline OLD.Sütun_Adı, yeni güncellenmiş haline ise NEW.Sütun_Adı şeklinde erişilebilir. Her iki ifade de geçerlidir."
+  },
+  {
+    id: 13,
+    category: 'trigger',
+    type: 'choice',
+    question: "Tetikleyici işlem komutlarından DELETE (silme) işlemi sırasında OLD ve NEW ifadelerinin kullanılabilirliğiyle ilgili hangisi doğrudur?",
+    options: [
+      "OLD ifadesi kullanılabilir (Evet), NEW ifadesi kullanılamaz (Hayır).",
+      "OLD ifadesi kullanılamaz (Hayır), NEW ifadesi kullanılabilir (Evet).",
+      "Her iki ifade de kullanılabilir (Evet).",
+      "Her iki ifade de kullanılamaz (Hayır)."
+    ],
+    answer: 0,
+    explanation: "Slayt 31'e göre: DELETE işleminde silinen eski satır verisine OLD ile erişilebilir, ancak yeni bir satır eklenmediği için NEW ifadesi kullanılamaz."
+  },
+  {
+    id: 14,
+    category: 'trigger',
+    type: 'choice',
+    question: "INSERT (ekleme) işlemi sırasında tetikleyici gövdesinde OLD ve NEW ifadelerinin kullanılabilirliğiyle ilgili hangisi doğrudur?",
+    options: [
+      "OLD ifadesi kullanılabilir, NEW ifadesi kullanılamaz.",
+      "OLD ifadesi kullanılamaz (Hayır), NEW ifadesi kullanılabilir (Evet).",
+      "Her iki ifade de kullanılabilir.",
+      "Her iki ifade de kullanılamaz."
+    ],
+    answer: 1,
+    explanation: "Slayt 31'e göre: INSERT işleminde veritabanına yeni bir veri eklendiği için NEW ifadesi kullanılabilir, ancak öncesinde eski bir veri olmadığı için OLD ifadesi kullanılamaz."
+  },
+  {
+    id: 15,
+    category: 'trigger',
+    type: 'choice',
+    question: "Ders sunumunda yer alan 6 farklı tetikleyici çeşidi göz önüne alındığında, aşağıdakilerden hangisi bir tetikleyici zamanlama ve işlem türü değildir?",
+    options: [
+      "Silmeden Önce (Before Delete)",
+      "Eklemeden Sonra (After Insert)",
+      "Sorgulamadan Önce (Before Select)",
+      "Güncellemeden Sonra (After Update)"
+    ],
+    answer: 2,
+    explanation: "Slayt 28'e göre tetikleyiciler sadece DML (INSERT, UPDATE, DELETE) işlemleri için yazılabilir. SELECT işlemi bir tetikleyici türü değildir."
+  },
+  {
+    id: 16,
+    category: 'trigger',
+    type: 'code',
+    question: "Bir tablonun üzerindeki INSERT işleminden sonra çalışacak bir tetikleyici oluşturma söz dizimindeki boşlukları doldurun.",
+    snippet: "___1___ TRIGGER satis_AFTER_INSERT\n___2___ INSERT ___3___ satis\nFOR ___4___ ROW\nBEGIN\n  /* Tetikleyici kod bloğu */\nEND",
+    blanks: ["CREATE", "AFTER", "ON", "EACH"],
+    explanation: "Tetikleyiciler CREATE TRIGGER komutuyla, AFTER zamanlamasıyla, ON tablo_adı tablosu üzerinde ve her satır için FOR EACH ROW komutuyla tanımlanır."
+  },
+  {
+    id: 17,
+    category: 'trigger',
+    type: 'code',
+    question: "Bir UPDATE tetikleyicisinde UrunAd sütununun güncelleme öncesindeki eski değerini 'eski_ad' değişkenine, güncelleme sonrasındaki yeni değerini 'yeni_ad' değişkenine atayan ifadeleri tamamlayın.",
+    snippet: "SET eski_ad = ___1___.UrunAd;\nSET yeni_ad = ___2___.UrunAd;",
+    blanks: ["OLD", "NEW"],
+    explanation: "UPDATE tetikleyicisinde eski veriye OLD, yeni veriye NEW niteleyicisi ile erişilir."
+  },
+  {
+    id: 18,
+    category: 'trigger',
+    type: 'code',
+    question: "Satış tablosuna (`satis`) yeni bir kayıt eklendikten sonra, satış tutarının %5'ini puan olarak hesaplayıp `puan` tablosuna otomatik ekleyen tetikleyiciyi tamamlayın.",
+    snippet: "CREATE TRIGGER satis_AFTER_INSERT AFTER ___1___ ON satis FOR EACH ROW\nBEGIN\n  INSERT INTO puan (MusteriNo, Puan, Tarih) \n  VALUES (___2___.MusteriNo, ((SELECT Fiyat FROM urun WHERE UrunNo = ___3___.UrunNo) * ___4___.Adet * 0.05), ___5___.Tarih);\nEND",
+    blanks: ["INSERT", "NEW", "NEW", "NEW", "NEW"],
+    explanation: "Tetikleyici AFTER INSERT olarak çalışır ve eklenen yeni satırdaki verilere NEW anahtar kelimesi ile (NEW.MusteriNo, NEW.UrunNo, NEW.Adet, NEW.Tarih) erişir."
+  },
+  {
+    id: 19,
+    category: 'trigger',
+    type: 'choice',
+    question: "MySQL'de bir tetikleyicinin etkilenen her bir satır için ayrı ayrı çalıştırılmasını (satır düzeyinde tetikleyici olmasını) sağlayan zorunlu ifade hangisidir?",
+    options: [
+      "FOR EACH ROW",
+      "FOR EVERY RECORD",
+      "EXECUTE FOR ALL",
+      "PER ROW TRIGGER"
+    ],
+    answer: 0,
+    explanation: "Slayt 29'a göre: MySQL'de tetikleyici oluşturulurken satır düzeyinde çalışması için 'FOR EACH ROW' ifadesinin kullanılması zorunludur."
+  },
+  {
+    id: 20,
+    category: 'trigger',
+    type: 'code',
+    question: "Rastgele değer üreten nondeterministik 'rastgele_deger()' fonksiyonunun tanımındaki eksik kısımları tamamlayın.",
+    snippet: "CREATE FUNCTION rastgele_deger() RETURNS INT\n___1___ DETERMINISTIC\nBEGIN\n  RETURN FLOOR(1 + (___2___() * 100));\nEND",
+    blanks: ["NOT", "RAND"],
+    explanation: "Rastgele değer üreten fonksiyonlar NOT DETERMINISTIC olarak tanımlanır ve rastgele sayı üretmek için yerleşik RAND() fonksiyonu kullanılır."
+  }
+];
+
 const sqlFileList = [
   '10_Hafta_eticaret_siparis_musteri_puan_tabloları.sql',
   '1_Veritabani_Tablo_Olusturma.sql',

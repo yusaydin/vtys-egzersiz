@@ -117,6 +117,12 @@
           <option value="joins">I. Tablo Birleştirmeleri - JOIN (38)</option>
           <option value="subquery">II. Alt Sorgular ve Gruplama (37)</option>
         `;
+      } else if (lessonId === 'ders11') {
+        categoryFilter.innerHTML = `
+          <option value="all">Tüm Sorular (20)</option>
+          <option value="function">I. Fonksiyon - FUNCTION (10)</option>
+          <option value="trigger">II. Tetikleyici - TRIGGER (10)</option>
+        `;
       }
     }
 
@@ -144,6 +150,12 @@
         if (dashboardSubtitle) {
           dashboardSubtitle.innerText = `Market veritabanı üzerindeki JOIN birleştirmeleri ve Alt Sorgular (Subqueries) içeren 75 soruluk uygulamalı (${currentDifficulty === 'hard' ? 'Zor' : 'Kolay'}) sınavı tamamladınız.`;
         }
+      } else if (lessonId === 'ders11') {
+        headerTitle.innerText = "VTYS Egzersiz (Ders 11)";
+        docTitle.innerText = "VTYS Egzersiz - Ders 11";
+        if (dashboardSubtitle) {
+          dashboardSubtitle.innerText = "Dr. Öğr. Üyesi Hüseyin COŞKUN'un Ders 11 (Fonksiyonlar ve Tetikleyiciler) sunumuna dayalı 20 soruluk sınavı tamamladınız.";
+        }
       }
     }
 
@@ -166,6 +178,8 @@
           questions = questionsDers8;
         } else if (lessonId === 'ders9') {
           questions = questionsDers9;
+        } else if (lessonId === 'ders11') {
+          questions = questionsDers11;
         }
       }
       
@@ -289,6 +303,8 @@
       else if (q.category === 'index') catText = "III. Dizin (INDEX)";
       else if (q.category === 'tsql') catText = "I. Transact-SQL ve Transaction";
       else if (q.category === 'sp') catText = "II. Saklı Yordam (STORED PROCEDURE)";
+      else if (q.category === 'function') catText = "I. Fonksiyon (FUNCTION)";
+      else if (q.category === 'trigger') catText = "II. Tetikleyici (TRIGGER)";
       questionCategoryEl.innerText = catText;
 
       // Set question counts
