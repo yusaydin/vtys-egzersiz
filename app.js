@@ -38,8 +38,11 @@
     const sqlModalCopy = document.getElementById('sql-modal-copy');
     const sqlModalDownload = document.getElementById('sql-modal-download');
 
-    // Right Sidebar Elements
+    // Sidebar & Resizer Elements
+    const sidebar = document.getElementById('sidebar');
     const sidebarRight = document.getElementById('sidebar-right');
+    const resizerLeft = document.getElementById('resizer-left');
+    const resizerRight = document.getElementById('resizer-right');
     const sqlFilesList = document.getElementById('sql-files-list');
     const sqlSearch = document.getElementById('sql-search');
     
@@ -152,11 +155,13 @@
       if (lessonId === 'ders10') {
         difficultyFilterContainer.style.display = 'block';
         sidebarRight.style.display = 'flex';
+        if (resizerRight) resizerRight.style.display = 'block';
         difficultyFilter.value = currentDifficulty;
         questions = (currentDifficulty === 'hard') ? questionsDers10Zor : questionsDers10;
       } else {
         difficultyFilterContainer.style.display = 'none';
         sidebarRight.style.display = 'none';
+        if (resizerRight) resizerRight.style.display = 'none';
         if (lessonId === 'ders8') {
           questions = questionsDers8;
         } else if (lessonId === 'ders9') {
@@ -1279,6 +1284,85 @@
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     });
+
+    // Restoring sidebars widths from localStorage
+    const savedLeftWidth = localStorage.getItem('sidebar_left_width');
+    if (savedLeftWidth && sidebar) {
+      sidebar.style.width = savedLeftWidth;
+    }
+    const savedRightWidth = localStorage.getItem('sidebar_right_width');
+    if (savedRightWidth && sidebarRight) {
+      sidebarRight.style.width = savedRightWidth;
+    }
+
+    // Left Sidebar Drag Resize Handler
+    if (resizerLeft && sidebar) {
+      resizerLeft.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        resizerLeft.classList.add('dragging');
+        document.body.classList.add('dragging-resizer');
+
+        function onMouseMove(moveEvent) {
+          moveEvent.preventDefault();
+          let newWidth = moveEvent.clientX;
+
+          // Enforce 200px - 450px bounds
+          if (newWidth < 200) newWidth = 200;
+          if (newWidth > 450) newWidth = 450;
+
+          sidebar.style.width = `${newWidth}px`;
+        }
+
+        function onMouseUp() {
+          resizerLeft.classList.remove('dragging');
+          document.body.classList.remove('dragging-resizer');
+          
+          localStorage.setItem('sidebar_left_width', sidebar.style.width);
+
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
+    }
+
+    // Right Sidebar Drag Resize Handler
+    if (resizerRight && sidebarRight) {
+      resizerRight.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        resizerRight.classList.add('dragging');
+        document.body.classList.add('dragging-resizer');
+
+        const container = document.querySelector('.app-container');
+
+        function onMouseMove(moveEvent) {
+          moveEvent.preventDefault();
+          const containerRect = container.getBoundingClientRect();
+          let newWidth = containerRect.right - moveEvent.clientX;
+
+          // Enforce 200px - 450px bounds
+          if (newWidth < 200) newWidth = 200;
+          if (newWidth > 450) newWidth = 450;
+
+          sidebarRight.style.width = `${newWidth}px`;
+        }
+
+        function onMouseUp() {
+          resizerRight.classList.remove('dragging');
+          document.body.classList.remove('dragging-resizer');
+          
+          localStorage.setItem('sidebar_right_width', sidebarRight.style.width);
+
+          document.removeEventListener('mousemove', onMouseMove);
+          document.removeEventListener('mouseup', onMouseUp);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+      });
+    }
 
     // Run!
     skipToggle.checked = skipQuestionsEnabled;

@@ -1047,3 +1047,40 @@
   background-color: #e8f5e9;
   color: #2e7d32;
 }
+
+/* Sidebar Resizers Styles */
+.resizer-left, .resizer-right {
+  width: 6px;
+  background-color: transparent;
+  cursor: col-resize;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+  z-index: 10;
+  position: relative;
+}
+
+.resizer-left::after, .resizer-right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2px;
+  width: 2px;
+  background-color: var(--w3-border);
+  transition: background-color 0.15s ease;
+}
+
+.resizer-left:hover, .resizer-right:hover,
+.resizer-left.dragging, .resizer-right.dragging {
+  background-color: rgba(4, 170, 109, 0.08);
+}
+
+.resizer-left:hover::after, .resizer-right:hover::after,
+.resizer-left.dragging::after, .resizer-right.dragging::after {
+  background-color: var(--w3-green);
+}
+
+.dragging-resizer {
+  user-select: none !important;
+  cursor: col-resize !important;
+}
