@@ -114,7 +114,7 @@
 
     /* Sidebar Navigation */
     .sidebar {
-      width: 300px;
+      width: 280px;
       background-color: var(--w3-light-gray);
       border-right: 1px solid var(--w3-border);
       display: flex;
@@ -231,6 +231,9 @@
     .question-meta {
       display: flex;
       justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
       font-size: 13px;
       font-weight: 600;
       color: var(--text-muted);
@@ -482,12 +485,15 @@
     }
 
     .btn-info {
-      background-color: #2196F3;
-      color: white;
+      background-color: rgba(33, 150, 243, 0.08);
+      color: #1e88e5;
+      border: 1px solid rgba(33, 150, 243, 0.25);
     }
-
+ 
     .btn-info:hover {
-      background-color: #0b7dda;
+      background-color: rgba(33, 150, 243, 0.18);
+      border-color: #2196F3;
+      color: #0b7dda;
     }
 
     /* Explanation Box */
@@ -972,7 +978,7 @@
 
 /* Sidebar Right (SQL Files Explorer) Styles */
 .sidebar-right {
-  width: 280px;
+  width: 260px;
   background-color: white;
   border-left: 1px solid var(--w3-border);
   display: flex;
@@ -1001,15 +1007,15 @@
 }
 
 .sql-file-item:hover {
-  background-color: #e8f0fe;
-  border-color: #d2e3fc;
+  background-color: #e8f5e9;
+  border-color: #c8e6c9;
 }
 
 .sql-file-item.active {
-  background-color: #e8f0fe;
-  border-color: var(--info-border);
-  color: #1a73e8;
-  font-weight: 500;
+  background-color: #e8f5e9;
+  border-color: var(--w3-green);
+  color: var(--correct);
+  font-weight: 600;
 }
 
 .sql-file-name-container {
