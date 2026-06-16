@@ -969,3 +969,75 @@
   font-family: var(--font-title);
   font-weight: 500;
 }
+
+/* Sidebar Right (SQL Files Explorer) Styles */
+.sidebar-right {
+  width: 280px;
+  background-color: white;
+  border-left: 1px solid var(--w3-border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  z-index: 5;
+}
+
+.sql-files-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sql-file-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: var(--w3-light-gray);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sql-file-item:hover {
+  background-color: #e8f0fe;
+  border-color: #d2e3fc;
+}
+
+.sql-file-item.active {
+  background-color: #e8f0fe;
+  border-color: var(--info-border);
+  color: #1a73e8;
+  font-weight: 500;
+}
+
+.sql-file-name-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+}
+
+.sql-file-name {
+  font-size: 12.5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sql-file-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background-color: #e3e3e3;
+  color: #555;
+  flex-shrink: 0;
+}
+
+.sql-file-badge.linked {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}

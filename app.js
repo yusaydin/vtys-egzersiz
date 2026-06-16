@@ -37,6 +37,11 @@
     const sqlModalTitle = document.getElementById('sql-modal-title');
     const sqlModalCopy = document.getElementById('sql-modal-copy');
     const sqlModalDownload = document.getElementById('sql-modal-download');
+
+    // Right Sidebar Elements
+    const sidebarRight = document.getElementById('sidebar-right');
+    const sqlFilesList = document.getElementById('sql-files-list');
+    const sqlSearch = document.getElementById('sql-search');
     
     // Header Stats
     const headerCorrect = document.getElementById('header-correct');
@@ -146,10 +151,12 @@
       
       if (lessonId === 'ders10') {
         difficultyFilterContainer.style.display = 'block';
+        sidebarRight.style.display = 'flex';
         difficultyFilter.value = currentDifficulty;
         questions = (currentDifficulty === 'hard') ? questionsDers10Zor : questionsDers10;
       } else {
         difficultyFilterContainer.style.display = 'none';
+        sidebarRight.style.display = 'none';
         if (lessonId === 'ders8') {
           questions = questionsDers8;
         } else if (lessonId === 'ders9') {
@@ -166,6 +173,9 @@
       renderQuestionsGrid();
       loadQuestion();
       updateStats();
+      if (currentLesson === 'ders10') {
+        renderSQLFilesList();
+      }
     }
 
     // Initialize Quiz
@@ -337,6 +347,10 @@
       const totalAnswered = Object.keys(userAnswers).length;
       const progressPercent = (totalAnswered / questions.length) * 100;
       progressBar.style.width = `${progressPercent}%`;
+
+      if (currentLesson === 'ders10') {
+        renderSQLFilesList();
+      }
     }
 
     // Render Multiple Choice Answers
@@ -1053,6 +1067,126 @@
       showExplanation(q);
     });
     btnReset.addEventListener('click', resetQuiz);
+    
+    if (sqlSearch) {
+      sqlSearch.addEventListener('input', () => {
+        renderSQLFilesList();
+      });
+    }
+
+    function renderSQLFilesList() {
+      if (!sqlFilesList) return;
+      sqlFilesList.innerHTML = '';
+
+      const searchTerm = (sqlSearch && sqlSearch.value) ? sqlSearch.value.trim().toLowerCase() : '';
+
+      // Filter the file list based on search term
+      const filtered = sqlFileList.filter(file => file.toLowerCase().includes(searchTerm));
+
+      // Determine the active question's sql_file
+      const activeQuestion = currentFilteredQuestions[currentIndex];
+      const activeSqlFile = activeQuestion ? activeQuestion.sql_file : null;
+
+      filtered.forEach(filename => {
+        const item = document.createElement('div');
+        item.className = 'sql-file-item';
+
+        // Find if this file is linked to any question in currentFilteredQuestions
+        let targetIdx = currentFilteredQuestions.findIndex(q => q.sql_file === filename);
+        let qForFile = null;
+
+        if (targetIdx !== -1) {
+          qForFile = currentFilteredQuestions[targetIdx];
+        } else {
+          // If not in currentFilteredQuestions, check in the full questions list (in case it is filtered out)
+          const fullIdx = questions.findIndex(q => q.sql_file === filename);
+          if (fullIdx !== -1) {
+            qForFile = questions[fullIdx];
+          }
+        }
+
+        // Is it the active sql file?
+        if (activeSqlFile && filename === activeSqlFile) {
+          item.classList.add('active');
+        }
+
+        // Build the contents of the item
+        const nameContainer = document.createElement('div');
+        nameContainer.className = 'sql-file-name-container';
+
+        // SVG Icon
+        nameContainer.innerHTML = `
+          <svg class="sql-file-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0; opacity: 0.7;">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span class="sql-file-name" title="${filename}">${filename}</span>
+        `;
+
+        item.appendChild(nameContainer);
+
+        // Badge
+        const badge = document.createElement('span');
+        badge.className = 'sql-file-badge';
+        if (qForFile) {
+          badge.classList.add('linked');
+          badge.innerText = `Soru ${qForFile.id}`;
+        } else {
+          badge.innerText = 'Şema/Veri';
+        }
+        item.appendChild(badge);
+
+        // Click action
+        item.addEventListener('click', () => {
+          if (qForFile) {
+            // Find targetIdx again under potential updated filters
+            let quizIdx = currentFilteredQuestions.findIndex(q => q.sql_file === filename);
+            if (quizIdx === -1) {
+              // If not found in current filters, reset filters to show all questions
+              categoryFilter.value = 'all';
+              typeFilter.value = 'all';
+              filterQuestions();
+              renderQuestionsGrid();
+              quizIdx = currentFilteredQuestions.findIndex(q => q.sql_file === filename);
+            }
+
+            if (quizIdx !== -1) {
+              // Enforce skip logic
+              if (!skipQuestionsEnabled && quizIdx > currentIndex) {
+                for (let i = currentIndex; i < quizIdx; i++) {
+                  const checkQ = currentFilteredQuestions[i];
+                  if (!userAnswers[checkQ.id] || !userAnswers[checkQ.id].isCorrect) {
+                    alert("Soruları sırayla ve doğru cevaplayarak ilerlemelisiniz!");
+                    return;
+                  }
+                }
+              }
+
+              // Navigate to the target question
+              currentIndex = quizIdx;
+              renderQuestionsGrid(); // Redraw grid to update active button
+              loadQuestion();
+            }
+          } else {
+            // Open reference file modal directly
+            openSQLModal(filename);
+          }
+        });
+
+        sqlFilesList.appendChild(item);
+      });
+
+      // Scroll active item into view if the search input is not focused
+      if (document.activeElement !== sqlSearch) {
+        const activeItem = sqlFilesList.querySelector('.sql-file-item.active');
+        if (activeItem) {
+          activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        }
+      }
+    }
 
     function showResultBanner(isCorrect, q) {
       console.log("Result banner:", isCorrect, q.id);

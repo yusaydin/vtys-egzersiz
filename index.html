@@ -178,6 +178,21 @@
         </div>
       </div>
     </main>
+
+    <!-- Right Sidebar (SQL Files Explorer) -->
+    <aside class="sidebar-right" id="sidebar-right" style="display: none;">
+      <div class="sidebar-filter">
+        <div class="filter-label">SQL Dosya Gezgini</div>
+        <div style="margin-top: 5px;">
+          <input type="text" id="sql-search" placeholder="Dosya adı ara..." class="filter-select" style="padding: 6px 10px; font-size: 13px;">
+        </div>
+      </div>
+      <div class="sidebar-list-container">
+        <div class="sql-files-list" id="sql-files-list">
+          <!-- Dynamically populated files list -->
+        </div>
+      </div>
+    </aside>
   </div>
 
   <!-- SQL Code Modal -->
@@ -197,7 +212,7 @@
     </div>
   </div>
 
-  <script src="questions.js?v=1.8"></script>
-  <script src="app.js?v=1.8"></script>
+  <script src="questions.js?v=1.9"></script>
+  <script src="app.js?v=1.9"></script>
 </body>
 </html>
