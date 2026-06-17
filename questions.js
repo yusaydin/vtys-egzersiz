@@ -4584,6 +4584,491 @@ const questionsDers12 = [
   }
 ];
 
+const questionsFinal = [
+  {
+    "id": 1,
+    "category": "ders8",
+    "type": "choice",
+    "question": "MySQL'de VIEW (Görünüm) nedir?",
+    "options": [
+      "Veritabanında fiziksel olarak saklanan bir tablo",
+      "Bir SELECT sorgusuna dayalı sanal (virtual) tablo",
+      "Veritabanı yedekleme aracı",
+      "Tablo indeksleme yöntemi"
+    ],
+    "optionReasons": [
+      "Yanlış – VIEW fiziksel veri saklamaz, sorgu tanımını saklar.",
+      "Doğru – VIEW, bir SELECT sorgusunun sonucunu temsil eden sanal tablodur.",
+      "Yanlış – VIEW yedekleme ile ilgili değildir.",
+      "Yanlış – VIEW indeksleme mekanizması değildir."
+    ],
+    "answer": 1,
+    "explanation": "VIEW, bir SELECT sorgusuna dayalı sanal tablodur. Kendi başına veri saklamaz; her çağrıldığında tanımlandığı sorguyu çalıştırır."
+  },
+  {
+    "id": 2,
+    "category": "ders8",
+    "type": "choice",
+    "question": "Aşağıdakilerden hangisi bir VIEW'ı güncellenemez (non-updatable) yapar?",
+    "options": [
+      "WHERE koşulu kullanmak",
+      "Tek bir tablodan SELECT yapmak",
+      "GROUP BY ve toplama fonksiyonu (SUM, COUNT vb.) kullanmak",
+      "Sütunlara takma ad (alias) vermek"
+    ],
+    "optionReasons": [
+      "Yanlış – WHERE koşulu VIEW'ı güncellenemez yapmaz.",
+      "Yanlış – Tek tablodan SELECT yapan VIEW'lar genellikle güncellenebilir.",
+      "Doğru – Toplama fonksiyonları ve GROUP BY, VIEW'ı güncellenemez yapar.",
+      "Yanlış – Alias kullanmak VIEW'ın güncellenebilirliğini etkilemez."
+    ],
+    "answer": 2,
+    "explanation": "GROUP BY, HAVING, DISTINCT, toplama fonksiyonları (SUM, COUNT, AVG vb.), UNION veya alt sorgu içeren VIEW'lar güncellenemez olur."
+  },
+  {
+    "id": 3,
+    "category": "ders8",
+    "type": "choice",
+    "question": "WITH CHECK OPTION ifadesinin amacı nedir?",
+    "options": [
+      "VIEW'ın performansını artırır",
+      "VIEW üzerinden yapılan INSERT/UPDATE işlemlerinin WHERE koşulunu sağlamasını zorunlu kılar",
+      "VIEW'ı salt okunur (read-only) yapar",
+      "VIEW'ın otomatik olarak yenilenmesini sağlar"
+    ],
+    "optionReasons": [
+      "Yanlış – WITH CHECK OPTION performans optimizasyonu değildir.",
+      "Doğru – Eklenen veya güncellenen satırların VIEW'ın WHERE koşuluyla uyumlu olmasını zorunlu kılar.",
+      "Yanlış – VIEW hâlâ güncellenebilir, sadece koşul kontrolü eklenir.",
+      "Yanlış – VIEW'ın yenilenmesiyle ilgili değildir."
+    ],
+    "answer": 1,
+    "explanation": "WITH CHECK OPTION, VIEW üzerinden yapılan veri değişikliklerinin (INSERT, UPDATE) VIEW'ın WHERE koşulunu karşılamasını zorunlu kılar. Koşulu sağlamayan işlemler reddedilir."
+  },
+  {
+    "id": 4,
+    "category": "ders8",
+    "type": "code",
+    "question": "Basit bir VIEW oluşturmak için eksik anahtar kelimeyi tamamlayın.",
+    "snippet": "CREATE ___1___ aktif_musteriler AS\nSELECT musteri_id, ad, soyad\nFROM musteriler\nWHERE durum = 'aktif';",
+    "blanks": [
+      "VIEW"
+    ],
+    "explanation": "CREATE VIEW ifadesi, bir sanal tablo (görünüm) oluşturmak için kullanılır. VIEW anahtar kelimesi CREATE'den sonra gelir."
+  },
+  {
+    "id": 5,
+    "category": "ders8",
+    "type": "code",
+    "question": "VIEW tanımında SELECT sorgusunu bağlamak için eksik kelimeyi yazın.",
+    "snippet": "CREATE VIEW urun_ozet ___1___\nSELECT urun_adi, fiyat\nFROM urunler;",
+    "blanks": [
+      "AS"
+    ],
+    "explanation": "AS anahtar kelimesi, VIEW adı ile SELECT sorgusu arasında köprü görevi görür. VIEW'ın hangi sorguyu temsil ettiğini belirtir."
+  },
+  {
+    "id": 6,
+    "category": "ders8",
+    "type": "code",
+    "question": "Mevcut bir VIEW'ı silmek için eksik komutu yazın.",
+    "snippet": "___1___ VIEW eski_rapor;",
+    "blanks": [
+      "DROP"
+    ],
+    "explanation": "DROP VIEW ifadesi, veritabanından mevcut bir görünümü kalıcı olarak siler."
+  },
+  {
+    "id": 7,
+    "category": "ders9",
+    "type": "choice",
+    "question": "Aşağıdaki SQL kodunun çalıştırılması durumunda hesaplar tablosundaki verilerin son durumu ne olur? (İşlem öncesinde Ali'nin bakiyesi 3000'dir).",
+    "snippet": "START TRANSACTION;\nUPDATE hesaplar SET bakiye = bakiye - 1000 WHERE musteri = 'Ali';\nROLLBACK;",
+    "options": [
+      "Ali'nin bakiyesi 2000 olur ve değişiklik kalıcı hale gelir.",
+      "Ali'nin bakiyesi 3000 olarak kalır, değişiklik geri alınır.",
+      "Kod hata verir çünkü ROLLBACK komutu START TRANSACTION ile kullanılamaz.",
+      "Ali'nin bakiyesi 0 olur."
+    ],
+    "optionReasons": [
+      "Yanlış. Değişiklik kalıcı hale gelmez çünkü COMMIT yerine ROLLBACK yapılmıştır.",
+      "Doğru! ROLLBACK komutu işlem içindeki tüm değişiklikleri geri alır.",
+      "Yanlış. ROLLBACK komutu TRANSACTION ile birlikte kullanılan temel bir komuttur.",
+      "Yanlış. Bakiye 3000 olarak kalır."
+    ],
+    "answer": 1,
+    "explanation": "ROLLBACK komutu, transaction (işlem) başladıktan sonra yapılan tüm değişiklikleri iptal ederek veritabanını işlem öncesi durumuna geri döndürür."
+  },
+  {
+    "id": 8,
+    "category": "ders9",
+    "type": "choice",
+    "question": "Veri tabanında transaction (işlem) kavramı en doğru şekilde nasıl tanımlanır?",
+    "options": [
+      "Bir veri tabanında tablo oluşturma komutudur.",
+      "Veri tabanını yedekleme işlemidir.",
+      "Bir veya daha fazla SQL ifadesinden oluşan ve bir bütün olarak çalışan SQL kod bloğudur.",
+      "Veri tabanı sunucusunu başlatan komuttur."
+    ],
+    "optionReasons": [
+      "Yanlış. Tablo oluşturma DDL komutudur.",
+      "Yanlış. Yedekleme (backup) farklı bir yönetimsel işlemdir.",
+      "Doğru! Transaction, birden fazla sorgunun tek bir mantıksal işlem birimi olarak bütün halinde çalışmasını sağlar.",
+      "Yanlış. Sunucu başlatma işlemi veritabanı dışı bir sistem komutudur."
+    ],
+    "answer": 2,
+    "explanation": "Transaction (İşlem-Faaliyet), bir veya daha fazla SQL sorgusundan meydana gelen, sistemin veri bütünlüğünü korumak adına tüm adımları tek bir adım gibi çalıştırdığı kod bloğudur."
+  },
+  {
+    "id": 9,
+    "category": "ders9",
+    "type": "choice",
+    "question": "MySQL veri tabanı yönetim sisteminde transaction (işlem) desteği almak için hangi depolama motoru (storage engine) tercih edilmelidir?",
+    "options": [
+      "MyISAM",
+      "InnoDB",
+      "Memory",
+      "CSV"
+    ],
+    "optionReasons": [
+      "Yanlış. MyISAM depolama motoru transaction yapısını desteklemez.",
+      "Doğru! InnoDB, MySQL'de transaction desteği ve yabancı anahtar (FK) kısıtlamalarını tam olarak destekleyen motordur.",
+      "Yanlış. Memory geçici veriler için kullanılır ve transaction desteği tam değildir.",
+      "Yanlış. CSV metin tabanlı basit depolama yapar, transaction desteklemez."
+    ],
+    "answer": 1,
+    "explanation": "MySQL'de transaction desteği için varsayılan ve önerilen motor InnoDB'dir. MyISAM depolama motorunun transaction desteği yoktur."
+  },
+  {
+    "id": 10,
+    "category": "ders9",
+    "type": "choice",
+    "question": "Aşağıdaki transaction bloğunda birinci UPDATE işlemi başarıyla çalışmış ancak ikinci UPDATE işleminde yabancı anahtar hatası oluşmuştur. Bu durumda veri tabanının davranışı ne olur?",
+    "snippet": "START TRANSACTION;\nUPDATE hesaplar SET bakiye = bakiye - 500 WHERE musteri = 'Ali';\nUPDATE hesaplar SET bakiye = bakiye + 500 WHERE musteri = 'BilinmeyenMusteri'; -- (Hata Oluştu)\nCOMMIT;",
+    "options": [
+      "Ali'nin hesabı güncellenir, diğer müşteri güncellenmez.",
+      "Hata nedeniyle veri bütünlüğü gereği tüm işlemler iptal edilir ve veriler işlem öncesi durumuna geri döner.",
+      "Yalnızca hata veren satır atlanır, commit başarıyla tamamlanır.",
+      "Veri tabanı kilitlenir (deadlock oluşur)."
+    ],
+    "optionReasons": [
+      "Yanlış. Kısmi güncelleme transaction kurallarına aykırıdır.",
+      "Doğru! Bir transaction içindeki SQL ifadelerinden biri bile hatalı olursa, o transactiondaki diğer işlemler de gerçekleştirilmez ve bütünlük sağlanır.",
+      "Yanlış. Hatalı sorguya rağmen commit gerçekleşmez.",
+      "Yanlış. Kilitlenme (deadlock) eşzamanlı kaynak yarışlarında olur, bu bir kısıt hatasıdır."
+    ],
+    "answer": 1,
+    "explanation": "Bir transaction'daki işlemler ya hep ya hiç kuralına tabidir. 1 tanesi bile hata alırsa veri tabanı bütünlüğü korumak için değişiklikleri uygulamaz."
+  },
+  {
+    "id": 11,
+    "category": "ders9",
+    "type": "choice",
+    "question": "ACID özelliklerinden hangisi, bir transaction başarılı bir şekilde tamamlandığında (COMMIT edildiğinde) sistem çökse bile yapılan değişikliklerin kalıcı olacağını garanti eder?",
+    "options": [
+      "Atomicity (Bütünlük)",
+      "Consistency (Tutarlılık)",
+      "Isolation (İzolasyon)",
+      "Durability (Süreklilik)"
+    ],
+    "optionReasons": [
+      "Yanlış. Atomicity işlemin bölünemezliğini (ya hep ya hiç) ifade eder.",
+      "Yanlış. Consistency veritabanının kurallara uygun kalmasını sağlar.",
+      "Yanlış. Isolation işlemlerin paralellikte birbirini etkilememesidir.",
+      "Doğru! Durability (Süreklilik), commit edilen işlemlerin kalıcı disk ortamına yazılmasını ve sistem çökmelerinde dahi kaybolmamasını garanti eder."
+    ],
+    "answer": 3,
+    "explanation": "Durability (Süreklilik), işlemin başarıyla tamamlanması durumunda sonuçların kalıcı olduğunu ve elektrik kesintisi veya sistem çökmesi gibi durumlarda bile kaybolmayacağını garanti eder."
+  },
+  {
+    "id": 12,
+    "category": "ders9",
+    "type": "choice",
+    "question": "Transaction (İşlem) günlüklerinde yer alan ve bir işlem geri alındığında (ROLLBACK edildiğinde) eski veri değerlerini geri yüklemek için kullanılan log türü aşağıdakilerden hangisidir?",
+    "options": [
+      "Binary Log (Binlog)",
+      "Redo Log",
+      "Undo Log",
+      "Error Log"
+    ],
+    "optionReasons": [
+      "Yanlış. Binary Log replikasyon ve yedekleme için kullanılır.",
+      "Yanlış. Redo Log disk üzerindeki yazma bütünlüğü ve çökme kurtarma için kullanılır.",
+      "Doğru! Undo Log, transaction geri alındığında eski veri değerlerini yerine koymak için eski değerleri saklar.",
+      "Yanlış. Error Log sistem hatalarını kaydeder."
+    ],
+    "answer": 2,
+    "explanation": "Undo Log, bir transaction iptal edildiğinde (ROLLBACK) veya tutarlı okuma yapılması gerektiğinde verinin eski değerlerini saklamak için kullanılır."
+  },
+  {
+    "id": 13,
+    "category": "ders10",
+    "type": "code",
+    "question": "1 nolu müşterinin satın aldığı ürünlerin adını, fiyatını ve müşteri numarasını listeleyen sorguyu tamamlayın.",
+    "snippet": "___1___ U.UrunAd, U.Fiyat, S.MusteriNo \nFROM satis ___2___ S\n___3___ JOIN urun AS U\n___4___ U.UrunNo = S.UrunNo\n___5___ S.MusteriNo = 1;",
+    "blanks": [
+      "SELECT",
+      "AS",
+      "INNER",
+      "ON",
+      "WHERE"
+    ],
+    "sql_file": "SQL 1 nolu müşterinin satın aldığı ürünlerin listelenmesi.sql",
+    "explanation": "SELECT kolonları listeler. satis tablosuna S alias'ı verilir. urun tablosu U alias'ı ile INNER JOIN yapılarak ON kelimesiyle ilişkilendirilir. Müşteri filtresi WHERE ile uygulanır."
+  },
+  {
+    "id": 14,
+    "category": "ders10",
+    "type": "code",
+    "question": "1 nolu müşterinin satın aldığı ürünlerin toplam tutarını ve müşteri numarasını veren aggregate sorgusunu yazın.",
+    "snippet": "SELECT ___1___(U.Fiyat * S.Adet), S.MusteriNo \nFROM satis ___2___ S\n___3___ JOIN urun AS U\n___4___ U.UrunNo = S.UrunNo\n___5___ S.MusteriNo = 1;",
+    "blanks": [
+      "SUM",
+      "AS",
+      "INNER",
+      "ON",
+      "WHERE"
+    ],
+    "sql_file": "SQL 1 nolu müşterinin satın aldığı ürünlerin toplam tutarı.sql",
+    "explanation": "SUM fonksiyonu toplam tutarı (fiyat * adet) hesaplar. Tablolar INNER JOIN ile birleştirilir ve ON birleşme koşulu belirlenir."
+  },
+  {
+    "id": 15,
+    "category": "ders10",
+    "type": "code",
+    "question": "2 nolu kasiyerin içinde bulunduğumuz ayda yaptığı toplam satış tutarı sorgusunu tamamlayın.",
+    "snippet": "SELECT ___1___(U.Fiyat * S.Adet) \nFROM satis AS S\nINNER ___2___ urun AS U\n___3___ U.UrunNo = S.UrunNo\n___4___ S.KasiyerNo = 2\nAND ___5___(S.Tarih) = MONTH(NOW());",
+    "blanks": [
+      "SUM",
+      "JOIN",
+      "ON",
+      "WHERE",
+      "MONTH"
+    ],
+    "sql_file": "SQL 2 nolu kasiyerin bu ay yaptığı toplam satış tutarı.sql",
+    "explanation": "SUM fonksiyonu toplam tutarı hesaplar. Tablolar INNER JOIN ile bağlanır. MONTH() fonksiyonu tarihin ay bilgisini alıp NOW() (bugün) ile karşılaştırır."
+  },
+  {
+    "id": 16,
+    "category": "ders10",
+    "type": "code",
+    "question": "1 nolu müşterinin satın aldığı ürünlerin adını, fiyatını ve müşteri numarasını listeleyen sorguyu tamamlayın.",
+    "snippet": "___1___ U.UrunAd, U.Fiyat, S.MusteriNo \n___2___ satis ___3___ S\n___4___ urun ___5___ U\n___6___ U.UrunNo = S.UrunNo\n___7___ S.MusteriNo = 1;",
+    "blanks": [
+      "SELECT",
+      "FROM",
+      "AS",
+      "INNER JOIN",
+      "AS",
+      "ON",
+      "WHERE"
+    ],
+    "sql_file": "SQL 1 nolu müşterinin satın aldığı ürünlerin listelenmesi.sql",
+    "explanation": "SELECT kolonları listeler. satis tablosuna S alias'ı verilir. urun tablosu U alias'ı ile INNER JOIN yapılarak ON kelimesiyle ilişkilendirilir. Müşteri filtresi WHERE ile uygulanır."
+  },
+  {
+    "id": 17,
+    "category": "ders10",
+    "type": "code",
+    "question": "1 nolu müşterinin satın aldığı ürünlerin toplam tutarını ve müşteri numarasını veren aggregate sorgusunu yazın.",
+    "snippet": "___1___ ___2___(U.Fiyat * S.Adet), S.MusteriNo \n___3___ satis ___4___ S\n___5___ urun ___6___ U\n___7___ U.UrunNo = S.UrunNo\n___8___ S.MusteriNo = 1;",
+    "blanks": [
+      "SELECT",
+      "SUM",
+      "FROM",
+      "AS",
+      "INNER JOIN",
+      "AS",
+      "ON",
+      "WHERE"
+    ],
+    "sql_file": "SQL 1 nolu müşterinin satın aldığı ürünlerin toplam tutarı.sql",
+    "explanation": "SUM fonksiyonu toplam tutarı (fiyat * adet) hesaplar. Tablolar INNER JOIN ile birleştirilir ve ON birleşme koşulu belirlenir."
+  },
+  {
+    "id": 18,
+    "category": "ders10",
+    "type": "code",
+    "question": "2 nolu kasiyerin içinde bulunduğumuz ayda yaptığı toplam satış tutarı sorgusunu tamamlayın.",
+    "snippet": "___1___ ___2___(U.Fiyat * S.Adet) \n___3___ satis ___4___ S\n___5___ urun ___6___ U\n___7___ U.UrunNo = S.UrunNo\n___8___ S.KasiyerNo = 2\n___9___ ___10___(S.Tarih) = ___11___(___12___());",
+    "blanks": [
+      "SELECT",
+      "SUM",
+      "FROM",
+      "AS",
+      "INNER JOIN",
+      "AS",
+      "ON",
+      "WHERE",
+      "AND",
+      "MONTH",
+      "MONTH",
+      "NOW"
+    ],
+    "sql_file": "SQL 2 nolu kasiyerin bu ay yaptığı toplam satış tutarı.sql",
+    "explanation": "SUM fonksiyonu toplam tutarı hesaplar. Tablolar INNER JOIN ile bağlanır. MONTH() fonksiyonu tarihin ay bilgisini alıp NOW() (bugün) ile karşılaştırır."
+  },
+  {
+    "id": 19,
+    "category": "ders11",
+    "type": "choice",
+    "question": "MySQL'de kullanıcı tanımlı fonksiyonlar (UDF) ile ilgili aşağıdakilerden hangisi yanlıştır?",
+    "options": [
+      "Kullanıcı tanımlı fonksiyonlar CREATE FUNCTION komutuyla oluşturulur.",
+      "Fonksiyonların sadece girdi (IN) parametreleri olabilir.",
+      "Fonksiyonların gövdesinde saklı yordamlar (Stored Procedure) çağrılabilir.",
+      "Fonksiyon tanımlamalarında tek bir değer dönülmesi (RETURN) zorunludur."
+    ],
+    "answer": 2,
+    "explanation": "Slayt 21'e göre: Fonksiyonlar içerisinde saklı yordamlar (stored procedure) çalıştırılamaz."
+  },
+  {
+    "id": 20,
+    "category": "ders11",
+    "type": "choice",
+    "question": "Deterministik (DETERMINISTIC) fonksiyon kavramı aşağıdakilerden hangisini ifade eder?",
+    "options": [
+      "Aynı giriş parametreleri için her çağrıda farklı sonuçlar üreten fonksiyonlardır.",
+      "Aynı giriş parametreleri için her zaman aynı sonucu döndüren fonksiyonlardır.",
+      "Sadece INSERT işlemi gerçekleştiğinde otomatik olarak çalışan fonksiyonlardır.",
+      "İçerisinde işlem (transaction) kontrol komutları bulunduran fonksiyonlardır."
+    ],
+    "answer": 1,
+    "explanation": "Slayt 8'e göre: Deterministik bir fonksiyon, aynı giriş parametreleri için her zaman aynı sonucu döndürür."
+  },
+  {
+    "id": 21,
+    "category": "ders11",
+    "type": "choice",
+    "question": "MySQL'de fonksiyon tanımlanırken deterministik olup olmadığı belirtilmezse, varsayılan olarak hangisi kabul edilir?",
+    "options": [
+      "DETERMINISTIC",
+      "NOT DETERMINISTIC (Nondeterministik)",
+      "READS SQL DATA",
+      "CONTAINS SQL"
+    ],
+    "answer": 1,
+    "explanation": "Slayt 8'e göre: Eğer DETERMINISTIC veya NOT DETERMINISTIC ifadeleri belirtilmezse, MySQL varsayılan olarak fonksiyonu nondeterministik (NOT DETERMINISTIC) kabul eder."
+  },
+  {
+    "id": 22,
+    "category": "ders11",
+    "type": "code",
+    "question": "Dizgi (string) fonksiyonlarından; dizgideki karakter sayısını döndüren LENGTH() ve birden fazla dizgiyi birleştiren CONCAT() fonksiyonlarının kullanımını tamamlayın.",
+    "snippet": "SELECT ___1___('Merhaba'), ___2___('Merhaba', ' Dünya');",
+    "blanks": [
+      "LENGTH",
+      "CONCAT"
+    ],
+    "explanation": "LENGTH() karakter uzunluğunu bulur, CONCAT() ise dizgileri birleştirir."
+  },
+  {
+    "id": 23,
+    "category": "ders11",
+    "type": "code",
+    "question": "Matematiksel fonksiyonlardan; mutlak değeri döndüren ABS() ve sayıyı aşağı yuvarlayan FLOOR() fonksiyonlarının kullanımını tamamlayın.",
+    "snippet": "SELECT ___1___(-42), ___2___(3.7);",
+    "blanks": [
+      "ABS",
+      "FLOOR"
+    ],
+    "explanation": "ABS() mutlak değeri verir (çıktı 42 olur), FLOOR() ise aşağı yuvarlar (çıktı 3 olur)."
+  },
+  {
+    "id": 24,
+    "category": "ders11",
+    "type": "code",
+    "question": "Market veritabanında ürünlerin son kullanma tarihine kaç gün kaldığını hesaplayan 'SonKullanmaZamanHesapla' fonksiyonunun tanımındaki boşlukları tamamlayın.",
+    "snippet": "CREATE FUNCTION SonKullanmaZamanHesapla (P_SonKullanmaTarih DATE) ___1___ int(11)\nBEGIN\n  DECLARE KalanZaman INT;\n  SET KalanZaman = ___2___(P_SonKullanmaTarih, ___3___());\n  ___4___ KalanZaman;\nEND",
+    "blanks": [
+      "RETURNS",
+      "DATEDIFF",
+      "NOW",
+      "RETURN"
+    ],
+    "explanation": "Fonksiyon dönüş türü RETURNS ifadesiyle, tarih farkı DATEDIFF(tarih1, tarih2) ile, mevcut zaman NOW() ile ve değer döndürme RETURN ile yapılır."
+  },
+  {
+    "id": 25,
+    "category": "ders12",
+    "type": "choice",
+    "question": "MySQL'de saklı yordam çağrıldığında dışarıdan değer alan, bu değeri işlem sırasında yalnızca okuyan ve varsayılan (default) mod olan parametre tipi hangisidir?",
+    "options": [
+      "OUT",
+      "IN",
+      "INOUT",
+      "RETURN"
+    ],
+    "answer": 1,
+    "explanation": "Slayt 4'e göre: IN (Girdi) parametresi yordam çağrıldığında dışarıdan değer alır ve bu değer prosedür içinde yalnızca okunabilir. IN varsayılan parametre modudur."
+  },
+  {
+    "id": 26,
+    "category": "ders12",
+    "type": "choice",
+    "question": "Bir OUT (Çıktı) parametresi ile ilgili aşağıdakilerden hangisi doğrudur?",
+    "options": [
+      "Yordam çağrıldığında çağıran programın atadığı başlangıç değerine doğrudan erişebilir.",
+      "Değeri yordam içinde değiştirilemez ve çağıran programa geri döndürülemez.",
+      "Yordam içinde işlenen bir değeri çağıran programa çıktı veya görüntüleme amacıyla döndürür.",
+      "Hem girdi hem çıktı olarak davranır ve prosedür başlangıcında değer taşır."
+    ],
+    "answer": 2,
+    "explanation": "Slayt 4 ve 7'ye göre: OUT parametresi yordam içinde işlenen bir değeri dışarıya döndürür. Prosedür başladığında OUT parametresinin başlangıç değerine erişemez."
+  },
+  {
+    "id": 27,
+    "category": "ders12",
+    "type": "choice",
+    "question": "Hem girdi (giriş) hem de çıktı (çıkış) parametresi olarak davranan, çağrıldığında başlangıç değeri alıp işlenmiş değeri aynı parametre olarak geri döndüren mod hangisidir?",
+    "options": [
+      "IN",
+      "OUT",
+      "INOUT",
+      "PARAM"
+    ],
+    "answer": 2,
+    "explanation": "Slayt 4 ve 11'e göre: INOUT parametresi hem giriş hem çıkış için kullanılır. Çağrıldığında bir başlangıç değeri alır ve işlenmiş değeri aynı parametreyle geri döndürür."
+  },
+  {
+    "id": 28,
+    "category": "ders12",
+    "type": "code",
+    "question": "Girdi olarak 'p_Girdi' ve çıktı olarak 'p_Cikti' tamsayı parametreleri alan saklı yordam parametre tanımını tamamlayın.",
+    "snippet": "CREATE PROCEDURE GirdiCiktiOrnek (___1___ p_Girdi INT, ___2___ p_Cikti INT)",
+    "blanks": [
+      "IN",
+      "OUT"
+    ],
+    "explanation": "Girdi parametresi için IN, çıktı parametresi için OUT anahtar kelimeleri kullanılır."
+  },
+  {
+    "id": 29,
+    "category": "ders12",
+    "type": "code",
+    "question": "Girdi parametresini 2 ile çarpıp 'SONUC' değişkenine alan ve bu değeri çıktı parametresine ('p_Cikti') atayan yordam gövdesini tamamlayın.",
+    "snippet": "BEGIN\n  DECLARE SONUC INTEGER;\n  SET SONUC = p_Girdi * 2;\n  ___1___ p_Cikti = ___2___;\nEND",
+    "blanks": [
+      "SET",
+      "SONUC"
+    ],
+    "explanation": "MySQL saklı yordamlarında bir değişkene değer atamak için SET komutu kullanılır."
+  },
+  {
+    "id": 30,
+    "category": "ders12",
+    "type": "code",
+    "question": "Çıktı parametresi içeren 'GirdiCiktiOrnek' yordamını '5' girdi değeriyle çağıran ve dönen değeri '@SonucDegiskeni' adlı değişkende saklayıp yazdıran komutları tamamlayın.",
+    "snippet": "___1___ GirdiCiktiOrnek(5, ___2___);\nSELECT ___3___ AS \"Yordam Çıktısı\";",
+    "blanks": [
+      "CALL",
+      "@SonucDegiskeni",
+      "@SonucDegiskeni"
+    ],
+    "explanation": "Saklı yordamlar CALL ile çağrılır. Çıktı değişkeni @ işaretiyle tanımlanır ve SELECT ile ekrana yazdırılır."
+  }
+];
+
 const sqlFileList = [
   '10_Hafta_eticaret_siparis_musteri_puan_tabloları.sql',
   '1_Veritabani_Tablo_Olusturma.sql',

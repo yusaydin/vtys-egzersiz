@@ -130,6 +130,15 @@
           <option value="loops">II. Döngüler (LOOP, WHILE, REPEAT) (8)</option>
           <option value="errors">III. Hata Kontrolü (HANDLER, GET DIAGNOSTICS) (21)</option>
         `;
+      } else if (lessonId === 'final') {
+        categoryFilter.innerHTML = `
+          <option value="all">Tüm Sorular (30)</option>
+          <option value="ders8">Ders 8: Görünüm, Geçici Tablo ve Dizin (6)</option>
+          <option value="ders9">Ders 9: T-SQL ve Saklı Yordam (6)</option>
+          <option value="ders10">Ders 10: Market SQL (6)</option>
+          <option value="ders11">Ders 11: Fonksiyon ve Tetikleyici (6)</option>
+          <option value="ders12">Ders 12: Gelişmiş Saklı Yordam ve Hata (6)</option>
+        `;
       }
     }
 
@@ -169,6 +178,12 @@
         if (dashboardSubtitle) {
           dashboardSubtitle.innerText = "Dr. Öğr. Üyesi Hüseyin COŞKUN'un Ders 10 (Parametreler, Döngüler ve Hata Yönetimi) sunumuna dayalı 40 soruluk sınavı tamamladınız.";
         }
+      } else if (lessonId === 'final') {
+        headerTitle.innerText = "VTYS Egzersiz (Final Sınavı)";
+        docTitle.innerText = "VTYS Egzersiz - Final Sınavı";
+        if (dashboardSubtitle) {
+          dashboardSubtitle.innerText = "Tüm ders konularını (Ders 8 - 12) kapsayan 30 soruluk kapsamlı Final Sınavını tamamladınız.";
+        }
       }
     }
 
@@ -195,6 +210,8 @@
           questions = questionsDers11;
         } else if (lessonId === 'ders12') {
           questions = questionsDers12;
+        } else if (lessonId === 'final') {
+          questions = questionsFinal;
         }
       }
       
@@ -318,11 +335,18 @@
       else if (q.category === 'index') catText = "III. Dizin (INDEX)";
       else if (q.category === 'tsql') catText = "I. Transact-SQL ve Transaction";
       else if (q.category === 'sp') catText = "II. Saklı Yordam (STORED PROCEDURE)";
+      else if (q.category === 'joins') catText = "I. Tablo Birleştirmeleri (JOIN)";
+      else if (q.category === 'subquery') catText = "II. Alt Sorgular ve Gruplama";
       else if (q.category === 'function') catText = "I. Fonksiyon (FUNCTION)";
       else if (q.category === 'trigger') catText = "II. Tetikleyici (TRIGGER)";
       else if (q.category === 'params') catText = "I. Girdi-Çıktı Parametreleri";
       else if (q.category === 'loops') catText = "II. Döngüler";
       else if (q.category === 'errors') catText = "III. Hata Kontrolü ve Yönetimi";
+      else if (q.category === 'ders8') catText = "Ders 8: Görünüm, Geçici Tablo ve Dizin";
+      else if (q.category === 'ders9') catText = "Ders 9: T-SQL ve Saklı Yordamlar";
+      else if (q.category === 'ders10') catText = "Ders 10: Market SQL Sorguları";
+      else if (q.category === 'ders11') catText = "Ders 11: Fonksiyonlar ve Tetikleyiciler";
+      else if (q.category === 'ders12') catText = "Ders 12: Gelişmiş Saklı Yordamlar ve Hata Yönetimi";
       questionCategoryEl.innerText = catText;
 
       // Set question counts
