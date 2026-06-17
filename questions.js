@@ -4121,6 +4121,469 @@ const questionsDers11 = [
   }
 ];
 
+const questionsDers12 = [
+  {
+    id: 1,
+    category: 'params',
+    type: 'choice',
+    question: "MySQL'de saklı yordam çağrıldığında dışarıdan değer alan, bu değeri işlem sırasında yalnızca okuyan ve varsayılan (default) mod olan parametre tipi hangisidir?",
+    options: [
+      "OUT",
+      "IN",
+      "INOUT",
+      "RETURN"
+    ],
+    answer: 1,
+    explanation: "Slayt 4'e göre: IN (Girdi) parametresi yordam çağrıldığında dışarıdan değer alır ve bu değer prosedür içinde yalnızca okunabilir. IN varsayılan parametre modudur."
+  },
+  {
+    id: 2,
+    category: 'params',
+    type: 'choice',
+    question: "Bir OUT (Çıktı) parametresi ile ilgili aşağıdakilerden hangisi doğrudur?",
+    options: [
+      "Yordam çağrıldığında çağıran programın atadığı başlangıç değerine doğrudan erişebilir.",
+      "Değeri yordam içinde değiştirilemez ve çağıran programa geri döndürülemez.",
+      "Yordam içinde işlenen bir değeri çağıran programa çıktı veya görüntüleme amacıyla döndürür.",
+      "Hem girdi hem çıktı olarak davranır ve prosedür başlangıcında değer taşır."
+    ],
+    answer: 2,
+    explanation: "Slayt 4 ve 7'ye göre: OUT parametresi yordam içinde işlenen bir değeri dışarıya döndürür. Prosedür başladığında OUT parametresinin başlangıç değerine erişemez."
+  },
+  {
+    id: 3,
+    category: 'params',
+    type: 'choice',
+    question: "Hem girdi (giriş) hem de çıktı (çıkış) parametresi olarak davranan, çağrıldığında başlangıç değeri alıp işlenmiş değeri aynı parametre olarak geri döndüren mod hangisidir?",
+    options: [
+      "IN",
+      "OUT",
+      "INOUT",
+      "PARAM"
+    ],
+    answer: 2,
+    explanation: "Slayt 4 ve 11'e göre: INOUT parametresi hem giriş hem çıkış için kullanılır. Çağrıldığında bir başlangıç değeri alır ve işlenmiş değeri aynı parametreyle geri döndürür."
+  },
+  {
+    id: 4,
+    category: 'params',
+    type: 'choice',
+    question: "Aşağıdakilerden hangisi saklı yordam parametreleri tanımlanırken dikkat edilmesi gereken hususlardan biri değildir?",
+    options: [
+      "IN, OUT veya INOUT parametreleri tanımlanırken uygun veri tipleri seçilmelidir.",
+      "OUT parametrelerine prosedür çağrılmadan önce doğrudan başlangıç değeri atanabilir.",
+      "INOUT parametrelerinin çağrı sırasında bir başlangıç değerine ihtiyacı vardır.",
+      "Hata yönetimi sağlamak için SIGNAL komutuyla özel hata mesajları tanımlanabilir."
+    ],
+    answer: 1,
+    explanation: "Slayt 13'e göre: OUT parametrelerine doğrudan başlangıç değeri atanamaz. OUT parametresi yalnızca saklı yordam içinde atanabilir."
+  },
+  {
+    id: 5,
+    category: 'params',
+    type: 'choice',
+    question: "OUT parametresine sahip bir saklı yordam çağrıldığında, çıktı değerini yakalayıp saklamak için CALL komutunda aşağıdakilerden hangisi kullanılmalıdır?",
+    options: [
+      "Bir SQL tablosunun adı",
+      "Bir kullanıcı tanımlı değişken (örn. @SonucDegiskeni)",
+      "Bir saklı yordam adı",
+      "Doğrudan sabit bir tamsayı değeri (örn. 5)"
+    ],
+    answer: 1,
+    explanation: "Slayt 9 ve 10'a göre: OUT parametresi içeren saklı yordamlar çağrılırken çıktı değeri bir kullanıcı değişkenine atanır ve SELECT komutu ile yazdırılır."
+  },
+  {
+    id: 6,
+    category: 'params',
+    type: 'choice',
+    question: "INOUT parametresine sahip bir yordamı çağırmadan önce aşağıdakilerden hangisinin yapılması zorunludur?",
+    options: [
+      "Çağrı parametresi olarak kullanılacak değişkene bir başlangıç değeri atanmalıdır.",
+      "Yordam içinde bir SELECT sorgusu çalıştırılması zorunludur.",
+      "DELIMITER ifadesinin kaldırılması gerekir.",
+      "Veritabanındaki tüm tabloların geçici olarak kilitlenmesi gerekir."
+    ],
+    answer: 0,
+    explanation: "Slayt 12 ve 13'e göre: INOUT parametresi yordam başlangıcında bu değer üzerinden işlem yapacağından, saklı yordam çağrısı sırasında başlangıç değeri verilmelidir (örn. SET @bakiye = 700.00;)."
+  },
+  {
+    id: 7,
+    category: 'params',
+    type: 'code',
+    question: "Girdi olarak 'p_Girdi' ve çıktı olarak 'p_Cikti' tamsayı parametreleri alan saklı yordam parametre tanımını tamamlayın.",
+    snippet: "CREATE PROCEDURE GirdiCiktiOrnek (___1___ p_Girdi INT, ___2___ p_Cikti INT)",
+    blanks: ["IN", "OUT"],
+    explanation: "Girdi parametresi için IN, çıktı parametresi için OUT anahtar kelimeleri kullanılır."
+  },
+  {
+    id: 8,
+    category: 'params',
+    type: 'code',
+    question: "Girdi parametresini 2 ile çarpıp 'SONUC' değişkenine alan ve bu değeri çıktı parametresine ('p_Cikti') atayan yordam gövdesini tamamlayın.",
+    snippet: "BEGIN\n  DECLARE SONUC INTEGER;\n  SET SONUC = p_Girdi * 2;\n  ___1___ p_Cikti = ___2___;\nEND",
+    blanks: ["SET", "SONUC"],
+    explanation: "MySQL saklı yordamlarında bir değişkene değer atamak için SET komutu kullanılır."
+  },
+  {
+    id: 9,
+    category: 'params',
+    type: 'code',
+    question: "Çıktı parametresi içeren 'GirdiCiktiOrnek' yordamını '5' girdi değeriyle çağıran ve dönen değeri '@SonucDegiskeni' adlı değişkende saklayıp yazdıran komutları tamamlayın.",
+    snippet: "___1___ GirdiCiktiOrnek(5, ___2___);\nSELECT ___3___ AS \"Yordam Çıktısı\";",
+    blanks: ["CALL", "@SonucDegiskeni", "@SonucDegiskeni"],
+    explanation: "Saklı yordamlar CALL ile çağrılır. Çıktı değişkeni @ işaretiyle tanımlanır ve SELECT ile ekrana yazdırılır."
+  },
+  {
+    id: 10,
+    category: 'params',
+    type: 'code',
+    question: "'para_cek' adında, 'bakiye' değişkenini hem girdi hem çıktı olarak alan, 'cekilecek_miktar'ı ise sadece girdi olarak alan saklı yordam tanımını tamamlayın.",
+    snippet: "CREATE PROCEDURE `Para_Cek` (\n  ___1___ bakiye DECIMAL(10,2),\n  ___2___ cekilecek_miktar DECIMAL(10,2)\n)",
+    blanks: ["INOUT", "IN"],
+    explanation: "Hem girdi hem çıktı olan parametreler INOUT, sadece girdi olanlar ise IN ile tanımlanır."
+  },
+  {
+    id: 11,
+    category: 'params',
+    type: 'code',
+    question: "Çekilecek miktar bakiyeden büyükse SIGNAL SQLSTATE '45000' ile 'Yetersiz bakiye!' hatası fırlatan ve yordamı sonlandıran yapıyı tamamlayın.",
+    snippet: "IF bakiye >= cekilecek_miktar THEN\n  SET bakiye = bakiye - cekilecek_miktar;\nELSE\n  ___1___ SQLSTATE '45000'\n  SET ___2___ = 'Yetersiz bakiye!';\n___3___ IF;",
+    blanks: ["SIGNAL", "MESSAGE_TEXT", "END"],
+    explanation: "Özel hata fırlatmak için SIGNAL SQLSTATE kullanılır ve hata mesajı MESSAGE_TEXT değişkenine atanır. IF bloğu END IF ile bitirilir."
+  },
+  {
+    id: 12,
+    category: 'loops',
+    type: 'choice',
+    question: "MySQL'de etiket temelli LOOP döngüsünden çıkmak ve döngüyü sonlandırmak için kullanılan ifade aşağıdakilerden hangisidir?",
+    options: [
+      "BREAK",
+      "EXIT",
+      "LEAVE",
+      "END LOOP"
+    ],
+    answer: 2,
+    explanation: "Slayt 15'e göre: LOOP döngüsü bir etikete sahiptir ve döngüden çıkılmak istendiğinde LEAVE ifadesiyle sonlandırılır."
+  },
+  {
+    id: 13,
+    category: 'loops',
+    type: 'choice',
+    question: "MySQL döngü yapılarından WHILE döngüsü ile ilgili aşağıdakilerden hangisi doğrudur?",
+    options: [
+      "Koşul doğru olsun ya da olmasın işlemleri en az bir kez gerçekleştirir.",
+      "Koşul doğru (true) olduğu sürece belirtilen işlemleri tekrarlar.",
+      "Mutlaka bir döngü etiketine sahip olmak zorundadır.",
+      "Sadece SELECT komutlarıyla birlikte çalışabilir."
+    ],
+    answer: 1,
+    explanation: "Slayt 14'e göre: WHILE döngüsü, koşul doğru olduğu sürece işlemleri tekrarlar."
+  },
+  {
+    id: 14,
+    category: 'loops',
+    type: 'choice',
+    question: "MySQL'de REPEAT döngüsüyle ilgili aşağıdakilerden hangisi doğrudur?",
+    options: [
+      "Koşulu en başta kontrol eder, koşul baştan yanlışsa döngüye hiç girmez.",
+      "Döngü içindeki işlemleri en az bir kez gerçekleştirir ve koşul doğru (true) olduğunda sona erer.",
+      "Sonlandırılması için döngü gövdesinde mutlaka LEAVE ifadesi kullanılmalıdır.",
+      "Bir transaction (işlem) bloğu içinde kullanılamaz."
+    ],
+    answer: 1,
+    explanation: "Slayt 14 ve 26'ya göre: REPEAT döngüsü (do-while mantığıyla) içindeki işlemleri koşul doğru olsun olmasın en az bir kez çalıştırır ve UNTIL koşulu doğru olduğunda sona erer."
+  },
+  {
+    id: 15,
+    category: 'loops',
+    type: 'choice',
+    question: "Döngülerde sonsuz döngüye (infinite loop) girilmesini önlemek amacıyla dikkat edilmesi gereken en kritik kural hangisidir?",
+    options: [
+      "Döngünün mutlaka büyük harflerle yazılması gerekir.",
+      "Döngü sonlandırma koşulunun (LEAVE, UNTIL veya WHILE) doğru ve erişilebilir tanımlanması.",
+      "Döngü içerisinde DECLARE komutunun kullanılmaması.",
+      "Döngünün bir saklı yordam içinde çalıştırılmaması."
+    ],
+    answer: 1,
+    explanation: "Slayt 27'ye göre: Sonsuz döngüden kaçınmak için döngü sonlandırma koşulu iyi tanımlanmalıdır. LEAVE veya doğru bir UNTIL/WHILE ifadesi kullanılmalıdır."
+  },
+  {
+    id: 16,
+    category: 'loops',
+    type: 'code',
+    question: "'dongu_etiket' etiketine sahip LOOP döngüsünde, 'i' değişkeni girdi değerini aştığında döngüden çıkmayı (LEAVE) sağlayan yapıyı tamamlayın.",
+    snippet: "dongu_etiket: LOOP\n  SET toplam = toplam + i;\n  SET i = i + 1;\n  IF i > sayi THEN\n    ___1___ dongu_etiket;\n  END IF;\nEND ___2___ dongu_etiket;",
+    blanks: ["LEAVE", "LOOP"],
+    explanation: "LOOP döngüsü LEAVE etiket_adi ile sonlandırılır ve döngü bloğu END LOOP ile bitirilir."
+  },
+  {
+    id: 17,
+    category: 'loops',
+    type: 'code',
+    question: "Sayaç değişkeni girdi olarak verilen 'p_Sayi' değerine eşit veya küçük olduğu sürece çalışan WHILE döngüsünü tamamlayın.",
+    snippet: "___1___ Sayac <= p_Sayi ___2___\n  SET Faktoryel = Faktoryel * Sayac;\n  SET Sayac = Sayac + 1;\nEND ___3___;",
+    blanks: ["WHILE", "DO", "WHILE"],
+    explanation: "WHILE döngüsü 'WHILE kosul DO ... END WHILE;' söz dizimiyle yazılır."
+  },
+  {
+    id: 18,
+    category: 'loops',
+    type: 'code',
+    question: "Tarih farkı hesaplayan WHILE döngüsü içinde, 'SonrakiTarih' değişkenine her adımda 1 yıl ekleyen SQL ifadesindeki boşlukları tamamlayın.",
+    snippet: "WHILE OncekiTarih < BitisTarih DO\n  SET Yil = Yil + 1;\n  SET OncekiTarih = SonrakiTarih;\n  SET SonrakiTarih = SonrakiTarih + ___1___ 1 ___2___;\nEND WHILE;",
+    blanks: ["INTERVAL", "YEAR"],
+    explanation: "Tarihe zaman eklemek için '+ INTERVAL 1 YEAR' ifadesi kullanılır."
+  },
+  {
+    id: 19,
+    category: 'loops',
+    type: 'code',
+    question: "'faktoryel_hesapla2' saklı yordamında REPEAT döngüsünü 'i > sayi' koşulu sağlanana kadar çalışacak şekilde tamamlayın.",
+    snippet: "___1___\n  SET sonuc = sonuc * i;\n  SET i = i + 1;\n___2___ i > sayi\nEND ___3___;",
+    blanks: ["REPEAT", "UNTIL", "REPEAT"],
+    explanation: "REPEAT döngüsü 'REPEAT ... UNTIL kosul END REPEAT;' yapısıyla kurulur."
+  },
+  {
+    id: 20,
+    category: 'errors',
+    type: 'choice',
+    question: "Hata oluştuğunda yordamın durmadan bir sonraki adıma geçmesini ve çalışmaya devam etmesini sağlayan hata tutucu (handler) eylemi hangisidir?",
+    options: [
+      "EXIT",
+      "CONTINUE",
+      "IGNORE",
+      "RESIGNAL"
+    ],
+    answer: 1,
+    explanation: "Slayt 29'a göre: CONTINUE durumunda, hata oluştuğunda işlem devam eder."
+  },
+  {
+    id: 21,
+    category: 'errors',
+    type: 'choice',
+    question: "Hata oluştuğunda saklı yordamın çalışmasının tamamen sonlandırılmasını ve durmasını sağlayan hata tutucu (handler) eylemi hangisidir?",
+    options: [
+      "CONTINUE",
+      "STOP",
+      "EXIT",
+      "LEAVE"
+    ],
+    answer: 2,
+    explanation: "Slayt 29'a göre: EXIT durumunda, hata oluştuğunda işlem durur ve saklı yordam sonlandırılır."
+  },
+  {
+    id: 22,
+    category: 'errors',
+    type: 'choice',
+    question: "Veritabanına mükerrer (tekrarlayan) bir kayıt eklenmeye çalışıldığında ortaya çıkan 1062 nolu hata kodunun (ER_DUP_ENTRY) nedeni hangisidir?",
+    options: [
+      "İlgili tablonun veritabanında bulunamaması",
+      "UNIQUE anahtar (benzersizlik) veya PRIMARY KEY kısıtlamasının ihlal edilmesi",
+      "NOT NULL olarak tanımlanmış bir sütuna boş değer girilmesi",
+      "Kullanıcının tabloya veri ekleme yetkisinin bulunmaması"
+    ],
+    answer: 1,
+    explanation: "Slayt 31'deki hata tablosuna göre: 1062 hata kodu tekrarlayan bir kayıt eklenmeye çalışıldığında UNIQUE anahtar ihlali durumunda oluşur."
+  },
+  {
+    id: 23,
+    category: 'errors',
+    type: 'choice',
+    question: "MySQL'de bir select sorgusu veya işlem sonucunda aranan satırın bulunamadığını belirten SQL durum sınıfı (SQL state class) hangisidir?",
+    options: [
+      "SQLEXCEPTION",
+      "SQLWARNING",
+      "NOT FOUND",
+      "SQLSTATE '23000'"
+    ],
+    answer: 2,
+    explanation: "Slayt 30 ve 34'e göre: 'NOT FOUND' ifadesi aranan satırın veya kaydın bulunamadığı durumları temsil eden genel bir hata/durum sınıfıdır."
+  },
+  {
+    id: 24,
+    category: 'errors',
+    type: 'choice',
+    question: "Hata tutucu (DECLARE HANDLER) tanımlarken belirli bir hata kodu yerine genel bir hata sınıfına göre tanımlama yapmak istendiğinde hangisi kullanılamaz?",
+    options: [
+      "SQLEXCEPTION",
+      "SQLWARNING",
+      "NOT FOUND",
+      "ER_BAD_DB_ERROR"
+    ],
+    answer: 3,
+    explanation: "Slayt 30 ve 31'e göre: SQLEXCEPTION, SQLWARNING ve NOT FOUND genel hata sınıflarıdır. ER_BAD_DB_ERROR (veya 1049) ise özel bir hata kodudur, genel bir hata sınıfı değildir."
+  },
+  {
+    id: 25,
+    category: 'errors',
+    type: 'choice',
+    question: "Hata kontrolü yapılan bir saklı yordamda, oluşan hatanın hata numarası (MYSQL_ERRNO) ve SQL durumu (RETURNED_SQLSTATE) gibi bilgilerini almak için kullanılan komut hangisidir?",
+    options: [
+      "SHOW ERRORS",
+      "GET DIAGNOSTICS CONDITION",
+      "SIGNAL SQLSTATE",
+      "DECLARE HANDLER"
+    ],
+    answer: 1,
+    explanation: "Slayt 36'ya göre: Tetiklenen bir hatanın numarası, SQL durumu veya hata mesajı gibi koşul detaylarını almak için GET DIAGNOSTICS CONDITION yapısı kullanılır."
+  },
+  {
+    id: 26,
+    category: 'errors',
+    type: 'choice',
+    question: "Veri tabanında aranan bir tablonun bulunamaması durumunda ortaya çıkan 1146 nolu hata kodunun adı/tipi hangisidir?",
+    options: [
+      "ER_BAD_DB_ERROR",
+      "ER_NO_SUCH_TABLE",
+      "ER_BAD_FIELD_ERROR",
+      "ER_ROW_IS_REFERENCED"
+    ],
+    answer: 1,
+    explanation: "Slayt 31'e göre: 1146 hata kodu ER_NO_SUCH_TABLE (belirtilen tablo bulunamadı) hatasını temsil eder."
+  },
+  {
+    id: 27,
+    category: 'errors',
+    type: 'choice',
+    question: "MySQL saklı yordamlarında hata kontrolü (HANDLER) kullanmanın olumsuz yönlerinden biri aşağıdakilerden hangisidir?",
+    options: [
+      "Esneklik kazandırması ve farklı hata türlerine özel işlemler yapabilmesi",
+      "Hataları önceden yakalayarak işlem akışını kontrol edebilmesi",
+      "İç içe geçmiş veya karmaşık yordamlarda hata takibini ve hata ayıklamayı (debugging) zorlaştırabilmesi",
+      "İşlemler sırasında oluşabilecek hatalarda kodun tamamen durmasını engelleyebilmesi"
+    ],
+    answer: 2,
+    explanation: "Slayt 37'ye göre: Hata kontrolü (HANDLER) kullanımının olumsuz yönleri karmaşık prosedürlerde hata takibinin zorlaşması, performans etkileri ve debug zorluğudur."
+  },
+  {
+    id: 28,
+    category: 'errors',
+    type: 'code',
+    question: "1062 nolu hata (tekrarlayan kayıt) oluştuğunda yordamın çalışmasını durduran (EXIT) ve ekrana hata numarasını yazdıran hata tutucuyu tamamlayın.",
+    snippet: "DECLARE ___1___ HANDLER FOR ___2___\n  SELECT MYSQL_ERRNO;",
+    blanks: ["EXIT", "1062"],
+    explanation: "Hata durumunda çıkış yapmak için EXIT HANDLER FOR hata_kodu söz dizimi kullanılır."
+  },
+  {
+    id: 29,
+    category: 'errors',
+    type: 'choice',
+    question: "Herhangi bir SQLEXCEPTION hatası oluştuğunda 'Hata' değişkenini 1 olarak atayıp saklı yordamın çalışmasına devam eden (CONTINUE) doğru handler tanımı hangisidir?",
+    options: [
+      "DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET Hata = 1;",
+      "DECLARE EXIT HANDLER FOR SQLEXCEPTION SET Hata = 1;",
+      "DECLARE HANDLER FOR SQLEXCEPTION CONTINUE SET Hata = 1;",
+      "DECLARE SQLEXCEPTION CONTINUE HANDLER SET Hata = 1;"
+    ],
+    answer: 0,
+    explanation: "Slayt 33'e göre: Hata anında çalışmanın sürmesi için 'DECLARE CONTINUE HANDLER FOR SQLEXCEPTION işlemler;' biçimi kullanılır."
+  },
+  {
+    id: 30,
+    category: 'errors',
+    type: 'code',
+    question: "Tetiklenen bir hatanın numarasını ve SQL durum kodunu almak için kullanılan GET DIAGNOSTICS kodunu tamamlayın.",
+    snippet: "___1___ DIAGNOSTICS ___2___ 1\n  @HataNo = MYSQL_ERRNO, @SQLDurum = RETURNED_SQLSTATE;",
+    blanks: ["GET", "CONDITION"],
+    explanation: "Hata teşhisi yapmak için 'GET DIAGNOSTICS CONDITION 1' yapısı kullanılır."
+  },
+  {
+    id: 31,
+    category: 'errors',
+    type: 'code',
+    question: "Herhangi bir SQLEXCEPTION durumunda yordamın çalışmasını durdurup çıkış (EXIT) yapan genel hata tutucu yapısını tamamlayın.",
+    snippet: "DECLARE ___1___ HANDLER FOR ___2___\nBEGIN\n  /* Hata yönetim kodları */\nEND;",
+    blanks: ["EXIT", "SQLEXCEPTION"],
+    explanation: "Genel hata yakalama bloğu 'DECLARE EXIT HANDLER FOR SQLEXCEPTION' ile başlatılır."
+  },
+  {
+    id: 32,
+    category: 'errors',
+    type: 'choice',
+    question: "Bir saklı yordamda aranan verinin bulunamaması (NOT FOUND) durumunda çıkış (EXIT) yapan ve 'Satır Bulunamadı' mesajı seçen handler hangisidir?",
+    options: [
+      "DECLARE CONTINUE HANDLER FOR NOT FOUND SELECT 'Satır Bulunamadı';",
+      "DECLARE EXIT HANDLER FOR NOT FOUND SELECT 'Satır Bulunamadı';",
+      "DECLARE HANDLER FOR NOT FOUND EXIT SELECT 'Satır Bulunamadı';",
+      "DECLARE EXIT FOR NOT FOUND SELECT 'Satır Bulunamadı';"
+    ],
+    answer: 1,
+    explanation: "Slayt 34'e göre: NOT FOUND hatası alındığında çıkıp mesaj vermek için 'DECLARE EXIT HANDLER FOR NOT FOUND SELECT 'Satır Bulunamadı';' kullanılır."
+  },
+  {
+    id: 33,
+    category: 'errors',
+    type: 'code',
+    question: "Çalışma uyarısı durumunda (SQLWARNING) çıkış yapan ve ekrana 'SQL Çalışma Uyarısı' yazdıran hata tutucusunu tamamlayın.",
+    snippet: "DECLARE EXIT HANDLER FOR ___1___\n  SELECT \"___2___\";",
+    blanks: ["SQLWARNING", "SQL Çalışma Uyarısı"],
+    explanation: "Hata sınıflarından SQLWARNING uyarıları yakalar. SELECT ile ekrana yazdırılacak metin çift tırnaklar arasına alınır."
+  },
+  {
+    id: 34,
+    category: 'errors',
+    type: 'code',
+    question: "Hata durumunda hata mesaj metnini '@HataMesaj' değişkenine, hata alınan şema adını ise '@SemaAd' değişkenine atayan komutu tamamlayın.",
+    snippet: "GET DIAGNOSTICS CONDITION 1\n  @HataMesaj = ___1___,\n  @SemaAd = ___2___;",
+    blanks: ["MESSAGE_TEXT", "SCHEMA_NAME"],
+    explanation: "GET DIAGNOSTICS CONDITION ile hata mesaj metni MESSAGE_TEXT, veritabanı şema adı ise SCHEMA_NAME ile okunur."
+  },
+  {
+    id: 35,
+    category: 'errors',
+    type: 'code',
+    question: "SQLSTATE '23000' (UNIQUE/PRIMARY KEY kısıtlaması) hatası durumunda çıkış yapan ve 'Durum' değişkenini eşitleyen hata tutucuyu tamamlayın.",
+    snippet: "DECLARE EXIT HANDLER FOR ___1___ '23000'\n  SET Durum = '23000';",
+    blanks: ["SQLSTATE"],
+    explanation: "Belirli bir SQL durum kodunu yakalamak için SQLSTATE ifadesi kullanılır."
+  },
+  {
+    id: 36,
+    category: 'errors',
+    type: 'code',
+    question: "Hata kodu '1048' (NOT NULL sütununa boş değer girilmesi) durumunda çalışmaya devam eden (CONTINUE) hata tutucu tanımını tamamlayın.",
+    snippet: "DECLARE ___1___ HANDLER FOR ___2___\n  SET Hata_Kodu = 1048;",
+    blanks: ["CONTINUE", "1048"],
+    explanation: "Hata kodu 1048 (ER_BAD_NULL_ERROR) durumunda çalışmanın sürmesi için CONTINUE HANDLER FOR 1048 yazılır."
+  },
+  {
+    id: 37,
+    category: 'errors',
+    type: 'code',
+    question: "Hata kodu '1146' (Tablo bulunamadı) durumunda 'Tablo Bulunamadı' mesajı yazıp çıkış yapan hata tutucuyu tamamlayın.",
+    snippet: "DECLARE EXIT HANDLER FOR ___1___\n  SELECT \"___2___\";",
+    blanks: ["1146", "Tablo Bulunamadı"],
+    explanation: "ER_NO_SUCH_TABLE hatasının sayısal kodu 1146'dır."
+  },
+  {
+    id: 38,
+    category: 'errors',
+    type: 'code',
+    question: "Kullanıcı adı/şifre hatasında (Hata kodu 1045) çalışmaya devam eden hata tutucu tanımını tamamlayın.",
+    snippet: "DECLARE ___1___ HANDLER FOR ___2___\n  SET Hata_Kodu = 1045;",
+    blanks: ["CONTINUE", "1045"],
+    explanation: "ER_ACCESS_DENIED_ERROR hatasının sayısal kodu 1045'tir ve CONTINUE ile çalışmayı sürdürebilir."
+  },
+  {
+    id: 39,
+    category: 'errors',
+    type: 'code',
+    question: "Döngülerde veya yordamlarda hata yönetimi için handler tanımlama söz dizimini tamamlayın.",
+    snippet: "___1___ CONTINUE ___2___ FOR SQLEXCEPTION SET Hata = 1;",
+    blanks: ["DECLARE", "HANDLER"],
+    explanation: "Hata yönetimi DECLARE durum_eylemi HANDLER FOR hata_sinifi söz dizimiyle tanımlanır."
+  },
+  {
+    id: 40,
+    category: 'errors',
+    type: 'code',
+    question: "'MarkaEkle' prosedüründe, marka eklenirken bir SQLEXCEPTION hatası oluştuğunda çıkış (EXIT) yapan handler tanımını tamamlayın.",
+    snippet: "CREATE PROCEDURE MarkaEkle(IN P_Marka VARCHAR(45), OUT O_Durum TEXT)\nBEGIN\n  ___1___ EXIT ___2___ FOR ___3___\n  BEGIN\n    /* Hata yakalandığında yapılacak işlemler */\n  END;\n  \n  INSERT INTO marka(MarkaAd) VALUES (P_Marka);\nEND",
+    blanks: ["DECLARE", "HANDLER", "SQLEXCEPTION"],
+    explanation: "Prosedür başlangıcında DECLARE EXIT HANDLER FOR SQLEXCEPTION kullanılarak yordam içindeki insert hataları yakalanır."
+  }
+];
+
 const sqlFileList = [
   '10_Hafta_eticaret_siparis_musteri_puan_tabloları.sql',
   '1_Veritabani_Tablo_Olusturma.sql',

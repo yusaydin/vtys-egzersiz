@@ -123,6 +123,13 @@
           <option value="function">I. Fonksiyon - FUNCTION (15)</option>
           <option value="trigger">II. Tetikleyici - TRIGGER (15)</option>
         `;
+      } else if (lessonId === 'ders12') {
+        categoryFilter.innerHTML = `
+          <option value="all">Tüm Sorular (40)</option>
+          <option value="params">I. Girdi-Çıktı Parametreleri (IN, OUT, INOUT) (11)</option>
+          <option value="loops">II. Döngüler (LOOP, WHILE, REPEAT) (8)</option>
+          <option value="errors">III. Hata Kontrolü (HANDLER, GET DIAGNOSTICS) (21)</option>
+        `;
       }
     }
 
@@ -156,6 +163,12 @@
         if (dashboardSubtitle) {
           dashboardSubtitle.innerText = "Dr. Öğr. Üyesi Hüseyin COŞKUN'un Ders 11 (Fonksiyonlar ve Tetikleyiciler) sunumuna dayalı 30 soruluk sınavı tamamladınız.";
         }
+      } else if (lessonId === 'ders12') {
+        headerTitle.innerText = "VTYS Egzersiz (Ders 12)";
+        docTitle.innerText = "VTYS Egzersiz - Ders 12";
+        if (dashboardSubtitle) {
+          dashboardSubtitle.innerText = "Dr. Öğr. Üyesi Hüseyin COŞKUN'un Ders 10 (Parametreler, Döngüler ve Hata Yönetimi) sunumuna dayalı 40 soruluk sınavı tamamladınız.";
+        }
       }
     }
 
@@ -180,6 +193,8 @@
           questions = questionsDers9;
         } else if (lessonId === 'ders11') {
           questions = questionsDers11;
+        } else if (lessonId === 'ders12') {
+          questions = questionsDers12;
         }
       }
       
@@ -305,6 +320,9 @@
       else if (q.category === 'sp') catText = "II. Saklı Yordam (STORED PROCEDURE)";
       else if (q.category === 'function') catText = "I. Fonksiyon (FUNCTION)";
       else if (q.category === 'trigger') catText = "II. Tetikleyici (TRIGGER)";
+      else if (q.category === 'params') catText = "I. Girdi-Çıktı Parametreleri";
+      else if (q.category === 'loops') catText = "II. Döngüler";
+      else if (q.category === 'errors') catText = "III. Hata Kontrolü ve Yönetimi";
       questionCategoryEl.innerText = catText;
 
       // Set question counts
