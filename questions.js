@@ -4028,6 +4028,96 @@ const questionsDers11 = [
     snippet: "CREATE FUNCTION rastgele_deger() RETURNS INT\n___1___ DETERMINISTIC\nBEGIN\n  RETURN FLOOR(1 + (___2___() * 100));\nEND",
     blanks: ["NOT", "RAND"],
     explanation: "Rastgele değer üreten fonksiyonlar NOT DETERMINISTIC olarak tanımlanır ve rastgele sayı üretmek için yerleşik RAND() fonksiyonu kullanılır."
+  },
+  {
+    id: 21,
+    category: 'function',
+    type: 'code',
+    question: "Matematiksel fonksiyonlardan; bir sayının belirtilen üssünü alan POWER() ve sayıyı belirtilen basamakta yuvarlayan ROUND() fonksiyonlarının kullanımını tamamlayın.",
+    snippet: "SELECT ___1___(2, 3), ___2___(3.14159, 2);",
+    blanks: ["POWER", "ROUND"],
+    explanation: "POWER(2, 3) ifadesi 2^3=8 değerini, ROUND(3.14159, 2) ise virgülden sonra iki basamak olacak şekilde yuvarlayıp 3.14 değerini verir."
+  },
+  {
+    id: 22,
+    category: 'function',
+    type: 'code',
+    question: "Tarih fonksiyonlarından; mevcut sistem tarih ve saatini döndüren NOW() ile yalnızca bugünün tarihini veren CURDATE() fonksiyonlarının kullanımını tamamlayın.",
+    snippet: "SELECT ___1___(), ___2___();",
+    blanks: ["NOW", "CURDATE"],
+    explanation: "NOW() hem tarihi hem saati döndürürken, CURDATE() yalnızca bugünün tarihini (yıl-ay-gün formatında) döndürür."
+  },
+  {
+    id: 23,
+    category: 'function',
+    type: 'code',
+    question: "Tarih fonksiyonlarından DATE_ADD() kullanarak, belirli bir tarihe 5 gün ekleyen SQL ifadesindeki boşlukları tamamlayın.",
+    snippet: "SELECT ___1___('2024-12-10', ___2___ 5 ___3___);",
+    blanks: ["DATE_ADD", "INTERVAL", "DAY"],
+    explanation: "DATE_ADD(tarih, INTERVAL miktar birim) şeklinde kullanılır. Burada gün eklemek için 'INTERVAL 5 DAY' kullanılır."
+  },
+  {
+    id: 24,
+    category: 'function',
+    type: 'code',
+    question: "MySQL komut satırı veya Workbench üzerinde fonksiyon tanımlanırken noktalı virgül (`;`) çakışmasını engellemek için kullanılan ayırıcı tanımlama komutlarını tamamlayın.",
+    snippet: "___1___ //\nCREATE FUNCTION kare_al(x INT) RETURNS INT DETERMINISTIC\nBEGIN\n  RETURN x * x;\nEND //\n___2___ ;",
+    blanks: ["DELIMITER", "DELIMITER"],
+    explanation: "MySQL Workbench'te fonksiyon gövdesi içindeki noktalı virgüllerin sorguyu yarıda kesmesini önlemek için DELIMITER komutuyla ayırıcı geçici olarak değiştirilir."
+  },
+  {
+    id: 25,
+    category: 'function',
+    type: 'code',
+    question: "Daha önce yazdığımız 'SonKullanmaZamanHesapla' fonksiyonunun SELECT, WHERE ve ORDER BY içerisinde kullanıldığı sorguyu tamamlayın.",
+    snippet: "SELECT UrunAd, ___1___(SonKullanmaTarih) AS 'Kalan Gun'\nFROM urun\nWHERE 0 < ___2___(SonKullanmaTarih)\n___3___ BY ___4___(SonKullanmaTarih) DESC;",
+    blanks: ["SonKullanmaZamanHesapla", "SonKullanmaZamanHesapla", "ORDER", "SonKullanmaZamanHesapla"],
+    explanation: "Slayt 23'e göre kullanıcı tanımlı fonksiyonlar saklı yordamların aksine SELECT, WHERE ve ORDER BY gibi komutların içinde doğrudan çağrılabilir."
+  },
+  {
+    id: 26,
+    category: 'trigger',
+    type: 'code',
+    question: "Bir UPDATE (güncelleme) tetikleyicisinde, verinin güncelleme öncesindeki durumuna (eski) ve güncelleme sonrasındaki durumuna (yeni) erişmek için kullanılan niteleyicileri tamamlayın.",
+    snippet: "SET eski_fiyat = ___1___.Fiyat;\nSET yeni_fiyat = ___2___.Fiyat;",
+    blanks: ["OLD", "NEW"],
+    explanation: "UPDATE tetikleyicisinde eski satır verileri için OLD, güncellenmiş yeni satır verileri için NEW niteleyicileri kullanılır."
+  },
+  {
+    id: 27,
+    category: 'trigger',
+    type: 'code',
+    question: "Bir tablonun üzerindeki DML işlemi gerçekleştirilmeden önce çalışacak bir tetikleyici oluşturma söz dizimindeki boşlukları doldurun.",
+    snippet: "CREATE TRIGGER satis_BEFORE_INSERT\n___1___ INSERT ___2___ satis\nFOR EACH ROW\nBEGIN\n  /* Tetikleyici kod bloğu */\nEND",
+    blanks: ["BEFORE", "ON"],
+    explanation: "DML işlemi öncesi tetikleyiciler BEFORE ifadesiyle tanımlanır ve ON tablo_adı ile ilgili tabloya bağlanırlar."
+  },
+  {
+    id: 28,
+    category: 'trigger',
+    type: 'code',
+    question: "Satış tablosundan (`satis`) bir satır silindikten (DELETE) sonra çalışacak ve silinen satırdaki MusteriNo bilgisini satis_log tablosuna yazacak tetikleyiciyi tamamlayın.",
+    snippet: "CREATE TRIGGER satis_AFTER_DELETE\nAFTER ___1___ ON satis\nFOR EACH ROW\nBEGIN\n  INSERT INTO satis_log (MusteriNo, Islem)\n  VALUES (___2___.MusteriNo, 'Silindi');\nEND",
+    blanks: ["DELETE", "OLD"],
+    explanation: "Silme işlemi sonrası için AFTER DELETE tanımlanır. DELETE tetikleyicilerinde silinen veriye OLD niteleyicisi (OLD.MusteriNo) ile erişilir. Yeni bir veri eklenmediği için NEW niteleyicisi kullanılamaz."
+  },
+  {
+    id: 29,
+    category: 'trigger',
+    type: 'code',
+    question: "MySQL'de Statement-Based (Sorgu bazlı) ve Row-Based (Satır bazlı) replikasyon formatlarını global olarak belirleyen komutları tamamlayın.",
+    snippet: "SET GLOBAL binlog_format = '___1___';\nSET GLOBAL binlog_format = '___2___';",
+    blanks: ["STATEMENT", "ROW"],
+    explanation: "binlog_format değeri 'STATEMENT' veya 'ROW' olarak ayarlanabilir. Non-deterministik fonksiyonların replikasyonda veri tutarsızlığı yapmaması için ROW kullanılması önerilir."
+  },
+  {
+    id: 30,
+    category: 'trigger',
+    type: 'code',
+    question: "MySQL Workbench'te veri tabanından veri okumayan veya üzerinde değişiklik yapmayan, aynı parametrelerle her zaman aynı sonucu veren bir kullanıcı tanımlı fonksiyon oluşturma şablonunu tamamlayın.",
+    snippet: "CREATE FUNCTION kare_al(x INT) RETURNS INT\n___1___\nBEGIN\n  ___2___ x * x;\nEND",
+    blanks: ["DETERMINISTIC", "RETURN"],
+    explanation: "Aynı parametrelerle her zaman aynı sonucu veren fonksiyonlar DETERMINISTIC ifadesiyle belirtilmeli ve gövdede değer döndürmek için RETURN kullanılmalıdır."
   }
 ];
 

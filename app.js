@@ -119,9 +119,9 @@
         `;
       } else if (lessonId === 'ders11') {
         categoryFilter.innerHTML = `
-          <option value="all">Tüm Sorular (20)</option>
-          <option value="function">I. Fonksiyon - FUNCTION (10)</option>
-          <option value="trigger">II. Tetikleyici - TRIGGER (10)</option>
+          <option value="all">Tüm Sorular (30)</option>
+          <option value="function">I. Fonksiyon - FUNCTION (15)</option>
+          <option value="trigger">II. Tetikleyici - TRIGGER (15)</option>
         `;
       }
     }
@@ -154,7 +154,7 @@
         headerTitle.innerText = "VTYS Egzersiz (Ders 11)";
         docTitle.innerText = "VTYS Egzersiz - Ders 11";
         if (dashboardSubtitle) {
-          dashboardSubtitle.innerText = "Dr. Öğr. Üyesi Hüseyin COŞKUN'un Ders 11 (Fonksiyonlar ve Tetikleyiciler) sunumuna dayalı 20 soruluk sınavı tamamladınız.";
+          dashboardSubtitle.innerText = "Dr. Öğr. Üyesi Hüseyin COŞKUN'un Ders 11 (Fonksiyonlar ve Tetikleyiciler) sunumuna dayalı 30 soruluk sınavı tamamladınız.";
         }
       }
     }
